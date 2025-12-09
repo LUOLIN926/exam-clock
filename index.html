@@ -10,74 +10,95 @@
 
 <body>
   <div class="container">
-    <div class="exam-time-header" id="examTimeHeader">
-      CET-4 考试时间 2025年12月13日上午 9:00 - 11:20
-      <div class="exam-countdown" id="examCountdown">距离考试还有 X 天</div>
-    </div>
+    <div class="column-wrapper">
+      <!-- 左侧栏 -->
+      <div class="left-column">
+        <div class="header-wrapper">
+          <span class="close-btn" id="closeHeaderBtn" title="关闭考试信息">×</span>
+          <div class="exam-time-header" id="examTimeHeader">
+            CET-4 考试时间 2025年12月13日上午 9:00 - 11:20
+            <div class="exam-countdown" id="examCountdown">距离考试还有 X 天</div>
+          </div>
+        </div>
 
-    <h1>🎓CET-4<br>考试时间模拟器</h1>
+        <h1>🎓CET-4<br>考试时间模拟器</h1>
 
-    <div class="real-time-display">
-      模拟考场时间：<span id="currentTimeSpan">09:00:00</span>
-    </div>
+        <div class="real-time-display">
+          模拟考场时间：<span id="currentTimeSpan">09:00:00</span>
+        </div>
 
-    <div class="timer-display">
-      距离考试结束：<span id="timer">02:10:00</span>
-    </div>
+        <div class="timer-display">
+          距离考试结束：<span id="timer">02:10:00</span>
+        </div>
 
-    <div class="section-timer-display" id="sectionTimer" style="display: none;">
-      本环节倒计时：<span class="time-value">00:00:00</span>
-    </div>
+        <div class="section-timer-display" id="sectionTimer" style="display: none;">
+          本环节倒计时：<span class="time-value">00:00:00</span>
+        </div>
 
-    <div class="current-section" id="currentSection">
-      考试尚未开始，请点击开始按钮
-    </div>
+        <div class="current-section" id="currentSection">
+          考试尚未开始，请点击开始按钮
+        </div>
 
-    <div class="countdown-container">
-      <div class="countdown" id="countdown">
-        <span class="countdown-label">下一环节：</span><span class="countdown-value">--</span>
+        <div class="countdown-container">
+          <div class="countdown" id="countdown">
+            <span class="countdown-label">下一环节：</span><span class="countdown-value">--</span>
+          </div>
+          <button onclick="nextSection()" id="nextBtn" class="next-button">▶</button>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="controls">
+          <button onclick="startExam()" id="startBtn">开始考试</button>
+          <button onclick="pauseExam()" id="pauseBtn" disabled>暂停</button>
+          <button onclick="resetExam()" id="resetBtn">重置</button>
+          <div class="skip-selector">
+            <label for="sectionSelect">跳转到环节:</label>
+            <select id="sectionSelect">
+              <option value="0">考前准备 (9:00-9:10)</option>
+              <option value="1">写作 (9:10-9:40)</option>
+              <option value="2">听力 (9:40-10:05)</option>
+              <option value="3">收答题卡1 (10:05-10:10)</option>
+              <option value="4">阅读理解+翻译 (10:10-11:20)</option>
+              <option value="5">考试结束 (11:20)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-number" id="totalTime">130</div>
+            <div class="stat-label">总分钟</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="remainingTime">130</div>
+            <div class="stat-label">剩余分钟</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="completedSections">0</div>
+            <div class="stat-label">已完成</div>
+          </div>
+        </div>
+        
+        <!-- 恢复提示（大屏幕设备使用） -->
+        <div class="restore-hint" id="restoreHintLargeScreen" style="display: none;">
+          点击恢复倒数日期
+        </div>
       </div>
-      <button onclick="nextSection()" id="nextBtn" class="next-button">▶</button>
-    </div>
 
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-
-    <div class="stats">
-      <div class="stat-item">
-        <div class="stat-number" id="totalTime">130</div>
-        <div class="stat-label">总分钟</div>
+      <!-- 右侧栏 -->
+      <div class="right-column">
+        <div class="section-timeline" id="timeline">
+          <!-- Sections will be populated by JavaScript -->
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number" id="remainingTime">130</div>
-        <div class="stat-label">剩余分钟</div>
+      
+      <!-- 恢复提示（小屏幕设备使用） -->
+      <div class="restore-hint" id="restoreHintSmallScreen" style="display: none;">
+          点击恢复倒数日期
       </div>
-      <div class="stat-item">
-        <div class="stat-number" id="completedSections">0</div>
-        <div class="stat-label">已完成</div>
-      </div>
-    </div>
-
-    <div class="controls">
-      <button onclick="startExam()" id="startBtn">开始考试</button>
-      <button onclick="pauseExam()" id="pauseBtn" disabled>暂停</button>
-      <button onclick="resetExam()" id="resetBtn">重置</button>
-      <div class="skip-selector">
-        <label for="sectionSelect">跳转到环节:</label>
-        <select id="sectionSelect">
-          <option value="0">考前准备 (9:00-9:10)</option>
-          <option value="1">写作 (9:10-9:40)</option>
-          <option value="2">听力 (9:40-10:05)</option>
-          <option value="3">收答题卡1 (10:05-10:10)</option>
-          <option value="4">阅读理解+翻译 (10:10-11:20)</option>
-          <option value="5">考试结束 (11:20)</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="section-timeline" id="timeline">
-      <!-- Sections will be populated by JavaScript -->
     </div>
   </div>
 

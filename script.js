@@ -15,6 +15,9 @@ let currentSectionIndex = 0;
 let examStartTime = new Date();
 examStartTime.setHours(9, 0, 0, 0); // 设置为9:00
 
+// 添加变量跟踪倒计时显示状态
+let isCountdownVisible = true;
+
 function formatTime(seconds) {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -322,18 +325,6 @@ function nextSection() {
   updateSectionList();
 }
 
-// 初始化
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('totalTime').textContent = 130;
-  updateSectionList();
-
-  // 计算并显示距离考试的天数
-  updateExamCountdown();
-  
-  // 为选择框添加change事件监听器
-  document.getElementById('sectionSelect').addEventListener('change', handleSectionChange);
-});
-
 // 计算并显示距离考试的天数
 function updateExamCountdown() {
   const examDate = new Date(2025, 11, 13); // 2025年12月13日 (月份从0开始，所以11代表12月)
@@ -350,3 +341,62 @@ function updateExamCountdown() {
     countdownElement.textContent = '考试已结束';
   }
 }
+
+// 关闭/显示整个标题区域功能
+function toggleHeader() {
+  const examHeader = document.getElementById('examTimeHeader');
+  const closeHeaderBtn = document.getElementById('closeHeaderBtn');
+  const restoreHintSmallScreen = document.getElementById('restoreHintSmallScreen');
+  const restoreHintLargeScreen = document.getElementById('restoreHintLargeScreen');
+  
+  if (examHeader.style.display !== 'none') {
+    // 隐藏标题区域
+    examHeader.style.display = 'none';
+    closeHeaderBtn.style.display = 'none'; // 隐藏关闭按钮
+    
+    // 根据屏幕宽度显示相应的恢复提示
+    if (window.innerWidth > 800) {
+      restoreHintLargeScreen.style.display = 'block';
+    } else {
+      restoreHintSmallScreen.style.display = 'block';
+    }
+  } else {
+    // 显示标题区域
+    examHeader.style.display = 'block';
+    closeHeaderBtn.style.display = 'flex'; // 显示关闭按钮
+    
+    // 隐藏恢复提示
+    restoreHintSmallScreen.style.display = 'none';
+    restoreHintLargeScreen.style.display = 'none';
+  }
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('totalTime').textContent = 130;
+  updateSectionList();
+
+  // 计算并显示距离考试的天数
+  updateExamCountdown();
+  
+  // 为选择框添加change事件监听器
+  document.getElementById('sectionSelect').addEventListener('change', handleSectionChange);
+  
+  // 为关闭标题区域按钮添加点击事件监听器
+  const closeHeaderBtn = document.getElementById('closeHeaderBtn');
+  if (closeHeaderBtn) {
+    closeHeaderBtn.addEventListener('click', toggleHeader);
+  }
+  
+  // 为恢复提示添加点击事件监听器
+  const restoreHintSmallScreen = document.getElementById('restoreHintSmallScreen');
+  const restoreHintLargeScreen = document.getElementById('restoreHintLargeScreen');
+  
+  if (restoreHintSmallScreen) {
+    restoreHintSmallScreen.addEventListener('click', toggleHeader);
+  }
+  
+  if (restoreHintLargeScreen) {
+    restoreHintLargeScreen.addEventListener('click', toggleHeader);
+  }
+});

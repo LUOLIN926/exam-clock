@@ -14,33 +14,143 @@ body {
   border-radius: 0;
   padding: 15px;
   box-shadow: none;
+  position: relative;
+}
+
+/* 恢复提示样式 */
+.restore-hint {
+  font-size: 0.9em;
+  text-align: center;
+  color: #7f8c8d;
+  cursor: pointer;
+  padding: 12px 0;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.restore-hint:hover {
+  color: #3498db;
+}
+
+/* 小屏幕设备的恢复提示 */
+#restoreHintSmallScreen {
+  display: none;
+}
+
+/* 大屏幕设备的恢复提示 */
+#restoreHintLargeScreen {
+  display: none;
+  margin-top: 20px;
+}
+
+/* 响应式布局 - 当屏幕宽度大于800px时 */
+@media (min-width: 801px) {
+  body {
+    background: #ffffff;
+    padding: 20px;
+  }
+
+  .container {
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    background: #ffffff;
+    margin: 0 auto;
+  }
+
+  .left-column {
+    flex: 0 0 calc(50% - 15px);
+  }
+
+  .right-column {
+    flex: 0 0 calc(50% - 15px);
+  }
+
+  .column-wrapper {
+    display: contents;
+  }
+
+  .section-timeline {
+    margin-top: 0;
+  }
+
+  /* 调整恢复提示的显示 */
+  #restoreHintSmallScreen {
+    display: none;
+  }
+
+  #restoreHintLargeScreen {
+    display: none;
+    text-align: center;
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 400px;
+    border-top: 1px dashed #ddd;
+  }
+}
+
+.header-wrapper {
+  position: relative;
 }
 
 .exam-time-header {
   text-align: center;
   background: linear-gradient(45deg, #ff6b6b, #ee5a24);
   color: white;
-  padding: 15px;
+  padding: 8px;
   border-radius: 10px;
   margin-bottom: 20px;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+  position: relative;
 }
 
 .exam-countdown {
   text-align: center;
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #f0f0f0;
-  margin-top: 5px;
+  margin-top: 3px;
   font-weight: normal;
+}
+
+.close-btn {
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #8b0000; /* 暗红色 */
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  display: none; /* 默认隐藏 */
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: color 0.3s;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  color: #000000; /* 悬停时变为黑色 */
+}
+
+/* 当鼠标靠近整个红色区域附近时显示关闭按钮 */
+.header-wrapper:hover .close-btn {
+  display: flex;
 }
 
 h1 {
   text-align: center;
   color: #2c3e50;
   margin-bottom: 20px;
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 .current-section {
@@ -190,8 +300,8 @@ button:disabled {
 }
 
 .section-real-time {
-  color: #e74c3c;
-  font-weight: bold;
+  color: #800080;
+  font-weight: normal;
   font-size: 0.9em;
 }
 
@@ -206,17 +316,32 @@ button:disabled {
 
 .status-current {
   background: #e74c3c;
-  color: white;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.7em;
+  border: none;
 }
 
 .status-upcoming {
   background: #3498db;
-  color: white;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.7em;
+  border: none;
 }
 
 .status-completed {
   background: #27ae60;
-  color: white;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.7em;
+  border: none;
 }
 
 .progress-bar {
