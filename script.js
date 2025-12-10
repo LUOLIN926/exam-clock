@@ -238,7 +238,7 @@ function resetExam() {
   document.getElementById('currentSection').textContent = '考试尚未开始，请点击开始按钮';
   document.querySelector('.countdown-value').textContent = '--';
   document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('remainingTime').textContent = Math.ceil(totalTime / 60); // 使用Math.ceil确保正确取整
+  document.getElementById('remainingTime').textContent = Math.ceil(timeLeft / 60); // 确保重置后剩余时间正确
 }
 
 function updateButtons() {
@@ -382,6 +382,7 @@ function toggleExamType() {
   resetExam();
   updateSectionOptions();
   document.getElementById('totalTime').textContent = totalTime / 60;
+  document.getElementById('remainingTime').textContent = Math.ceil(timeLeft / 60); // 确保切换后剩余时间正确
   
   // 更新初始时间显示
   const currentTimeDisplay = currentExamType === 'cet4' ? '09:00:00' : '15:00:00';
@@ -455,6 +456,7 @@ function toggleHeader() {
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('totalTime').textContent = totalTime / 60;
+  document.getElementById('remainingTime').textContent = Math.ceil(timeLeft / 60); // 确保初始剩余时间正确
   updateSectionList();
   updateSectionOptions(); // 确保在初始加载时设置正确的选项
 
