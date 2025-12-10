@@ -17,6 +17,50 @@ body {
   position: relative;
 }
 
+/* 切换考试按钮 */
+.toggle-exam-button-container {
+  margin: 5px 0; /* 进一步减小上下间距 */
+  text-align: center;
+}
+
+.toggle-exam-button {
+  background: #9b59b6;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 8px; /* 添加圆角 */
+}
+
+.toggle-exam-button:hover {
+  background: #8e44ad;
+}
+
+/* 小屏幕切换按钮 */
+.toggle-button-small-screen {
+  margin: 5px 0; /* 进一步减小上下间距 */
+}
+
+.toggle-button-small-screen button {
+  background: #9b59b6;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+  border-radius: 8px; /* 添加圆角 */
+}
+
+.toggle-button-small-screen button:hover {
+  background: #8e44ad;
+}
+
 /* 恢复提示样式 */
 .restore-hint {
   font-size: 0.9em;
@@ -40,7 +84,9 @@ body {
 /* 大屏幕设备的恢复提示 */
 #restoreHintLargeScreen {
   display: none;
-  margin-top: 20px;
+  margin-top: 5px;
+  padding-top: 10px;
+  border-top: 1px dashed #ddd;
 }
 
 /* 响应式布局 - 当屏幕宽度大于800px时 */
@@ -84,10 +130,25 @@ body {
   #restoreHintLargeScreen {
     display: none;
     text-align: center;
-    margin: 20px auto;
-    padding: 10px;
-    max-width: 400px;
+    margin: 5px auto 0;
+    padding: 10px 0 0;
     border-top: 1px dashed #ddd;
+  }
+  
+  /* 隐藏小屏幕切换按钮 */
+  #toggleButtonSmallScreen {
+    display: none !important;
+  }
+  
+  /* 大屏幕切换按钮居中 */
+  .toggle-exam-button-container {
+    flex: 0 0 100%;
+    margin: 5px 0; /* 进一步减小上下间距 */
+    text-align: center;
+  }
+  
+  .toggle-exam-button {
+    margin: 0 auto;
   }
 }
 
@@ -102,7 +163,7 @@ body {
   padding: 8px;
   border-radius: 10px;
   margin-bottom: 20px;
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight: bold;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   line-height: 1.2;
@@ -111,7 +172,7 @@ body {
 
 .exam-countdown {
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.9em;
   color: #f0f0f0;
   margin-top: 3px;
   font-weight: normal;

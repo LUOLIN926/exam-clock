@@ -1,19 +1,34 @@
-const examSections = [
+// CET-4 考试环节配置
+const cet4Sections = [
   { name: "考前准备", start: 0, duration: 10, end: 10, description: "发卷、填写个人信息、贴条形码", realTime: "9:00-9:10" },
   { name: "写作", start: 10, duration: 30, end: 40, description: "作文写作（不能翻看试题册）", realTime: "9:10-9:40" },
   { name: "听力", start: 40, duration: 25, end: 65, description: "听力理解（边听边涂答题卡1）", realTime: "9:40-10:05" },
   { name: "收答题卡1", start: 65, duration: 5, end: 70, description: "听力结束后立即收答题卡1", realTime: "10:05-10:10" },
-  { name: "阅读理解 + 翻译", start: 70, duration: 60, end: 130, description: "作答在答题卡2（阅读+翻译）", realTime: "10:10-11:20" },
-  { name: "考试结束", start: 130, duration: 0, end: 130, description: "收答题卡2和试题册", realTime: "11:20" }
+  { name: "阅读理解 + 翻译", start: 70, duration: 70, end: 140, description: "作答在答题卡2（阅读+翻译）", realTime: "10:10-11:20" },
+  { name: "考试结束", start: 140, duration: 0, end: 140, description: "收答题卡2和试题册", realTime: "11:20" }
 ];
 
+// CET-6 考试环节配置 (恢复考前准备环节)
+const cet6Sections = [
+  { name: "考前准备", start: 0, duration: 10, end: 10, description: "发卷、填写个人信息、贴条形码", realTime: "15:00-15:10" },
+  { name: "写作", start: 10, duration: 30, end: 40, description: "作文写作（不能翻看试题册）", realTime: "15:10-15:40" },
+  { name: "听力", start: 40, duration: 30, end: 70, description: "听力理解（边听边涂答题卡1）", realTime: "15:40-16:10" },
+  { name: "收答题卡1", start: 70, duration: 5, end: 75, description: "听力结束后立即收答题卡1", realTime: "16:10-16:15" },
+  { name: "阅读理解 + 翻译", start: 75, duration: 70, end: 145, description: "作答在答题卡2（阅读+翻译）", realTime: "16:15-17:25" },
+  { name: "考试结束", start: 145, duration: 0, end: 145, description: "收答题卡2和试题册", realTime: "17:25" }
+];
+
+// 当前使用的考试类型（默认为CET-4）
+let currentExamType = 'cet4';
+let examSections = cet4Sections;
+
 let timer = null;
-let timeLeft = 130 * 60; // 总时间130分钟，转换为秒
-let totalTime = 130 * 60;
+let timeLeft = 140 * 60; // CET-4总时间140分钟，转换为秒
+let totalTime = 140 * 60;
 let isRunning = false;
 let currentSectionIndex = 0;
 let examStartTime = new Date();
-examStartTime.setHours(9, 0, 0, 0); // 设置为9:00
+examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
 
 // 添加变量跟踪倒计时显示状态
 let isCountdownVisible = true;
@@ -37,7 +52,7 @@ function updateTimer() {
     isRunning = false;
     updateButtons();
     document.getElementById('currentSection').textContent = '考试结束！';
-    document.getElementById('currentTimeSpan').textContent = '11:20:00';
+    document.getElementById('currentTimeSpan').textContent = currentExamType === 'cet4' ? '11:20:00' : '17:20:00';
     document.querySelector('.countdown-value').textContent = '考试已结束';
     timeLeft = 0; // 确保时间不为负数
   }
@@ -111,7 +126,7 @@ function updateTimer() {
     isRunning = false;
     updateButtons();
     document.getElementById('currentSection').textContent = '考试结束！';
-    document.getElementById('currentTimeSpan').textContent = '11:20:00';
+    document.getElementById('currentTimeSpan').textContent = currentExamType === 'cet4' ? '11:20:00' : '17:20:00';
     document.querySelector('.countdown-value').textContent = '考试已结束';
   }
 
@@ -209,17 +224,21 @@ function pauseExam() {
 function resetExam() {
   clearInterval(timer);
   isRunning = false;
-  timeLeft = 130 * 60;
+  timeLeft = totalTime;
   currentSectionIndex = 0;
+  
+  // 更新时间显示
   document.getElementById('timer').textContent = formatTime(timeLeft);
-  document.getElementById('currentTimeSpan').textContent = '09:00:00';
+  document.getElementById('currentTimeSpan').textContent = currentExamType === 'cet4' ? '09:00:00' : '15:00:00';
   document.getElementById('sectionTimer').style.display = 'none';
+  
+  // 更新UI状态
   updateButtons();
   updateSectionList();
   document.getElementById('currentSection').textContent = '考试尚未开始，请点击开始按钮';
   document.querySelector('.countdown-value').textContent = '--';
   document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('remainingTime').textContent = '130';
+  document.getElementById('remainingTime').textContent = Math.ceil(totalTime / 60); // 使用Math.ceil确保正确取整
 }
 
 function updateButtons() {
@@ -325,6 +344,64 @@ function nextSection() {
   updateSectionList();
 }
 
+function toggleExamType() {
+  // 切换考试类型
+  if (currentExamType === 'cet4') {
+    currentExamType = 'cet6';
+    examSections = cet6Sections;
+    document.getElementById('examType').textContent = 'CET-6';
+    document.getElementById('examDate').textContent = '2025年12月13日下午';
+    document.getElementById('examTimeRange').textContent = '15:00 - 17:25';
+    document.getElementById('toggleExamBtn').textContent = '切换为CET-4';
+    document.getElementById('toggleExamBtnSmall').textContent = '切换为CET-4';
+    document.getElementById('mainTitle').innerHTML = '🎓CET-6考试时间模拟器'; // 更新主标题
+    examStartTime.setHours(15, 0, 0, 0); // CET-6开始时间
+    totalTime = 145 * 60;
+    timeLeft = totalTime;
+    
+    // 更新标题
+    document.title = 'CET-6考试时间模拟器';
+  } else {
+    currentExamType = 'cet4';
+    examSections = cet4Sections;
+    document.getElementById('examType').textContent = 'CET-4';
+    document.getElementById('examDate').textContent = '2025年12月13日上午';
+    document.getElementById('examTimeRange').textContent = '9:00 - 11:20';
+    document.getElementById('toggleExamBtn').textContent = '切换为CET-6';
+    document.getElementById('toggleExamBtnSmall').textContent = '切换为CET-6';
+    document.getElementById('mainTitle').innerHTML = '🎓CET-4考试时间模拟器'; // 更新主标题
+    examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
+    totalTime = 140 * 60; // 更新为正确的总时间
+    timeLeft = totalTime;
+    
+    // 更新标题
+    document.title = 'CET-4考试时间模拟器';
+  }
+  
+  // 重置考试状态
+  resetExam();
+  updateSectionOptions();
+  document.getElementById('totalTime').textContent = totalTime / 60;
+  
+  // 更新初始时间显示
+  const currentTimeDisplay = currentExamType === 'cet4' ? '09:00:00' : '15:00:00';
+  document.getElementById('timer').textContent = formatTime(timeLeft);
+  document.getElementById('currentTimeSpan').textContent = currentTimeDisplay;
+}
+
+function updateSectionOptions() {
+  const select = document.getElementById('sectionSelect');
+  select.innerHTML = '';
+  
+  examSections.forEach((section, index) => {
+    if (section.name === "考试结束") {
+      select.innerHTML += `<option value="${index}">${section.name} (${section.realTime})</option>`;
+    } else {
+      select.innerHTML += `<option value="${index}">${section.name} (${section.realTime})</option>`;
+    }
+  });
+}
+
 // 计算并显示距离考试的天数
 function updateExamCountdown() {
   const examDate = new Date(2025, 11, 13); // 2025年12月13日 (月份从0开始，所以11代表12月)
@@ -348,6 +425,8 @@ function toggleHeader() {
   const closeHeaderBtn = document.getElementById('closeHeaderBtn');
   const restoreHintSmallScreen = document.getElementById('restoreHintSmallScreen');
   const restoreHintLargeScreen = document.getElementById('restoreHintLargeScreen');
+  const toggleButtonSmallScreen = document.getElementById('toggleButtonSmallScreen');
+  const toggleExamBtnContainer = document.querySelector('.toggle-exam-button-container');
   
   if (examHeader.style.display !== 'none') {
     // 隐藏标题区域
@@ -359,6 +438,7 @@ function toggleHeader() {
       restoreHintLargeScreen.style.display = 'block';
     } else {
       restoreHintSmallScreen.style.display = 'block';
+      toggleButtonSmallScreen.style.display = 'block';
     }
   } else {
     // 显示标题区域
@@ -368,16 +448,52 @@ function toggleHeader() {
     // 隐藏恢复提示
     restoreHintSmallScreen.style.display = 'none';
     restoreHintLargeScreen.style.display = 'none';
+    toggleButtonSmallScreen.style.display = 'none';
   }
 }
 
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('totalTime').textContent = 130;
+  document.getElementById('totalTime').textContent = totalTime / 60;
   updateSectionList();
+  updateSectionOptions(); // 确保在初始加载时设置正确的选项
 
   // 计算并显示距离考试的天数
   updateExamCountdown();
+  
+  // 设置初始标题
+  if (currentExamType === 'cet4') {
+    document.title = 'CET-4考试时间模拟器';
+    document.getElementById('mainTitle').innerHTML = '🎓CET-4考试时间模拟器';
+  } else {
+    document.title = 'CET-6考试时间模拟器';
+    document.getElementById('mainTitle').innerHTML = '🎓CET-6考试时间模拟器';
+  }
+  
+  // 设置初始时间显示
+  document.getElementById('timer').textContent = formatTime(timeLeft);
+  
+  // 再次确认标题设置
+  setTimeout(() => {
+    if (currentExamType === 'cet4') {
+      document.title = 'CET-4考试时间模拟器';
+      document.getElementById('mainTitle').innerHTML = '🎓CET-4考试时间模拟器';
+    } else {
+      document.title = 'CET-6考试时间模拟器';
+      document.getElementById('mainTitle').innerHTML = '🎓CET-6考试时间模拟器';
+    }
+  }, 100);
+  
+  // 第三次确认标题设置
+  setTimeout(() => {
+    if (currentExamType === 'cet4') {
+      document.title = 'CET-4考试时间模拟器';
+      document.getElementById('mainTitle').innerHTML = '🎓CET-4考试时间模拟器';
+    } else {
+      document.title = 'CET-6考试时间模拟器';
+      document.getElementById('mainTitle').innerHTML = '🎓CET-6考试时间模拟器';
+    }
+  }, 500);
   
   // 为选择框添加change事件监听器
   document.getElementById('sectionSelect').addEventListener('change', handleSectionChange);
@@ -398,5 +514,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (restoreHintLargeScreen) {
     restoreHintLargeScreen.addEventListener('click', toggleHeader);
+  }
+  
+  // 根据屏幕宽度设置初始显示状态
+  const toggleButtonSmallScreen = document.getElementById('toggleButtonSmallScreen');
+  if (window.innerWidth <= 800) {
+    toggleButtonSmallScreen.style.display = 'none';
   }
 });
