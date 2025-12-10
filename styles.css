@@ -19,7 +19,7 @@ body {
 
 /* 切换考试按钮 */
 .toggle-exam-button-container {
-  margin: 5px 0; /* 进一步减小上下间距 */
+  margin: 10px 0; /* 减小上下间距 */
   text-align: center;
 }
 
@@ -42,7 +42,7 @@ body {
 
 /* 小屏幕切换按钮 */
 .toggle-button-small-screen {
-  margin: 5px 0; /* 进一步减小上下间距 */
+  margin: 10px 0; /* 减小上下间距 */
 }
 
 .toggle-button-small-screen button {
@@ -143,7 +143,7 @@ body {
   /* 大屏幕切换按钮居中 */
   .toggle-exam-button-container {
     flex: 0 0 100%;
-    margin: 5px 0; /* 进一步减小上下间距 */
+    margin: 10px 0; /* 减小上下间距 */
     text-align: center;
   }
   
