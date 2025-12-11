@@ -23,8 +23,8 @@ let currentExamType = 'cet4';
 let examSections = cet4Sections;
 
 let timer = null;
-let timeLeft = 120 * 60; // CET-4总时间120分钟，转换为秒
-let totalTime = 120 * 60;
+let timeLeft = 140 * 60; // CET-4总时间140分钟，转换为秒 (9:00 - 11:20)
+let totalTime = 140 * 60;
 let isRunning = false;
 let currentSectionIndex = 0;
 let examStartTime = new Date();
@@ -365,7 +365,7 @@ function toggleExamType() {
     document.getElementById('toggleExamBtn').textContent = '切换为CET-6';
     document.getElementById('toggleExamBtnSmall').textContent = '切换为CET-6';
     examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
-    totalTime = 120 * 60;
+    totalTime = 140 * 60;
     timeLeft = totalTime;
     
     // 更新标题
