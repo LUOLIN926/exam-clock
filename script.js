@@ -356,7 +356,6 @@ function toggleExamType() {
     
     // 更新标题
     document.getElementById('examTitle').textContent = 'CET-6';
-    document.title = 'CET-6考试时间模拟器';
   } else {
     currentExamType = 'cet4';
     examSections = cet4Sections;
@@ -371,7 +370,6 @@ function toggleExamType() {
     
     // 更新标题
     document.getElementById('examTitle').textContent = 'CET-4';
-    document.title = 'CET-4考试时间模拟器';
   }
   
   // 重置考试状态
@@ -456,30 +454,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // 计算并显示距离考试的天数
   updateExamCountdown();
   
-  // 设置初始标题
-  if (currentExamType === 'cet4') {
-    document.title = 'CET-4考试时间模拟器';
-  } else {
-    document.title = 'CET-6考试时间模拟器';
-  }
-  
-  // 再次确认标题设置
-  setTimeout(() => {
-    if (currentExamType === 'cet4') {
-      document.title = 'CET-4考试时间模拟器';
-    } else {
-      document.title = 'CET-6考试时间模拟器';
-    }
-  }, 100);
-  
-  // 第三次确认标题设置
-  setTimeout(() => {
-    if (currentExamType === 'cet4') {
-      document.title = 'CET-4考试时间模拟器';
-    } else {
-      document.title = 'CET-6考试时间模拟器';
-    }
-  }, 500);
   
   // 为选择框添加change事件监听器
   document.getElementById('sectionSelect').addEventListener('change', handleSectionChange);
