@@ -1,0 +1,266 @@
+“”
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CET-4/CET-6考试时间模拟器 - 功能介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .features {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-card h3 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .exam-types {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .exam-type {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .exam-type.cet4 {
+            border-top: 5px solid #4ecdc4;
+        }
+
+        .exam-type.cet6 {
+            border-top: 5px solid #ff6b6b;
+        }
+
+        .exam-type h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .features {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>CET-4/CET-6考试时间模拟器</h1>
+            <p class="subtitle">帮助考生熟悉考试流程和时间安排的高效学习工具</p>
+            <a href="index.html" class="cta-button">立即体验模拟考试</a>
+        </header>
+
+        <section class="features">
+            <h2 class="section-title">核心功能特色</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⏱️</div>
+                    <h3>精准时间模拟</h3>
+                    <p>严格按照官方考试时间安排，精确到秒的计时系统，帮助考生建立准确的时间感知。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>全流程覆盖</h3>
+                    <p>完整模拟CET-4和CET-6考试各个环节，包括准备、写作、听力、阅读翻译等全部流程。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>可视化进度追踪</h3>
+                    <p>通过进度条和状态标识，实时展示考试进度和当前环节状态（待开始/进行中/已完成）。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>响应式设计</h3>
+                    <p>完美适配各种设备屏幕，无论是在手机、平板还是电脑上都能获得最佳体验。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>双模式切换</h3>
+                    <p>轻松在CET-4和CET-6两种考试模式间切换，满足不同考生的需求。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>灵活控制功能</h3>
+                    <p>支持开始、暂停、重置、跳转到指定环节等多种操作，方便练习和复习。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2 class="section-title">考试模式</h2>
+            <div class="exam-types">
+                <div class="exam-type cet4">
+                    <h3>CET-4</h3>
+                    <p><strong>时间：</strong>上午 9:00-11:20</p>
+                    <p><strong>总时长：</strong>120分钟</p>
+                    <p><strong>环节：</strong>考前准备、写作、听力、收答题卡1、阅读理解+翻译</p>
+                </div>
+
+                <div class="exam-type cet6">
+                    <h3>CET-6</h3>
+                    <p><strong>时间：</strong>下午 15:00-17:25</p>
+                    <p><strong>总时长：</strong>145分钟</p>
+                    <p><strong>环节：</strong>考前准备、写作、听力、收答题卡1、阅读理解+翻译</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2 class="section-title">使用场景</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🎯 考前准备</h3>
+                    <p>帮助考生熟悉考试流程和时间分配，减少考试当天的紧张感。</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>⏰ 时间管理训练</h3>
+                    <p>通过反复练习，提高考生在各环节中的时间掌控能力。</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📚 学习规划</h3>
+                    <p>作为学习计划的一部分，定期使用以检验自己的时间把控水平。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 CET-4/CET-6考试时间模拟器 - 专为备考学生设计</p>
+            <p>作者：罗霖</p>
+        </footer>
+    </div>
+</body>
+
+</html>

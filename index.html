@@ -91,10 +91,21 @@
         <button id="toggleExamBtn" onclick="toggleExamType()" class="toggle-exam-button">切换为CET-6</button>
       </div>
 
+      <!-- 功能介绍按钮 -->
+      <div class="toggle-exam-button-container">
+        <button id="showIntroBtn" onclick="showIntroduction()" class="toggle-exam-button">点击显示功能介绍</button>
+      </div>
+
       <!-- 切换按钮（小屏幕设备使用） -->
       <div class="toggle-button-small-screen" id="toggleButtonSmallScreen" style="display: none;">
         <button id="toggleExamBtnSmall" onclick="toggleExamType()"
           style="width: 100%; background: #9b59b6; color: white; border: none; padding: 10px 0; font-size: 14px;">切换为CET-6</button>
+      </div>
+
+      <!-- 功能介绍按钮（小屏幕设备使用） -->
+      <div class="toggle-button-small-screen" id="introButtonSmallScreen" style="display: none;">
+        <button id="showIntroBtnSmall" onclick="showIntroduction()"
+          style="width: 100%; background: #9b59b6; color: white; border: none; padding: 10px 0; font-size: 14px;">点击显示功能介绍</button>
       </div>
 
       <!-- 恢复提示（大屏幕设备使用） -->
@@ -109,6 +120,11 @@
     </div>
   </div>
 
+  <script>
+    function showIntroduction() {
+      window.open('introduction.html', '_blank');
+    }
+  </script>
   <script src="script.js"></script>
 </body>
 

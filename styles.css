@@ -89,6 +89,24 @@ body {
   border-top: 1px dashed #ddd;
 }
 
+/* 响应式布局 - 当屏幕宽度小于等于800px时 */
+@media (max-width: 800px) {
+  /* 隐藏大屏幕切换按钮容器 */
+  .toggle-exam-button-container {
+    display: none !important;
+  }
+  
+  /* 显示小屏幕切换按钮 */
+  #toggleButtonSmallScreen {
+    display: block !important;
+  }
+  
+  /* 显示小屏幕功能介绍按钮 */
+  #introButtonSmallScreen {
+    display: block !important;
+  }
+}
+
 /* 响应式布局 - 当屏幕宽度大于800px时 */
 @media (min-width: 801px) {
   body {
@@ -137,6 +155,11 @@ body {
   
   /* 隐藏小屏幕切换按钮 */
   #toggleButtonSmallScreen {
+    display: none !important;
+  }
+  
+  /* 隐藏小屏幕功能介绍按钮 */
+  #introButtonSmallScreen {
     display: none !important;
   }
   
