@@ -40,6 +40,24 @@ body {
   background: #8e44ad;
 }
 
+/* 功能介绍按钮 */
+.intro-button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 8px; /* 添加圆角 */
+}
+
+.intro-button:hover {
+  background: #2980b9;
+}
+
 /* 小屏幕切换按钮 */
 .toggle-button-small-screen {
   margin: 10px 0; /* 减小上下间距 */
@@ -171,6 +189,10 @@ body {
   }
   
   .toggle-exam-button {
+    margin: 0 auto;
+  }
+  
+  .intro-button {
     margin: 0 auto;
   }
 }
