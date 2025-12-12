@@ -4,8 +4,8 @@ const cet4Sections = [
   { name: "写作", start: 10, duration: 30, end: 40, description: "作文写作（不能翻看试题册）", realTime: "9:10-9:40" },
   { name: "听力", start: 40, duration: 25, end: 65, description: "听力理解（边听边涂答题卡1）", realTime: "9:40-10:05" },
   { name: "收答题卡1", start: 65, duration: 5, end: 70, description: "听力结束后立即收答题卡1", realTime: "10:05-10:10" },
-  { name: "阅读理解 + 翻译", start: 70, duration: 50, end: 120, description: "作答在答题卡2（阅读+翻译）", realTime: "10:10-11:20" },
-  { name: "考试结束", start: 120, duration: 0, end: 120, description: "收答题卡2和试题册", realTime: "11:20" }
+  { name: "阅读理解 + 翻译", start: 70, duration: 70, end: 140, description: "作答在答题卡2（阅读40min+翻译30min）", realTime: "10:10-11:20" },
+  { name: "考试结束", start: 140, duration: 0, end: 140, description: "收答题卡2和试题册", realTime: "11:20" }
 ];
 
 // CET-6 考试环节配置 (恢复考前准备环节)
@@ -14,7 +14,7 @@ const cet6Sections = [
   { name: "写作", start: 10, duration: 30, end: 40, description: "作文写作（不能翻看试题册）", realTime: "15:10-15:40" },
   { name: "听力", start: 40, duration: 30, end: 70, description: "听力理解（边听边涂答题卡1）", realTime: "15:40-16:10" },
   { name: "收答题卡1", start: 70, duration: 5, end: 75, description: "听力结束后立即收答题卡1", realTime: "16:10-16:15" },
-  { name: "阅读理解 + 翻译", start: 75, duration: 70, end: 145, description: "作答在答题卡2（阅读+翻译）", realTime: "16:15-17:25" },
+  { name: "阅读理解 + 翻译", start: 75, duration: 70, end: 145, description: "作答在答题卡2（阅读40min+翻译30min）", realTime: "16:15-17:25" },
   { name: "考试结束", start: 145, duration: 0, end: 145, description: "收答题卡2和试题册", realTime: "17:25" }
 ];
 
@@ -56,7 +56,7 @@ function updateTimer() {
     document.querySelector('.countdown-value').textContent = '考试已结束';
     timeLeft = 0; // 确保时间不为负数
   }
-  
+
   document.getElementById('timer').textContent = formatTime(timeLeft);
 
   // 计算剩余时间
@@ -92,11 +92,11 @@ function updateTimer() {
     const sectionStartTime = currentSection.start * 60;
     const timeInCurrentSection = currentTime - sectionStartTime;
     const timeLeftInSection = Math.max(0, sectionEndTime - currentTime);
-    
+
     // 更新本环节倒计时显示
     document.getElementById('sectionTimer').style.display = 'block';
     document.querySelector('#sectionTimer .time-value').textContent = formatTime(timeLeftInSection);
-    
+
     document.getElementById('currentSection').innerHTML = `
                 <strong>当前环节：</strong>${currentSection.name}<br>
                 <small style="color: #7f8c8d;">${currentSection.description}</small><br>
@@ -197,7 +197,7 @@ function updateSectionList() {
     }
     return false;
   }).length;
-  
+
   document.getElementById('completedSections').textContent = completed;
 }
 
@@ -206,7 +206,7 @@ function startExam() {
   if (timeLeft <= 0) {
     resetExam();
   }
-  
+
   isRunning = true;
   timer = setInterval(updateTimer, 1000);
   updateButtons();
@@ -280,7 +280,7 @@ function skipToSelectedSection() {
   document.getElementById('currentTimeSpan').textContent = getRealTime(targetTime);
   updateSectionList();
   document.getElementById('timer').textContent = formatTime(timeLeft);
-  
+
   // 更新本环节倒计时显示
   if (examSections[currentSectionIndex]) {
     const section = examSections[currentSectionIndex];
@@ -297,16 +297,16 @@ function nextSection() {
     startExam();
     return;
   }
-  
+
   // 如果考试已经结束，重置考试
   if (timeLeft <= 0) {
     resetExam();
     return;
   }
-  
+
   // 获取当前时间
   const currentTime = totalTime - timeLeft;
-  
+
   // 查找当前环节
   let currentSectionIndex = 0;
   for (let i = 0; i < examSections.length; i++) {
@@ -315,20 +315,20 @@ function nextSection() {
       break;
     }
   }
-  
+
   // 如果已经是最后一个环节，重置考试
   if (currentSectionIndex >= examSections.length - 1) {
     resetExam();
     return;
   }
-  
+
   // 如果不是最后一个环节，则跳转到下一个环节
   const nextSectionIndex = currentSectionIndex + 1;
   const targetTime = examSections[nextSectionIndex].start * 60;
   timeLeft = totalTime - targetTime;
   document.getElementById('currentTimeSpan').textContent = getRealTime(targetTime);
   document.getElementById('timer').textContent = formatTime(timeLeft);
-  
+
   // 更新本环节倒计时显示
   if (examSections[nextSectionIndex]) {
     const section = examSections[nextSectionIndex];
@@ -336,7 +336,7 @@ function nextSection() {
     document.getElementById('sectionTimer').style.display = 'block';
     document.querySelector('#sectionTimer .time-value').textContent = formatTime(timeLeftInSection);
   }
-  
+
   updateSectionList();
 }
 
@@ -353,7 +353,7 @@ function toggleExamType() {
     examStartTime.setHours(15, 0, 0, 0); // CET-6开始时间
     totalTime = 145 * 60;
     timeLeft = totalTime;
-    
+
     // 更新标题
     document.getElementById('examTitle').textContent = 'CET-6';
   } else {
@@ -367,16 +367,16 @@ function toggleExamType() {
     examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
     totalTime = 140 * 60;
     timeLeft = totalTime;
-    
+
     // 更新标题
     document.getElementById('examTitle').textContent = 'CET-4';
   }
-  
+
   // 重置考试状态
   resetExam();
   updateSectionOptions();
   document.getElementById('totalTime').textContent = totalTime / 60;
-  
+
   // 更新初始时间显示
   document.getElementById('timer').textContent = formatTime(timeLeft);
   document.getElementById('currentTimeSpan').textContent = currentExamType === 'cet4' ? '09:00:00' : '15:00:00';
@@ -385,7 +385,7 @@ function toggleExamType() {
 function updateSectionOptions() {
   const select = document.getElementById('sectionSelect');
   select.innerHTML = '';
-  
+
   examSections.forEach((section, index) => {
     if (section.name === "考试结束") {
       select.innerHTML += `<option value="${index}">${section.name} (${section.realTime})</option>`;
@@ -420,12 +420,12 @@ function toggleHeader() {
   const restoreHintLargeScreen = document.getElementById('restoreHintLargeScreen');
   const toggleButtonSmallScreen = document.getElementById('toggleButtonSmallScreen');
   const toggleExamBtnContainer = document.querySelector('.toggle-exam-button-container');
-  
+
   if (examHeader.style.display !== 'none') {
     // 隐藏标题区域
     examHeader.style.display = 'none';
     closeHeaderBtn.style.display = 'none'; // 隐藏关闭按钮
-    
+
     // 根据屏幕宽度显示相应的恢复提示
     if (window.innerWidth > 800) {
       restoreHintLargeScreen.style.display = 'block';
@@ -437,7 +437,7 @@ function toggleHeader() {
     // 显示标题区域
     examHeader.style.display = 'block';
     closeHeaderBtn.style.display = 'flex'; // 显示关闭按钮
-    
+
     // 隐藏恢复提示
     restoreHintSmallScreen.style.display = 'none';
     restoreHintLargeScreen.style.display = 'none';
@@ -446,36 +446,36 @@ function toggleHeader() {
 }
 
 // 初始化
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('totalTime').textContent = totalTime / 60;
   updateSectionList();
   updateSectionOptions(); // 确保在初始加载时设置正确的选项
 
   // 计算并显示距离考试的天数
   updateExamCountdown();
-  
-  
+
+
   // 为选择框添加change事件监听器
   document.getElementById('sectionSelect').addEventListener('change', handleSectionChange);
-  
+
   // 为关闭标题区域按钮添加点击事件监听器
   const closeHeaderBtn = document.getElementById('closeHeaderBtn');
   if (closeHeaderBtn) {
     closeHeaderBtn.addEventListener('click', toggleHeader);
   }
-  
+
   // 为恢复提示添加点击事件监听器
   const restoreHintSmallScreen = document.getElementById('restoreHintSmallScreen');
   const restoreHintLargeScreen = document.getElementById('restoreHintLargeScreen');
-  
+
   if (restoreHintSmallScreen) {
     restoreHintSmallScreen.addEventListener('click', toggleHeader);
   }
-  
+
   if (restoreHintLargeScreen) {
     restoreHintLargeScreen.addEventListener('click', toggleHeader);
   }
-  
+
   // 根据屏幕宽度设置初始显示状态
   const toggleButtonSmallScreen = document.getElementById('toggleButtonSmallScreen');
   if (window.innerWidth <= 800) {
