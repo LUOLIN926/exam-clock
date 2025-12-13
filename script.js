@@ -405,9 +405,9 @@ function updateExamCountdown() {
   if (daysDiff > 0) {
     countdownElement.textContent = `距离考试还有 ${daysDiff} 天`;
   } else if (daysDiff === 0) {
-    countdownElement.textContent = '今天考试！666';
+    countdownElement.textContent = '今天考试啦！';
   } else {
-    countdownElement.textContent = '考试已结束';
+    countdownElement.textContent = '考试已结束，成绩将在2026年2月底公布';
   }
 }
 
