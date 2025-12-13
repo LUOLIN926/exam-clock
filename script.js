@@ -8,7 +8,7 @@ const cet4Sections = [
   { name: "考试结束", start: 140, duration: 0, end: 140, description: "收答题卡2和试题册", realTime: "11:20" }
 ];
 
-// CET-6 考试环节配置 (恢复考前准备环节)
+// CET-6 考试环节配置 
 const cet6Sections = [
   { name: "考前准备", start: 0, duration: 10, end: 10, description: "发卷、填写个人信息、贴条形码", realTime: "15:00-15:10" },
   { name: "写作", start: 10, duration: 30, end: 40, description: "作文写作（不能翻看试题册）", realTime: "15:10-15:40" },
@@ -23,11 +23,10 @@ let currentExamType = 'cet4';
 let examSections = cet4Sections;
 
 let timer = null;
-let timeLeft = 140 * 60; // CET-4总时间140分钟，转换为秒 (9:00 - 11:20)
-let totalTime = 140 * 60;
+let timeLeft = 140 * 60;
 let isRunning = false;
 let currentSectionIndex = 0;
-let examStartTime = new Date();
+let examStartTime = new Date()
 examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
 
 // 添加变量跟踪倒计时显示状态
@@ -290,7 +289,7 @@ function skipToSelectedSection() {
   }
 }
 
-// 新增函数：跳转到下一个环节
+// 函数：跳转到下一个环节
 function nextSection() {
   // 如果考试尚未开始，先启动考试
   if (!isRunning) {
@@ -406,7 +405,7 @@ function updateExamCountdown() {
   if (daysDiff > 0) {
     countdownElement.textContent = `距离考试还有 ${daysDiff} 天`;
   } else if (daysDiff === 0) {
-    countdownElement.textContent = '今天考试！';
+    countdownElement.textContent = '今天考试！666';
   } else {
     countdownElement.textContent = '考试已结束';
   }
