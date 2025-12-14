@@ -22,6 +22,9 @@ const cet6Sections = [
 let currentExamType = 'cet4';
 let examSections = cet4Sections;
 
+// 总考试时间（以秒为单位）
+let totalTime = 140 * 60; // CET-4总时间
+
 let timer = null;
 let timeLeft = 140 * 60;
 let isRunning = false;
