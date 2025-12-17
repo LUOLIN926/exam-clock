@@ -35,6 +35,21 @@ examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
 // 添加变量跟踪倒计时显示状态
 let isCountdownVisible = true;
 
+// 确保所有全局变量都有初始值
+if (isNaN(totalTime) || totalTime <= 0) {
+  totalTime = 140 * 60; // 默认为CET-4总时间
+}
+
+if (isNaN(timeLeft) || timeLeft <= 0) {
+  timeLeft = totalTime;
+}
+
+// 确保examStartTime是有效日期
+if (!(examStartTime instanceof Date) || isNaN(examStartTime.getTime())) {
+  examStartTime = new Date();
+  examStartTime.setHours(9, 0, 0, 0);
+}
+
 function formatTime(seconds) {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -467,14 +482,29 @@ document.addEventListener('DOMContentLoaded', function () {
   // 确保examStartTime是有效日期
   if (!(examStartTime instanceof Date) || isNaN(examStartTime.getTime())) {
     examStartTime = new Date();
-    examStartTime.setHours(9, 0, 0, 0);
+    examStartTime.setHours(currentExamType === 'cet4' ? 9 : 15, 0, 0, 0);
   }
   
   // 确保totalTime正确显示
-  document.getElementById('totalTime').textContent = Math.floor(totalTime / 60);
-  document.getElementById('remainingTime').textContent = Math.ceil(timeLeft / 60);
-  document.getElementById('timer').textContent = formatTime(timeLeft);
-  document.getElementById('currentTimeSpan').textContent = getRealTime(0);
+  const totalTimeElement = document.getElementById('totalTime');
+  if (totalTimeElement) {
+    totalTimeElement.textContent = Math.floor(totalTime / 60);
+  }
+  
+  const remainingTimeElement = document.getElementById('remainingTime');
+  if (remainingTimeElement) {
+    remainingTimeElement.textContent = Math.ceil(timeLeft / 60);
+  }
+  
+  const timerElement = document.getElementById('timer');
+  if (timerElement) {
+    timerElement.textContent = formatTime(timeLeft);
+  }
+  
+  const currentTimeSpanElement = document.getElementById('currentTimeSpan');
+  if (currentTimeSpanElement) {
+    currentTimeSpanElement.textContent = getRealTime(0);
+  }
   
   updateSectionList();
   updateSectionOptions(); // 确保在初始加载时设置正确的选项
@@ -482,9 +512,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // 计算并显示距离考试的天数
   updateExamCountdown();
 
-
   // 为选择框添加change事件监听器
-  document.getElementById('sectionSelect').addEventListener('change', handleSectionChange);
+  const sectionSelectElement = document.getElementById('sectionSelect');
+  if (sectionSelectElement) {
+    sectionSelectElement.addEventListener('change', handleSectionChange);
+  }
 
   // 为关闭标题区域按钮添加点击事件监听器
   const closeHeaderBtn = document.getElementById('closeHeaderBtn');
@@ -506,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 根据屏幕宽度设置初始显示状态
   const toggleButtonSmallScreen = document.getElementById('toggleButtonSmallScreen');
-  if (window.innerWidth <= 800) {
+  if (toggleButtonSmallScreen && window.innerWidth <= 800) {
     toggleButtonSmallScreen.style.display = 'none';
   }
 });
