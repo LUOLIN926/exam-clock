@@ -29,7 +29,7 @@ let timer = null;
 let timeLeft = 140 * 60;
 let isRunning = false;
 let currentSectionIndex = 0;
-let examStartTime = new Date()
+let examStartTime = new Date();
 examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
 
 // 添加变量跟踪倒计时显示状态
@@ -43,6 +43,12 @@ function formatTime(seconds) {
 }
 
 function getRealTime(currentTime) {
+  // 确保examStartTime是有效的日期对象
+  if (!(examStartTime instanceof Date) || isNaN(examStartTime.getTime())) {
+    examStartTime = new Date();
+    examStartTime.setHours(currentExamType === 'cet4' ? 9 : 15, 0, 0, 0);
+  }
+  
   const actualTime = new Date(examStartTime.getTime() + currentTime * 1000);
   return actualTime.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 }
@@ -449,7 +455,27 @@ function toggleHeader() {
 
 // 初始化
 document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('totalTime').textContent = totalTime / 60;
+  // 确保所有变量都被正确初始化
+  if (isNaN(totalTime) || totalTime <= 0) {
+    totalTime = 140 * 60; // 默认为CET-4总时间
+  }
+  
+  if (isNaN(timeLeft) || timeLeft <= 0) {
+    timeLeft = totalTime;
+  }
+  
+  // 确保examStartTime是有效日期
+  if (!(examStartTime instanceof Date) || isNaN(examStartTime.getTime())) {
+    examStartTime = new Date();
+    examStartTime.setHours(9, 0, 0, 0);
+  }
+  
+  // 确保totalTime正确显示
+  document.getElementById('totalTime').textContent = Math.floor(totalTime / 60);
+  document.getElementById('remainingTime').textContent = Math.ceil(timeLeft / 60);
+  document.getElementById('timer').textContent = formatTime(timeLeft);
+  document.getElementById('currentTimeSpan').textContent = getRealTime(0);
+  
   updateSectionList();
   updateSectionOptions(); // 确保在初始加载时设置正确的选项
 
