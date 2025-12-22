@@ -19,7 +19,8 @@ body {
 
 /* 切换考试按钮 */
 .toggle-exam-button-container {
-  margin: 10px 0; /* 减小上下间距 */
+  margin: 10px 0;
+  /* 减小上下间距 */
   text-align: center;
 }
 
@@ -27,13 +28,17 @@ body {
   background: #9b59b6;
   color: white;
   border: none;
-  padding: 10px 0;
+  padding: 10px;
   font-size: 14px;
   cursor: pointer;
   transition: background 0.3s;
   width: 100%;
   max-width: 800px;
-  border-radius: 8px; /* 添加圆角 */
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  min-height: 40px;
+  box-sizing: border-box;
 }
 
 .toggle-exam-button:hover {
@@ -45,13 +50,17 @@ body {
   background: #3498db;
   color: white;
   border: none;
-  padding: 10px 0;
+  padding: 10px;
   font-size: 14px;
   cursor: pointer;
   transition: background 0.3s;
   width: 100%;
   max-width: 800px;
-  border-radius: 8px; /* 添加圆角 */
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  min-height: 40px;
+  box-sizing: border-box;
 }
 
 .intro-button:hover {
@@ -60,19 +69,24 @@ body {
 
 /* 小屏幕切换按钮 */
 .toggle-button-small-screen {
-  margin: 10px 0; /* 减小上下间距 */
+  margin: 10px 0;
+  /* 减小上下间距 */
 }
 
 .toggle-button-small-screen button {
   background: #9b59b6;
   color: white;
   border: none;
-  padding: 10px 0;
+  padding: 10px;
   font-size: 14px;
   cursor: pointer;
   transition: background 0.3s;
   width: 100%;
-  border-radius: 8px; /* 添加圆角 */
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  min-height: 40px;
+  box-sizing: border-box;
 }
 
 .toggle-button-small-screen button:hover {
@@ -94,9 +108,346 @@ body {
   color: #3498db;
 }
 
+/* ICP备案信息样式 */
+.icp-info {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+.icp-info a {
+  color: #7f8c8d;
+  text-decoration: none;
+}
+
+.icp-info a:hover {
+  color: #3498db;
+  text-decoration: underline;
+}
+
 /* 小屏幕设备的恢复提示 */
 #restoreHintSmallScreen {
   display: none;
+}
+
+/* 模态窗口样式 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 8px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* 表单样式 */
+.custom-exam-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* 表单帮助文本样式 */
+.form-help-text {
+  font-size: 0.7em;
+  color: #c0392b;
+  margin-top: 5px;
+  font-style: normal;
+}
+
+/* 环节标题行样式 */
+.section-headers {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.section-header-item {
+  flex: 1;
+  font-size: 0.8em;
+  color: #555;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-name-header {
+  flex: 2;
+}
+
+.section-duration-header {
+  flex: 1;
+  max-width: 100px;
+}
+
+.section-description-header {
+  flex: 1;
+}
+
+.section-action-header {
+  flex: 1;
+  max-width: 80px;
+  text-align: center;
+  font-size: 0.8em;
+  color: #555;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.section-item input {
+  flex: 1;
+}
+
+.section-item .section-name {
+  flex: 2;
+}
+
+.section-item .section-duration {
+  flex: 1;
+  max-width: 100px;
+}
+
+.remove-section-btn {
+  background-color: transparent;
+  color: #e74c3c;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  min-height: 40px;
+  box-sizing: border-box;
+  text-decoration: underline;
+  width: 60px;
+}
+
+.remove-section-btn:hover {
+  background-color: transparent;
+  color: #c0392b;
+}
+
+.add-section-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  min-height: 40px;
+  box-sizing: border-box;
+  background-color: #e67e22;
+  color: white;
+}
+
+.add-section-btn:hover {
+  background-color: #d35400;
+}
+
+.form-actions {
+  margin-top: 20px;
+}
+
+.form-actions-row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.form-actions-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  min-height: 40px;
+  box-sizing: border-box;
+}
+
+#saveCustomExamBtn {
+  background-color: #27ae60;
+  color: white;
+}
+
+#saveCustomExamBtn:hover {
+  background-color: #219653;
+}
+
+#applyCustomExamBtn {
+  background-color: #9b59b6;
+  color: white;
+}
+
+#applyCustomExamBtn:hover {
+  background-color: #8e44ad;
+}
+
+#backToMainBtn {
+  background-color: #3498db;
+  color: white;
+}
+
+#backToMainBtn:hover {
+  background-color: #2980b9;
+}
+
+/* 已保存的考试配置列表样式 */
+.right-column h2 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+.exam-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #f8f9fa;
+}
+
+.exam-item h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.exam-item p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.exam-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.exam-actions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  min-height: 40px;
+  box-sizing: border-box;
+}
+
+.apply-exam-btn {
+  background-color: #9b59b6;
+  color: white;
+}
+
+.apply-exam-btn:hover {
+  background-color: #8e44ad;
+}
+
+.delete-exam-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete-exam-btn:hover {
+  background-color: #c0392b;
+}
+
+.no-exams {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 600px) {
+  .section-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .section-item input,
+  .section-item .section-name,
+  .section-item .section-duration {
+    max-width: none;
+  }
+
+  .exam-actions {
+    flex-direction: column;
+  }
+
+  /* 移动端隐藏标题行 */
+  .section-headers {
+    display: none;
+  }
 }
 
 /* 大屏幕设备的恢复提示 */
@@ -109,16 +460,17 @@ body {
 
 /* 响应式布局 - 当屏幕宽度小于等于800px时 */
 @media (max-width: 800px) {
+
   /* 隐藏大屏幕切换按钮容器 */
   .toggle-exam-button-container {
     display: none !important;
   }
-  
+
   /* 显示小屏幕切换按钮 */
   #toggleButtonSmallScreen {
     display: block !important;
   }
-  
+
   /* 显示小屏幕功能介绍按钮 */
   #introButtonSmallScreen {
     display: block !important;
@@ -170,28 +522,29 @@ body {
     padding: 10px 0 0;
     border-top: 1px dashed #ddd;
   }
-  
+
   /* 隐藏小屏幕切换按钮 */
   #toggleButtonSmallScreen {
     display: none !important;
   }
-  
+
   /* 隐藏小屏幕功能介绍按钮 */
   #introButtonSmallScreen {
     display: none !important;
   }
-  
+
   /* 大屏幕切换按钮居中 */
   .toggle-exam-button-container {
     flex: 0 0 100%;
-    margin: 10px 0; /* 减小上下间距 */
+    margin: 10px 0;
+    /* 减小上下间距 */
     text-align: center;
   }
-  
+
   .toggle-exam-button {
     margin: 0 auto;
   }
-  
+
   .intro-button {
     margin: 0 auto;
   }
@@ -229,12 +582,14 @@ body {
   left: -5px;
   font-size: 1.2em;
   font-weight: bold;
-  color: #8b0000; /* 暗红色 */
+  color: #8b0000;
+  /* 暗红色 */
   background: transparent;
   width: auto;
   height: auto;
   border-radius: 0;
-  display: none; /* 默认隐藏 */
+  display: none;
+  /* 默认隐藏 */
   align-items: center;
   justify-content: center;
   user-select: none;
@@ -244,7 +599,8 @@ body {
 }
 
 .close-btn:hover {
-  color: #000000; /* 悬停时变为黑色 */
+  color: #000000;
+  /* 悬停时变为黑色 */
 }
 
 /* 当鼠标靠近整个红色区域附近时显示关闭按钮 */
@@ -325,17 +681,20 @@ h1 {
 }
 
 .next-button {
-  padding: 8px;
+  padding: 10px;
   background: #e8f4fd;
   color: #3498db;
   border: 1px solid #3498db;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1.1em;
+  font-size: 14px;
+  font-weight: bold;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 40px;
+  box-sizing: border-box;
 }
 
 .next-button:hover {
@@ -347,27 +706,35 @@ h1 {
 }
 
 .controls {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin: 20px 0;
+  justify-content: space-between;
 }
 
-button {
+.controls button {
+  flex: 1;
   background: #3498db;
   color: white;
   border: none;
-  padding: 12px 24px;
-  margin: 5px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bold;
   transition: background 0.3s;
+  text-align: center;
+  min-height: 40px;
+  box-sizing: border-box;
+  margin: 0;
 }
 
-button:hover {
+.controls button:hover {
   background: #2980b9;
 }
 
-button:disabled {
+.controls button:disabled {
   background: #bdc3c7;
   cursor: not-allowed;
 }
@@ -496,15 +863,23 @@ button:disabled {
 }
 
 .skip-selector {
-  margin: 10px 0;
+  flex: 1 100%;
+  margin-top: 10px;
 }
 
-select {
+.skip-selector label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.skip-selector select {
+  width: 100%;
   padding: 8px 12px;
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 14px;
-  margin: 0 5px;
+  box-sizing: border-box;
 }
 
 .countdown-label {
