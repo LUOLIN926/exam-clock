@@ -232,6 +232,11 @@ body {
   flex: 1;
 }
 
+.section-count-header {
+  flex: 1;
+  max-width: 80px;
+}
+
 .section-action-header {
   flex: 1;
   max-width: 80px;
@@ -253,6 +258,8 @@ body {
 
 .section-item input {
   flex: 1;
+  min-width: 0;
+  /* 允许输入框在flex容器中正确收缩 */
 }
 
 .section-item .section-name {
@@ -260,8 +267,20 @@ body {
 }
 
 .section-item .section-duration {
+  flex: 0 0 60px; /* 不伸缩，固定宽度为60px */
+}
+
+.section-item .count-in-total-label {
   flex: 1;
   max-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count-in-total-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
 }
 
 .remove-section-btn {
@@ -275,7 +294,10 @@ body {
   min-height: 40px;
   box-sizing: border-box;
   text-decoration: underline;
-  width: 60px;
+  width: 100%;
+  /* 让按钮占满容器宽度 */
+  max-width: 80px;
+  /* 与表头宽度保持一致 */
 }
 
 .remove-section-btn:hover {
@@ -402,6 +424,15 @@ body {
   box-sizing: border-box;
 }
 
+.edit-exam-btn {
+  background-color: #f39c12;
+  color: white;
+}
+
+.edit-exam-btn:hover {
+  background-color: #e67e22;
+}
+
 .apply-exam-btn {
   background-color: #9b59b6;
   color: white;
@@ -495,11 +526,11 @@ body {
   }
 
   .left-column {
-    flex: 0 0 calc(50% - 15px);
+    flex: 0 0 calc(55% - 10px);
   }
 
   .right-column {
-    flex: 0 0 calc(50% - 15px);
+    flex: 0 0 calc(45% - 10px);
   }
 
   .column-wrapper {

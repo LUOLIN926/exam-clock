@@ -1,5 +1,6 @@
 // 全局变量
 let customExams = [];
+let editingExamId = null; // 用于跟踪正在编辑的考试ID
 
 // DOM加载完成后初始化
 document.addEventListener('DOMContentLoaded', function () {
@@ -12,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
   addSection();
 
   // 绑定事件监听器
-  document.getElementById('addSectionBtn').addEventListener('click', addSection);
+  document.getElementById('addSectionBtn').addEventListener('click', function() {
+    addSection();
+  });
   document.getElementById('saveCustomExamBtn').addEventListener('click', saveCustomExam);
   document.getElementById('applyCustomExamBtn').addEventListener('click', applyCustomExam);
   document.getElementById('backToMainBtn').addEventListener('click', function () {
@@ -24,16 +27,19 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // 添加考试环节
-function addSection() {
+function addSection(name = '', duration = 30, description = '', countInTotal = true) {
   const container = document.getElementById('sectionsContainer');
 
   const sectionRow = document.createElement('div');
   sectionRow.className = 'section-row';
   sectionRow.innerHTML = `
     <div class="section-item">
-      <input type="text" class="section-name" placeholder="环节名称" required>
-      <input type="number" class="section-duration" placeholder="时长(分钟)" min="1" value="30" required>
-      <input type="text" class="section-description" placeholder="环节描述（可选）">
+      <input type="text" class="section-name" placeholder="环节名称" value="${name}" required>
+      <input type="number" class="section-duration" placeholder="时长(分钟)" min="1" value="${duration}" required>
+      <input type="text" class="section-description" placeholder="环节描述（可选）" value="${description}">
+      <label class="count-in-total-label">
+        <input type="checkbox" class="count-in-total-checkbox" ${countInTotal ? 'checked' : ''}>
+      </label>
       <div class="section-actions">
         <button type="button" class="remove-section-btn">删除</button>
       </div>
@@ -78,6 +84,7 @@ function saveCustomExam() {
     const name = row.querySelector('.section-name').value;
     const duration = parseInt(row.querySelector('.section-duration').value);
     let description = row.querySelector('.section-description').value;
+    const countInTotal = row.querySelector('.count-in-total-checkbox').checked;
 
     // 如果没有填写描述，则使用环节名称作为描述
     if (!description) {
@@ -92,10 +99,14 @@ function saveCustomExam() {
     sections.push({
       name: name,
       duration: duration,
-      description: description
+      description: description,
+      countInTotal: countInTotal
     });
 
-    totalMinutes += duration;
+    // 只有在计入总时间时才累加到总时间
+    if (countInTotal) {
+      totalMinutes += duration;
+    }
   }
 
   // 构造考试时间段字符串
@@ -116,7 +127,7 @@ function saveCustomExam() {
   const timeRange = `${startTime} - ${endTimeString}`;
 
   const customExam = {
-    id: Date.now(), // 用时间戳作为唯一ID
+    id: editingExamId || Date.now(), // 如果正在编辑则使用原来的ID，否则生成新的
     name: examName,
     startTime: examStartTime,
     date: examDate,
@@ -125,22 +136,35 @@ function saveCustomExam() {
     totalMinutes: totalMinutes
   };
 
-  // 检查是否已存在同名考试
-  const existingIndex = customExams.findIndex(exam => exam.name === examName);
-  if (existingIndex >= 0) {
-    if (confirm(`已存在名为"${examName}"的考试配置，是否覆盖？`)) {
-      customExams[existingIndex] = customExam;
-    } else {
-      return;
+  if (editingExamId) {
+    // 更新现有配置
+    const index = customExams.findIndex(exam => exam.id === editingExamId);
+    if (index >= 0) {
+      customExams[index] = customExam;
     }
+    editingExamId = null; // 重置编辑状态
+    document.getElementById('saveCustomExamBtn').textContent = '保存配置';
   } else {
-    customExams.push(customExam);
+    // 检查是否已存在同名考试
+    const existingIndex = customExams.findIndex(exam => exam.name === examName);
+    if (existingIndex >= 0) {
+      if (confirm(`已存在名为"${examName}"的考试配置，是否覆盖？`)) {
+        customExams[existingIndex] = customExam;
+      } else {
+        return;
+      }
+    } else {
+      customExams.push(customExam);
+    }
   }
 
   // 保存到localStorage
   localStorage.setItem('customExams', JSON.stringify(customExams));
 
   alert(`考试"${examName}"配置已保存！`);
+
+  // 清空表单
+  clearForm();
 
   // 重新加载已保存的配置列表
   loadSavedExams();
@@ -168,11 +192,12 @@ function loadSavedExams() {
     examItem.className = 'exam-item';
     examItem.innerHTML = `
       <h3>${exam.name}</h3>
-      <p>时间: ${exam.timeRange}</p>
+      <p>正式考试时间：${exam.date.replace(/-/g, '年')}月</p>
+      <p>考试时间: ${exam.timeRange}</p>
       <p>总时长: ${exam.totalMinutes}分钟</p>
-      <p>环节数: ${exam.sections.length}个</p>
       <div class="exam-actions">
         <button class="apply-exam-btn" data-id="${exam.id}">应用</button>
+        <button class="edit-exam-btn" data-id="${exam.id}">编辑</button>
         <button class="delete-exam-btn" data-id="${exam.id}">删除</button>
       </div>
     `;
@@ -180,10 +205,15 @@ function loadSavedExams() {
     listContainer.appendChild(examItem);
   });
 
-  // 为新添加的应用和删除按钮绑定事件
+  // 为新添加的应用、编辑和删除按钮绑定事件
   document.querySelectorAll('.apply-exam-btn').forEach(button => {
     button.removeEventListener('click', handleApplyClick); // 先移除可能存在的旧监听器
     button.addEventListener('click', handleApplyClick);
+  });
+
+  document.querySelectorAll('.edit-exam-btn').forEach(button => {
+    button.removeEventListener('click', handleEditClick);
+    button.addEventListener('click', handleEditClick);
   });
 
   document.querySelectorAll('.delete-exam-btn').forEach(button => {
@@ -196,6 +226,12 @@ function loadSavedExams() {
 function handleApplyClick() {
   const examId = parseInt(this.getAttribute('data-id'));
   applySavedExam(examId);
+}
+
+// 处理编辑按钮点击事件
+function handleEditClick() {
+  const examId = parseInt(this.getAttribute('data-id'));
+  editSavedExam(examId);
 }
 
 // 处理删除按钮点击事件
@@ -219,6 +255,36 @@ function applySavedExam(examId) {
   window.location.href = 'index.html';
 }
 
+// 编辑已保存的考试配置
+function editSavedExam(examId) {
+  const exam = customExams.find(exam => exam.id === examId);
+  if (!exam) {
+    alert('未找到选定的考试配置');
+    return;
+  }
+
+  // 填充表单
+  document.getElementById('customExamName').value = exam.name;
+  document.getElementById('customExamStartTime').value = exam.startTime;
+  document.getElementById('customExamDate').value = exam.date;
+
+  // 清空现有环节
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = '';
+
+  // 添加环节
+  exam.sections.forEach(section => {
+    addSection(section.name, section.duration, section.description, section.countInTotal !== false);
+  });
+
+  // 设置编辑状态
+  editingExamId = examId;
+  document.getElementById('saveCustomExamBtn').textContent = '更新配置';
+
+  // 滚动到表单顶部
+  document.querySelector('.custom-exam-form').scrollIntoView({ behavior: 'smooth' });
+}
+
 // 删除已保存的考试配置
 function deleteSavedExam(examId) {
   if (!confirm('确定要删除这个考试配置吗？')) {
@@ -228,6 +294,23 @@ function deleteSavedExam(examId) {
   customExams = customExams.filter(exam => exam.id !== examId);
   localStorage.setItem('customExams', JSON.stringify(customExams));
   loadSavedExams();
+}
+
+// 清空表单
+function clearForm() {
+  document.getElementById('customExamForm').reset();
+
+  // 设置默认日期为今天
+  const today = new Date();
+  const dateString = today.toISOString().split('T')[0];
+  document.getElementById('customExamDate').value = dateString;
+
+  // 清空环节容器
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = '';
+
+  // 添加一个默认环节
+  addSection();
 }
 
 // 应用当前表单中的自定义考试配置
@@ -251,6 +334,7 @@ function applyCustomExam() {
     const name = row.querySelector('.section-name').value;
     const duration = parseInt(row.querySelector('.section-duration').value);
     let description = row.querySelector('.section-description').value;
+    const countInTotal = row.querySelector('.count-in-total-checkbox').checked;
 
     // 如果没有填写描述，则使用环节名称作为描述
     if (!description) {
@@ -265,10 +349,14 @@ function applyCustomExam() {
     sections.push({
       name: name,
       duration: duration,
-      description: description
+      description: description,
+      countInTotal: countInTotal
     });
 
-    totalMinutes += duration;
+    // 只有在计入总时间时才累加到总时间
+    if (countInTotal) {
+      totalMinutes += duration;
+    }
   }
 
   // 构造考试时间段字符串

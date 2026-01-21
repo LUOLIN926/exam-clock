@@ -832,9 +832,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 根据屏幕宽度设置初始显示状态
   const toggleButtonSmallScreen = document.getElementById('toggleButtonSmallScreen');
-  if (toggleButtonSmallScreen && window.innerWidth <= 800) {
-    toggleButtonSmallScreen.style.display = 'none';
+  const customExamButtonSmallScreen = document.getElementById('customExamButtonSmallScreen');
+  if (window.innerWidth <= 800) {
+    if (toggleButtonSmallScreen) {
+      toggleButtonSmallScreen.style.display = 'block';
+    }
+    if (customExamButtonSmallScreen) {
+      customExamButtonSmallScreen.style.display = 'block';
+    }
+  } else {
+    if (toggleButtonSmallScreen) {
+      toggleButtonSmallScreen.style.display = 'none';
+    }
+    if (customExamButtonSmallScreen) {
+      customExamButtonSmallScreen.style.display = 'none';
+    }
   }
+  
+  // 监听窗口大小变化
+  window.addEventListener('resize', function() {
+    const toggleButtonSmallScreen = document.getElementById('toggleButtonSmallScreen');
+    const customExamButtonSmallScreen = document.getElementById('customExamButtonSmallScreen');
+    const restoreHintSmallScreen = document.getElementById('restoreHintSmallScreen');
+    
+    if (window.innerWidth <= 800) {
+      // 小屏幕显示小屏幕按钮
+      if (toggleButtonSmallScreen) {
+        toggleButtonSmallScreen.style.display = 'block';
+      }
+      if (customExamButtonSmallScreen) {
+        customExamButtonSmallScreen.style.display = 'block';
+      }
+      
+      // 如果标题区域被隐藏，显示小屏幕恢复提示
+      const examHeader = document.getElementById('examTimeHeader');
+      if (examHeader && examHeader.style.display === 'none' && restoreHintSmallScreen) {
+        restoreHintSmallScreen.style.display = 'block';
+      }
+    } else {
+      // 大屏幕隐藏小屏幕按钮
+      if (toggleButtonSmallScreen) {
+        toggleButtonSmallScreen.style.display = 'none';
+      }
+      if (customExamButtonSmallScreen) {
+        customExamButtonSmallScreen.style.display = 'none';
+      }
+      if (restoreHintSmallScreen) {
+        restoreHintSmallScreen.style.display = 'none';
+      }
+    }
+  });
   
   // 加载保存的自定义考试配置
   const savedCustomExams = localStorage.getItem('customExams');
