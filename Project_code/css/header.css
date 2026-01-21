@@ -1,0 +1,889 @@
+/* 导航栏 */
+.wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+.homewrap {
+    max-width: 1350px;
+}
+
+.container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.icon img {
+    width: 150px;
+    height: 50px;
+    object-fit: contain;
+}
+
+/* 实现icon随着网页宽度缩小而缩小 */
+@media (max-width: 800px) {
+    .icon {
+        display: none;
+    }
+    
+    /* 小屏幕下添加白色下边框 */
+    header {
+        border-bottom: 1px solid white;
+    }
+}
+
+@media (min-width: 801px) and (max-width: 920px) {
+    .icon img {
+        width: calc(125px * ((100vw - 801px) / (920px - 801px)));
+        height: calc(33px * ((100vw - 801px) / (920px - 801px)));
+        transform-origin: left center;
+    }
+}
+
+@media (min-width: 921px) {
+    .icon img {
+        width: 125px;
+        height: 33px;
+    }
+}
+
+
+.nav-main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-main a {
+    color: aliceblue;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: tahoma, "microsoft yahei", sans-serif !important;
+    padding: 6px 12px;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+
+.nav-main a:hover {
+    background-color: #2a2a2a;
+    border-radius: 100px;
+}
+
+header li.nav-tag-wanxiang .nav-item-text:after {
+    content: "";
+    background: url(../web_assets/head/wanxiang.svg) no-repeat;
+    width: 41px;
+    height:12px
+}
+
+.nav-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-family: tahoma, "microsoft yahei", sans-serif !important;
+}
+
+.nav-login a {
+    color: #727272;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav-login a:hover {
+    transition: all 0.3s ease;
+    color: white;
+}
+
+header .site-nav .quick-menu>ul {
+    height: 100%;
+    align-items: center;
+    display: flex;
+}
+
+/* 图标样式 */
+.iconfont.icon-weibiaoti1,
+.iconfont.icon-yuyan-yingwen,
+.iconfont.icon-gouwuche,
+.iconfont.icon-notice {
+    color: rgba(255,255,255,.5);
+    font-size: 24px;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* 图标悬停效果 */
+.iconfont.icon-weibiaoti1:hover,
+.iconfont.icon-yuyan-yingwen:hover,
+.iconfont.icon-gouwuche:hover,
+.iconfont.icon-notice:hover {
+    color: #fff;
+}
+
+/* 用户头像 */
+.avatar-min {
+    width: 25px;
+    height: 25px;
+    background:0 0
+}
+
+.avatar {
+    display: inline-block;
+    vertical-align:middle
+}
+
+.avatar-min {
+    width: 25px;
+    height: 25px;
+    background: 0 0;
+    border-radius: 50%; /* 添加这行使头像变为圆形 */
+}
+
+.cp {
+    position: relative;
+}
+
+.head-dropdown-tips {
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    z-index: 800;
+    padding: 0;
+    border-radius: 6px;
+    color: #D1D1D1;
+    background-color: #232323;
+    border: 1px solid #22266C;
+    box-shadow: 0 2px 8px 0 #202568;
+    font-size:12px
+}
+
+.head-dropdown-tips:hover + .head-dropdown {
+    display:none
+}
+
+.head-dropdown-tips a {
+    color:#D1D1D1
+}
+
+.head-dropdown-tips li {
+    justify-content:flex-start !important
+}
+
+.head-dropdown-tips li + li {
+    border-top:1px solid rgba(151, 151, 151, .2)
+}
+
+.head-dropdown-tips .item {
+    padding: 12px 0;
+    display: flex;
+    width: 100%;
+    flex-direction:column
+}
+
+.head-dropdown-tips .item .bd {
+    flex:1
+}
+
+.head-dropdown-tips .item .ft {
+    display: flex;
+    align-items: center;
+    margin-top:6px
+}
+
+.head-dropdown-tips .item .ft .link {
+    flex:1
+}
+
+.head-dropdown {
+    padding: 0;
+    box-shadow: 0 0 3px 0 #4a54ff;
+    border-radius: 6px 6px 4px 4px;
+    z-index: 999;
+    display: none;
+    width: 120px;
+    left: -27px;
+    font-size: var(--site-sub-nav-font-size, 12px)
+}
+
+.head-dropdown li {
+    float: none !important;
+    margin: 0 !important;
+    height: 38px;
+    cursor:pointer
+}
+
+.head-dropdown li.gap {
+    border-bottom:1px solid #393f66
+}
+
+.head-dropdown li.gap .item {
+    word-break: break-all;
+    overflow: hidden;
+    white-space:normal
+}
+
+.head-dropdown li .item, .head-dropdown li a {
+    display: flex;
+    align-items: center;
+    align-items: safe center;
+    min-height: 38px;
+    max-height: 4.1lh;
+    box-sizing: border-box;
+    color: var(--site-sub-nav-color, rgba(255, 255, 255, .8));
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+    padding:.25em 20px
+}
+
+.head-dropdown li .ft {
+    border-top: 1px solid #22244a;
+    padding:4px 0
+}
+
+.head-dropdown li i {
+    margin-right:10px
+}
+
+.head-dropdown li:hover {
+    background: center center #4A54FF;
+    background-image: linear-gradient(315deg, #6772FF 0, #00F9E5 100%);
+    background-size:104% 104%
+}
+
+.head-dropdown li:hover a {
+    color:#fff
+}
+
+.head-dropdown li:last-child:hover {
+    border-radius:0 0 7px 7px
+}
+
+.head-dropdown li:first-child:hover {
+    border-radius:7px 7px 0 0
+}
+
+.head-dropdown li .icon-car-count {
+    background: #6272d6;
+    position: static;
+    margin-left:auto
+}
+
+.head-dropdown li:last-child:hover {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius:4px
+}
+
+header li:hover .head-dropdown {
+    display:block
+}
+
+header li:hover .library-dropdown, header li:hover .wanxiang-dropdown {
+    display:flex
+}
+
+header li.nav-item .head-dropdown {
+    width: 130px;
+    left:-13px
+}
+
+header li.nav-item-new .nav-item-link:after {
+    background: url(../web_assets/head/new1.png) no-repeat;
+    width: 30px;
+    height: 16px;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left:5px
+}
+
+header .mod-nav-is-new:after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    background: url(../web_assets/head/new2.png) no-repeat;
+    width: 30px;
+    height: 16px;
+    background-size: contain;
+    margin-left:5px
+}
+
+header li.nav-tag-ai .nav-item-link:after, header li.nav-tag-wanxiang .nav-item-link:after {
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left:2px
+}
+
+header li.nav-tag-ai .nav-item-text:after {
+    content: "";
+    background: url(../web_assets/head/ai_tool.svg) no-repeat;
+    width: 39px;
+    height:12px
+}
+
+header li.nav-tag-wanxiang .nav-item-text:after {
+    content: "";
+    background: url(../web_assets/head/wanxiang.svg) no-repeat;
+    width: 41px;
+    height:12px
+}
+
+header li.nav-item-more {
+    cursor:pointer
+}
+
+header li.nav-item-more .nav-item-link {
+    left: 7px;
+    position:relative
+}
+
+header li.nav-item-more .nav-item-link em {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .5);
+    margin:0 5px 0 0
+}
+
+header li.nav-item-more .nav-item-link:hover em {
+    background:#fff
+}
+
+header {
+    background-color: #000;
+    position: relative;
+    z-index:1025
+}
+
+header .bind-tips {
+    background-color: #fff9e3;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color:#333
+}
+
+header .bind-tips .iconfont {
+    margin-right: .5em;
+    color: #f4b754;
+    font-size:18px
+}
+
+header .btn-go-bind {
+    height: 30px;
+    width: 76px;
+    background: red;
+    border-radius: 100px;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+    font-size:12px
+}
+
+header .site-nav {
+    display: flex;
+    align-items: center;
+    height: 55px;
+    margin-left: auto;
+    margin-right:auto
+}
+
+header .site-nav .btn-site-menu, header .site-nav .btn-site-menu-close {
+    display:none
+}
+
+header .site-nav .logo {
+    width: 125px;
+    height: 55px;
+    text-align: center;
+    font-size: 24px;
+    margin-right:40px;
+}
+
+header .site-nav .logo a {
+    color: #868598;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content:center
+}
+
+header .site-nav nav {
+    transition: transform .3s ease
+}
+
+header .site-nav nav > ul {
+    display:flex
+}
+
+header .site-nav nav li.nav-item {
+    white-space: nowrap;
+    padding: 0 2px;
+    font-size: var(--site-nav-font-size, 14px);
+    position: relative;
+}
+
+header .site-nav nav li.nav-item .nav-item-link {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color:#fff
+}
+
+header .site-nav nav li.nav-item .nav-item-text {
+    height: 28px;
+    border-radius: 999px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+header .site-nav nav li.nav-item > :not(a) {
+    cursor:default
+}
+
+header .site-nav nav li.nav-item:hover {
+    color:#fff
+}
+
+header .site-nav nav li.nav-item:hover .nav-item-text {
+    color: #fff;
+    background-color:rgba(255, 255, 255, .1)
+}
+
+header .site-nav nav li.nav-item.current .nav-item-text {
+    color: #fff;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+header .site-nav nav li.nav-item.current .nav-item-text span {
+    color: transparent;
+    background-image: linear-gradient(106deg, #aafc89 0, #00f9e5 44%, #2d60ff 100%);
+    -webkit-background-clip: text;
+    background-clip:text
+}
+
+header .site-nav .search-box {
+    display: flex;
+    position:relative
+}
+
+header .site-nav .search-box .input_enter_icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content:center
+}
+
+header .site-nav .search-box .s_input {
+    padding-left: 65px;
+    padding-right:26px
+}
+
+header .site-nav .quick-menu {
+    margin-left: auto;
+    height:55px
+}
+
+header .site-nav .quick-menu .dropdown-search {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: 1px;
+    width: 56px;
+    height: auto;
+    background-color: rgba(133, 134, 156, .3);
+    border: none;
+    border-radius:16px 0 0 16px
+}
+
+header .site-nav .quick-menu .dropdown-search .dropdown-item {
+    float: none;
+    margin: 4px 0 0;
+    padding:0
+}
+
+header .site-nav .quick-menu .dropdown-search .dropdown-toggle {
+    padding: 0 0 0 8px;
+    display: flex;
+    justify-content: center;
+    align-items:center
+}
+
+header .site-nav .quick-menu .dropdown-search .dropdown-toggle-label {
+    color: rgba(255, 255, 255, .5);
+    font-size: 12px;
+    height: 28px;
+    line-height:28px
+}
+
+header .site-nav .quick-menu .dropdown-search .dropdown-menu-wrapper {
+    right: auto;
+    min-width:56px
+}
+
+header .site-nav .quick-menu .dropdown-search .dropdown-menu {
+    overflow:hidden
+}
+
+header .site-nav .quick-menu .dropdown-search .dropdown-arrow {
+    position: static;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    height: 12px;
+    font-size: 12px;
+    margin-left:.25em
+}
+
+header .site-nav .quick-menu li, header .site-nav .quick-menu > ul {
+    height: 100%;
+    align-items: center;
+    display:flex
+}
+
+header .site-nav .quick-menu .dropdown-search .item-link {
+    font-size: 12px;
+    text-align:center
+}
+
+header .site-nav .quick-menu .dropdown-search .item-link:not(.active):hover {
+    color: #333;
+    background-color:#f0f0f0
+}
+
+header .site-nav .quick-menu li {
+    margin: 0 13px;
+    position: relative;
+    line-height: 1.5;
+    justify-content:center
+}
+
+header .site-nav .quick-menu li .lang-btn {
+    color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:24px
+}
+
+header .site-nav .quick-menu li .lang-btn:hover {
+    color:#fff
+}
+
+header .site-nav .quick-menu .form_search {
+    margin-top:1px
+}
+
+header .site-nav .quick-menu .signin {
+    color: rgba(255, 255, 255, .5);
+    font-size: 14px;
+    position: relative;
+    white-space:nowrap
+}
+
+header .site-nav .quick-menu .signin i {
+    margin-right: 5px;
+    font-size: 22px;
+    vertical-align:-3px
+}
+
+header .site-nav .quick-menu .signin:hover {
+    color:#fff
+}
+
+header .site-nav .quick-menu .signin + .signin {
+    margin-left:.5em
+}
+
+header .site-nav .quick-menu .nickname {
+    color: #fff;
+    margin-left: 10px;
+    width: 50px;
+    height: 55px;
+    line-height: 55px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    white-space:nowrap
+}
+
+/* 头像区 */
+
+.avatar {
+    display: inline-block;
+    vertical-align:middle
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit:cover
+}
+
+.avatar-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    overflow:hidden
+}
+
+.avatar-middle {
+    width: 40px;
+    height: 40px;
+    border-radius:20px
+}
+
+.avatar-middle img {
+    border-radius:20px
+}
+
+.avatar-large, .avatar-large img {
+    border-radius:55px
+}
+
+.avatar-large {
+    width: 110px;
+    height:110px
+}
+
+.avatar-special {
+    width: 130px;
+    height: 130px;
+    text-align: center;
+    position: relative;
+    display:block
+}
+
+.avatar-special .avatar-special-inner {
+    vertical-align: middle;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-top:15px
+}
+
+.avatar-special .avatar-special-cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height:130px
+}
+
+/* 素材库下拉框 */
+.library-dropdown,.wanxiang-dropdown {
+    z-index: 999;
+    box-shadow: 0 0 3px 0 #4A54FF;
+}
+
+.library-dropdown {
+    position: absolute;
+    padding: 0;
+    background-color: #1E1E1E;
+    border-radius: 6px 6px 4px 4px;
+    display: none;
+    left: -163px;
+    font-size: 12px;
+    width: 906px;
+    height:398px
+}
+
+.library-dropdown .lib-sub {
+    max-width:180px
+}
+
+.library-dropdown .lib-sub a {
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    height: 38px;
+    line-height: 38px;
+    padding:0 20px
+}
+
+.library-dropdown .lib-sub a:hover {
+    background-color:#0e0e0e
+}
+
+.head-dropdown, .wanxiang-dropdown {
+    position: absolute;
+    background-color:#1E1E1E
+}
+
+.library-dropdown .lib-sub .lib-sub-title {
+    height: auto;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom:11px
+}
+
+.library-dropdown .lib-sub .lib-sub-title div {
+    margin-bottom:5px
+}
+
+.library-dropdown .lib-sub .lib-sub-title img {
+    max-width: 140px;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    display:block
+}
+
+/* AI工具（万象）下拉框 */
+    /* new-tag */
+header .mod-nav-is-new:after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    background: url(../web_assets/head/new2.png) no-repeat;
+    width: 30px;
+    height: 16px;
+    background-size: contain;
+    margin-left:5px
+}
+
+.wanxiang-dropdown {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 36px;
+    left: -163px;
+    border-radius: 6px 6px 4px 4px;
+    font-size: 12px;
+    padding: 0 2em;
+    min-width:630px
+}
+
+.wanxiang-dropdown .lib-footer {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+    border-top: 1px solid rgba(74, 74, 74, .6);
+    height: 50px;
+    margin-top:12px
+}
+
+.wanxiang-dropdown .lib-footer:after {
+    content: "";
+    background: url(../web_assets/head/wanxiang.svg) no-repeat;
+    width: 41px;
+    height: 12px;
+    margin-left:5px
+}
+
+.wanxiang-dropdown .lib-sub {
+    max-width: 180px;
+    min-width:120px
+}
+
+.wanxiang-dropdown .lib-sub .iconfont {
+    margin-right:.36em
+}
+
+.wanxiang-dropdown .lib-sub a {
+    display: block;
+    color: #B0B0B0;
+    font-size: 14px;
+    height: 38px;
+    line-height: 38px;
+    padding:0
+}
+
+.wanxiang-dropdown .lib-sub a:hover {
+    background: 0 0;
+    color:#fff
+}
+
+.wanxiang-dropdown .lib-sub .lib-sub-title {
+    color: #fff;
+    padding: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 1px;
+    border-bottom:1px solid rgba(74, 74, 74, .6)
+}
+
+.wanxiang-dropdown .lib-sub .lib-sub-title div {
+    margin-bottom:5px
+}
+
+/* 通知下拉框 */
+.notification-item .head-dropdown ,.quick-menu-avatar .head-dropdown {
+    position: absolute;
+    top: 100%; /* 相对于父元素的100%高度位置 */
+    left: 50%;
+    transform: translateX(-50%); /* 居中对齐 */
+}
+
+/* 购物车计数器(red) */
+.icon-car-count::before {
+    content: " ";
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    opacity: 0.75;
+    width: 0px;
+    height: 0px;
+    background-color: red;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px inset;
+    z-index: -1;
+}
+
+.icon-car-count {
+    box-sizing: border-box;
+    text-align: center;
+    position: absolute;
+    left: 8px;
+    top: 0px;
+    background: red;
+    color: rgb(255, 255, 255);
+    border-radius: 999px;
+    padding: 0px 0.5em;
+    min-width: 30px;
+    height: 30px;
+    font-size: 16px;
+    transform: scale(0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: tahoma !important;
+}

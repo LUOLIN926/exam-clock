@@ -1,0 +1,23 @@
+/* slogan区域 */
+.page-home {
+    position: relative;
+    overflow: hidden;
+    /* min-height: 750px; */
+    background-color: #000;
+}
+
+.page-home .slogan {
+    text-align: center;
+    color: #fff;
+    padding-top: 46px;
+}
+
+.page-home .slogan h1 {
+    font-size: 42px;
+    color: #FFF;
+    display:inline-block
+}
+
+.page-home .slogan h2 {
+    font-size: 18px
+}

@@ -1,0 +1,452 @@
+/* 购物车侧拉框样式 */
+.block-car-container {
+    position: fixed;
+    top: 0;
+    right: -400px; /* 初始隐藏在右侧 */
+    width: 350px;
+    height: 100vh;
+    background-color: red; /* 红色背景 */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+}
+
+.block-car-container.show {
+    right: 0; /* 显示时滑入 */
+}
+
+.car-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.car-top h3 {
+    margin: 0;
+    color: white;
+    font-size: 18px;
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+.icons-container {
+    padding: 20px;
+    color: white;
+    height: calc(100% - 100px);
+    overflow-y: auto;
+}
+
+.car-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.2);
+    color: white;
+}
+
+/* 遮罩层样式 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0); /* 初始透明 */
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.active {
+    background-color: rgba(0,0,0,0.5);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- */
+
+.block-car-container {
+    display: block;
+    width: 300px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+    background: #f3f3f3;
+    transform: translateX(100%);
+    opacity: 0;
+    transition:transform .3s cubic-bezier(.25, .5, .5, .9), opacity .3s cubic-bezier(.25, .5, .5, .9)
+}
+
+.block-car-container .car-top {
+    height: 55px;
+    background: #0a0f30;
+    position: relative;
+    z-index:100
+}
+
+.block-car-container .car-top .car-header {
+    display: flex;
+    align-items: center;
+    height:100%
+}
+
+.block-car-container .car-top .btn-clean-all {
+    font-size: 12px;
+    color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+    margin-left:10px
+}
+
+.block-car-container .car-top .btn-clean-all .iconfont {
+    margin-right:8px
+}
+
+.block-car-container .car-top .btn-clean-all:hover {
+    color:#fff
+}
+
+.block-car-container .car-top .btn-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding:0 10px
+}
+
+.block-car-container .car-top .top-btn-car .car-count, .block-car-container .car-top .top-icon .car-count {
+    min-width: 14px;
+    line-height: 14px;
+    display: inline-block;
+    border-radius: 17px;
+    padding: 6px;
+    font-family:tahoma !important
+}
+
+.block-car-container .car-top .top-btn-car {
+    position: absolute;
+    left: 24px;
+    top: -19px;
+    z-index:1
+}
+
+.block-car-container .car-top .top-btn-car .iconfont {
+    font-size: 65px;
+    color:rgba(255, 255, 255, .1)
+}
+
+.block-car-container .car-top .top-btn-car .car-count {
+    text-align: center;
+    position: absolute;
+    right: -7px;
+    top: 23px;
+    background: red;
+    font-size: 16px;
+    color: #fff;
+    transform:scale(.7)
+}
+
+.block-car-container .car-top .top-back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+    cursor: pointer;
+    height: 55px;
+    line-height: 55px;
+    font-size: 18px;
+    width: 30px;
+    background: center center #4A54FF;
+    background-image: linear-gradient(315deg, #6772FF 0, #00F9E5 100%);
+    background-size: 104% 104%;
+    text-align: center;
+    z-index:2
+}
+
+.block-car-container .car-top .top-icon {
+    font-size: 26px;
+    color: rgba(255, 255, 255, .5);
+    margin-right: 30px;
+    margin-top: 8px;
+    position: relative;
+    cursor:pointer
+}
+
+.block-car-container .car-top .top-icon .car-count {
+    text-align: center;
+    position: absolute;
+    right: -14px;
+    top: -4px;
+    background: red;
+    font-size: 16px;
+    color: #fff;
+    transform:scale(.7)
+}
+
+.block-car-container .car-top .top-icon.del {
+    font-size: 22px;
+    margin-top: 13px;
+    color:#fff
+}
+
+.block-car-container .icons-container {
+    padding: 5px;
+    height: 380px;
+    overflow: auto;
+    background: #fcfcfc;
+    text-align:center
+}
+
+.block-car-container .icons-container .icons-top {
+    color: #777;
+    margin-left:7px
+}
+
+.block-car-container .icons-container .icons-top .clear-icon {
+    cursor:pointer
+}
+
+.block-car-container .icons-container .block-icon-list {
+    margin-top: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    grid-gap:12px 12px
+}
+
+.block-car-container .icons-container .block-icon-list li {
+    width: 60px;
+    height: 65px;
+    margin: 7px 4px 10px;
+    cursor:pointer
+}
+
+.block-car-container .icons-container .block-icon-list li .icon {
+    font-size:26px
+}
+
+.block-car-container .icons-container .block-icon-list li .icon-twrap {
+    margin-top:11px
+}
+
+.block-car-container .icons-container .block-icon-list li .icon-name {
+    font-size: 12px;
+    width: 100%;
+    margin-top:6px
+}
+
+.block-car-container .icons-container .block-icon-list li .cover-center {
+    width: 100%;
+    vertical-align: middle;
+    color: #fff;
+    position: relative;
+    top: 18px;
+    font-size:20px
+}
+
+.block-car-container .icons-container .no-result {
+    margin-top: 64px;
+    width:170px
+}
+
+.block-car-container .icons-container .no-result-message {
+    text-align: center;
+    font-size: 12px;
+    color:#666
+}
+
+.block-car-container .car-bottom {
+    height: 160px;
+    background: #f3f3f3;
+    padding-top:37px
+}
+
+.block-car-container .car-bottom .btn-large {
+    display: block;
+    max-width: 164px;
+    margin:16px auto 25px
+}
+
+.block-car-container .car-mask {
+    height: 330px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .7);
+    z-index: 99;
+    display:none
+}
+
+.block-car-container .car-manage {
+    height: 330px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background:#fafafa
+}
+
+.block-car-container .car-manage .hide-arrow {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+    color: #999;
+    font-size: 16px;
+    cursor:pointer
+}
+
+.block-car-container .car-manage .car-manage-top {
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    color:#333
+}
+
+.block-car-container .car-manage .car-manage-top .car-manage-title {
+    margin-left:20px
+}
+
+.block-car-container .car-manage .car-manage-top .right-icon {
+    position: absolute;
+    right: 20px;
+    top: -1px;
+    color: #ccc;
+    font-size: 20px;
+    cursor:pointer
+}
+
+.block-car-container .car-manage .car-manage-content {
+    height: 190px;
+    overflow:auto
+}
+
+.block-car-container .car-manage .car-manage-content .car-project-wrap {
+    padding-left:20px
+}
+
+.block-car-container .car-manage .car-manage-content .car-project-wrap .car-project-item {
+    min-width: 220px;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid #fafafa;
+    border-radius: 5px;
+    cursor:pointer
+}
+
+.block-car-container .car-manage .car-manage-content .car-project-wrap .car-project-item .iconfont {
+    margin-left: 15px;
+    color: #ccc;
+    margin-right:9px
+}
+
+.block-car-container .car-manage .car-manage-content .car-project-wrap .car-project-item.current, .block-car-container .car-manage .car-manage-content .car-project-wrap .car-project-item:hover {
+    border-color: #4A54FF;
+    background:rgba(74, 84, 255, .1)
+}
+
+.block-car-container .car-manage .car-manage-content .car-project-input {
+    margin-left: 18px;
+    height: 32px;
+    width:218px
+}
+
+.block-car-container .car-manage .car-manage-bottom {
+    height: 89px;
+    line-height: 80px;
+    padding-left: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background:#f3f3f3
+}
+
+.block-car-container .car-manage .car-manage-project, .block-car-container .car-manage .car-manage-sucai {
+    display:none
+}
+
+.block-car-container .car-manage .car-manage-project .project-history {
+    display:block
+}
+
+.block-car-container .car-manage .car-manage-project .project-new {
+    display:none
+}
+
+.block-car-container .car-manage .car-manage-sucai .car-manage-content {
+    overflow:visible !important
+}
+
+.block-car-container .car-manage .car-manage-bottom .btn {
+    vertical-align: middle;
+    margin-right: 17px;
+    width: 75px;
+    padding:0
+}
+
+.block-car-container.show {
+    display: block;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+    opacity:1
+}
+
+.block-car-container.show-mask .car-mask, .block-car-container.show-project .car-manage-project {
+    display:block
+}
+
+.block-car-container.show-project .car-manage-project.show-add .project-history {
+    display:none
+}
+
+.block-car-container.show-project .car-manage-project.show-add .project-new, .block-car-container.show-sucai .car-manage-sucai {
+    display:block
+}
+
+/* 清空购物车按钮样式 */
+.block-car-container .car-top .btn-clean-all {
+    font-size: 12px;
+    color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+    margin-right: 10px; /* 改为右边距 */
+    margin-left: auto; /* 推到右边 */
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.block-car-container .car-top .btn-clean-all .iconfont {
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.block-car-container .car-top .btn-clean-all:hover {
+    color: #fff;
+}
+
+/* 购物车为空时的样式 */
+.block-car-container .icons-container .no-result {
+    margin-top: 64px;
+    width: 170px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.block-car-container .icons-container .no-result-message {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
