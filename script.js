@@ -42,33 +42,42 @@ const officialExams = {
 function loadCustomExams() {
   const savedExams = localStorage.getItem('customExams');
   if (savedExams) {
-    window.customExams = JSON.parse(savedExams);
+    try {
+      window.customExams = JSON.parse(savedExams);
+    } catch (e) {
+      console.error("解析自定义考试数据失败，已重置为默认值", e);
+      setDefaultCustomExams();
+    }
   } else {
-    // 如果没有保存的自定义考试，设置默认预设
-    window.customExams = [
-      {
-        id: 1,
-        name: "参考预设：中期模拟考试",
-        startTime: "09:00",
-        date: "2026-06-20",
-        timeRange: "09:00 - 11:30",
-        totalMinutes: 150,
-        displaySettings: {
-          showCurrentTime: false,
-          showCountdownTimer: true,
-          showSectionTimer: true
-        },
-        sections: [
-          { name: "考前准备", duration: 10, description: "发卷及填写信息", countInTotal: true },
-          { name: "第一部分", duration: 60, description: "选择题模块", countInTotal: true },
-          { name: "第二部分", duration: 80, description: "主观题模块", countInTotal: true },
-          { name: "考试结束", duration: 0, description: "收起试卷", countInTotal: false }
-        ]
-      }
-    ];
-    // 保存默认预设到 localStorage
-    localStorage.setItem('customExams', JSON.stringify(window.customExams));
+    setDefaultCustomExams();
   }
+}
+
+function setDefaultCustomExams() {
+  // 如果没有保存的自定义考试，或者解析失败，设置默认预设
+  window.customExams = [
+    {
+      id: 1,
+      name: "参考预设：中期模拟考试",
+      startTime: "09:00",
+      date: "2026-06-20",
+      timeRange: "09:00 - 11:30",
+      totalMinutes: 150,
+      displaySettings: {
+        showCurrentTime: false,
+        showCountdownTimer: true,
+        showSectionTimer: true
+      },
+      sections: [
+        { name: "考前准备", duration: 10, description: "发卷及填写信息", countInTotal: true },
+        { name: "第一部分", duration: 60, description: "选择题模块", countInTotal: true },
+        { name: "第二部分", duration: 80, description: "主观题模块", countInTotal: true },
+        { name: "考试结束", duration: 0, description: "收起试卷", countInTotal: false }
+      ]
+    }
+  ];
+  // 保存默认预设到 localStorage
+  localStorage.setItem('customExams', JSON.stringify(window.customExams));
 }
 
 // 在脚本加载时立即加载自定义考试配置
@@ -608,7 +617,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // 检查是否有从自定义考试页面传递过来的配置
   const selectedCustomExam = localStorage.getItem('selectedCustomExam');
   if (selectedCustomExam) {
-    applyCustomExamConfig(JSON.parse(selectedCustomExam));
+    try {
+      applyCustomExamConfig(JSON.parse(selectedCustomExam));
+    } catch (e) {
+      console.error("解析选择的自定义考试配置失败", e);
+    }
     // 清除已应用的配置，避免重复应用
     localStorage.removeItem('selectedCustomExam');
   }
@@ -785,13 +798,9 @@ function calculateEndTime(startTime, durationMinutes) {
   // 如果开始时间加上持续时间超过了24小时，则需要处理跨日期的情况
   endTime.setMinutes(endTime.getMinutes() + durationMinutes);
   
-  // 检查是否跨日期
-  if (endTime.getDate() > 1 || (endTime.getHours() < hours)) {
-    // 跨日期情况，显示第二天的时间
-    return `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-  } else {
-    return `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-  }
+  const timeStr = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
+  const isNextDay = endTime.getDate() > 1 || (endTime.getHours() < hours);
+  return isNextDay ? `${timeStr} (次日)` : timeStr;
 }
 
 // 显示设置相关功能
@@ -805,10 +814,17 @@ function initializeDisplaySettings() {
   // 从localStorage加载设置
   const savedSettings = localStorage.getItem('displaySettings');
   if (savedSettings) {
-    const settings = JSON.parse(savedSettings);
-    showCurrentTime = settings.showCurrentTime !== undefined ? settings.showCurrentTime : true;
-    showCountdownTimer = settings.showCountdownTimer !== undefined ? settings.showCountdownTimer : true;
-    showSectionTimer = settings.showSectionTimer !== undefined ? settings.showSectionTimer : true;
+    try {
+      const settings = JSON.parse(savedSettings);
+      showCurrentTime = settings.showCurrentTime !== undefined ? settings.showCurrentTime : true;
+      showCountdownTimer = settings.showCountdownTimer !== undefined ? settings.showCountdownTimer : true;
+      showSectionTimer = settings.showSectionTimer !== undefined ? settings.showSectionTimer : true;
+    } catch (e) {
+      console.error("解析显示设置失败，恢复默认值", e);
+      showCurrentTime = true;
+      showCountdownTimer = true;
+      showSectionTimer = true;
+    }
   } else {
     // 默认设置
     showCurrentTime = true;
@@ -871,10 +887,14 @@ function resetDisplaySettings() {
   // 检查当前是否选择了自定义考试，并且它有自定义显示设置
   const selectedCustomExam = localStorage.getItem('selectedCustomExam');
   if (selectedCustomExam) {
-    const exam = JSON.parse(selectedCustomExam);
-    if (exam.displaySettings) {
-      applyDisplaySettings(exam.displaySettings);
-      return;
+    try {
+      const exam = JSON.parse(selectedCustomExam);
+      if (exam.displaySettings) {
+        applyDisplaySettings(exam.displaySettings);
+        return;
+      }
+    } catch (e) {
+      console.error("解析选中自定义考试的显示设置失败", e);
     }
   }
   

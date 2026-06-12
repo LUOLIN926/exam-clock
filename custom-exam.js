@@ -861,13 +861,9 @@ function saveCustomExam() {
   endTime.setMinutes(endTime.getMinutes() + totalMinutes);
 
   // 检查是否跨日期
-  let endTimeString;
-  if (endTime.getDate() > 1 || (endTime.getHours() < hours)) {
-    // 跨日期情况，显示第二天的时间
-    endTimeString = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-  } else {
-    endTimeString = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-  }
+  const timeStr = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
+  const isNextDay = endTime.getDate() > 1 || (endTime.getHours() < hours);
+  const endTimeString = isNextDay ? `${timeStr} (次日)` : timeStr;
 
   const timeRange = `${startTime} - ${endTimeString}`;
 
@@ -925,7 +921,11 @@ function loadSavedExams() {
   // 从localStorage加载
   const savedExams = localStorage.getItem('customExams');
   if (savedExams) {
-    customExams = JSON.parse(savedExams);
+    try {
+      customExams = JSON.parse(savedExams);
+    } catch (e) {
+      console.error("解析已保存的考试配置失败，使用内存中的默认配置", e);
+    }
   }
 
   // 更新配置列表显示
@@ -1272,13 +1272,9 @@ function applyCustomExam() {
   endTime.setMinutes(endTime.getMinutes() + totalMinutes);
 
   // 检查是否跨日期
-  let endTimeString;
-  if (endTime.getDate() > 1 || (endTime.getHours() < hours)) {
-    // 跨日期情况，显示第二天的时间
-    endTimeString = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-  } else {
-    endTimeString = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-  }
+  const timeStr = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
+  const isNextDay = endTime.getDate() > 1 || (endTime.getHours() < hours);
+  const endTimeString = isNextDay ? `${timeStr} (次日)` : timeStr;
 
   const timeRange = `${startTime} - ${endTimeString}`;
 

@@ -128,8 +128,12 @@
 
       <!-- 直接显示的显示设置控件 -->
       <div class="inline-display-settings">
-        <div class="inline-setting-controls">
+        <div class="inline-setting-header">
           <h3 class="display-settings-label">显示设置 / Display Settings</h3>
+          <button type="button" id="resetDisplaySettingsBtn" class="reset-display-settings-btn" title="恢复默认显示设置"
+            onclick="resetDisplaySettings()">恢复默认</button>
+        </div>
+        <div class="inline-setting-checkboxes">
           <label class="setting-checkbox-horizontal">
             <input type="checkbox" id="inlineShowCurrentTime" name="inlineShowCurrentTime" checked
               onchange="toggleDisplaySetting('showCurrentTime', this.checked)">
@@ -145,8 +149,6 @@
               onchange="toggleDisplaySetting('showSectionTimer', this.checked)">
             <span>显示"本环节倒计时"</span>
           </label>
-          <button type="button" id="resetDisplaySettingsBtn" class="reset-display-settings-btn" title="恢复默认显示设置"
-            onclick="resetDisplaySettings()">恢复默认</button>
         </div>
       </div>
 

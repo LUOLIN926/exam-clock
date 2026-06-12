@@ -1779,6 +1779,30 @@ input[type="checkbox"] {
   .exam-actions {
     flex-direction: column;
   }
+
+  /* 响应式显示设置 */
+  .inline-setting-checkboxes {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .inline-setting-header {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .inline-setting-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .reset-display-settings-btn {
+    align-self: flex-end;
+  }
 }
 
 /* 响应式布局 - 当屏幕宽度大于800px时 */
@@ -2259,88 +2283,96 @@ h1 {
 }
 
 /* 显示设置控件样式 */
+/* 显示设置控件样式 */
 .inline-display-settings {
   width: 100%;
+  background-color: var(--color-cream-dark);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-earth);
+  padding: 16px;
+  margin-top: 20px;
+  box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
+}
+
+.inline-setting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--color-earth);
+}
+
+.inline-display-settings .display-settings-label {
+  margin: 0;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reset-display-settings-btn {
+  padding: 4px 12px;
+  font-size: 0.85em;
+  color: var(--color-primary);
+  font-weight: 500;
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  height: 28px;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-display-settings-btn:hover {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.inline-setting-checkboxes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
 }
 
 .setting-checkbox-horizontal {
   display: flex;
   flex-direction: row;
-  /* 保持水平方向排列 */
   align-items: center;
-  /* 垂直居中对齐 */
-  justify-content: flex-start;
   font-size: 0.9em;
   cursor: pointer;
-  flex: 1;
-  padding: 5px;
-  min-width: 0;
-  gap: 5px;
-  /* 保持之前的间隙设置 */
-  height: 1.5em;
-  /* 与标签保持相同的高度 */
+  gap: 8px;
+  user-select: none;
 }
 
 .setting-checkbox-horizontal input[type="checkbox"] {
-  margin-bottom: 0;
-  /* 移除底部边距，因为现在是水平排列 */
   cursor: pointer;
-  margin-right: 4px;
-  /* 给复选框添加右边距 */
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  margin: 0;
 }
 
 .setting-checkbox-horizontal span {
   cursor: pointer;
-  word-break: break-all;
-  line-height: 1.2;
-  font-size: 0.9em;
+  line-height: 1.4;
+  font-size: 1em;
   font-weight: normal;
-  /* 确保文字不加粗 */
-}
-
-.inline-setting-controls {
-  display: flex;
-  align-items: center;
-  /* 垂直居中对齐 */
-  padding: 10px;
-  background-color: var(--color-cream-dark);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-earth);
-  margin-top: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  /* 允许换行，以防空间不够 */
-}
-
-.reset-display-settings-btn {
-  margin-left: 10px;
-  padding: 0 10px;
-  /* 上下内边距为0，使总高度约为18px */
-  font-size: 0.8em;
-  /* 缩小字体大小 */
   color: var(--color-text-light);
-  /* 文字颜色改为柔和色 */
-  font-weight: normal;
-  /* 不加粗 */
-  background-color: var(--color-cream-dark);
-  border: 1px solid var(--color-earth);
-  /* 边框1px */
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  height: 18px;
-  /* 设定固定高度为18px */
-  transition: border-color 0.3s;
-  box-sizing: border-box;
-  /* 确保内边距和边框包含在元素总高度内 */
-  display: flex;
-  align-items: center;
-  /* 垂直居中文本 */
+  transition: color var(--transition-fast);
 }
 
-.reset-display-settings-btn:hover {
-  border: 1px solid var(--color-danger);
-  /* 悬浮时使用深红色边框 */
+.setting-checkbox-horizontal:hover span {
+  color: var(--color-text);
 }
 
 /* 竖向显示设置控件样式 */
