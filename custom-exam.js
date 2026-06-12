@@ -639,10 +639,15 @@ function addSection(name = '', duration = 30, description = '', countInTotal = t
       <div class="section-field section-field-checkbox">
         <label class="count-in-total-label">
           <input type="checkbox" class="count-in-total-checkbox" ${countInTotal ? 'checked' : ''} ${isEndSection ? 'disabled' : ''} title="计入总时间">
+          <span class="checkbox-text-mobile">计入总时间</span>
         </label>
       </div>
       <div class="section-card-actions">
-        ${isEndSection ? '' : '<button type="button" class="remove-section-btn" title="删除环节">✕</button>'}
+        ${isEndSection ? '' : `
+          <button type="button" class="move-up-btn" title="上移">↑</button>
+          <button type="button" class="move-down-btn" title="下移">↓</button>
+          <button type="button" class="remove-section-btn" title="删除环节">✕</button>
+        `}
       </div>
     </div>
   `;
@@ -663,12 +668,42 @@ function addSection(name = '', duration = 30, description = '', countInTotal = t
     sectionRow.querySelector('.remove-section-btn').addEventListener('click', function () {
       removeSection(this);
     });
+    sectionRow.querySelector('.move-up-btn').addEventListener('click', function () {
+      moveSectionUp(this);
+    });
+    sectionRow.querySelector('.move-down-btn').addEventListener('click', function () {
+      moveSectionDown(this);
+    });
 
     // 拖拽功能
     sectionRow.addEventListener('dragstart', handleDragStart);
     sectionRow.addEventListener('dragover', handleDragOver);
     sectionRow.addEventListener('drop', handleDrop);
     sectionRow.addEventListener('dragend', handleDragEnd);
+  }
+}
+
+// 移动环节上移
+function moveSectionUp(button) {
+  const card = button.closest('.section-card');
+  const previous = card.previousElementSibling;
+  if (previous) {
+    // 插入到前一个元素之前
+    card.parentNode.insertBefore(card, previous);
+  }
+}
+
+// 移动环节下移
+function moveSectionDown(button) {
+  const card = button.closest('.section-card');
+  const next = card.nextElementSibling;
+  if (next) {
+    // 确保不把卡片移到"考试结束"卡片的下方
+    if (next.hasAttribute('data-end-section')) {
+      return;
+    }
+    // 插入到下下一个元素之前，或者直接在next之后
+    card.parentNode.insertBefore(card, next.nextSibling);
   }
 }
 

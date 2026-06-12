@@ -16,11 +16,12 @@ body {
 }
 
 .container {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   margin: 0 auto;
   background: transparent;
   border-radius: 0;
-  padding-top: 15px;
+  padding: 15px 16px;
   box-shadow: none;
   position: relative;
 }
@@ -1095,6 +1096,14 @@ body {
     min-height: 48px;
     padding: 14px;
   }
+
+  .remove-section-btn,
+  .move-up-btn,
+  .move-down-btn {
+    min-height: 44px;
+    width: 44px !important;
+    font-size: 18px;
+  }
 }
 
 /* 环节卡片样式 */
@@ -1259,6 +1268,15 @@ body {
   height: 100%;
   box-sizing: border-box;
   line-height: 0;
+}
+
+.checkbox-text-mobile {
+  display: none;
+}
+
+.move-up-btn,
+.move-down-btn {
+  display: none;
 }
 
 .count-in-total-label input[type="checkbox"] {
@@ -1754,10 +1772,50 @@ input[type="checkbox"] {
   .section-card-actions {
     width: 100%;
     justify-content: center;
+    gap: 8px;
   }
 
   .remove-section-btn {
-    width: auto;
+    width: 36px;
+  }
+
+  .move-up-btn,
+  .move-down-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-autumn);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    height: 32px;
+    width: 36px;
+    transition: all 0.2s;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .move-up-btn:hover,
+  .move-down-btn:hover {
+    background-color: var(--color-autumn-dark);
+  }
+
+  .checkbox-text-mobile {
+    display: inline;
+    margin-left: 8px;
+    font-size: 0.9em;
+    color: var(--color-text-light);
+  }
+
+  .vertical-setting-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+    gap: 10px;
   }
 
   /* 表单按钮在小屏幕上垂直排列 */
@@ -1803,6 +1861,26 @@ input[type="checkbox"] {
   .reset-display-settings-btn {
     align-self: flex-end;
   }
+
+  .exam-time-header {
+    gap: 4px 8px;
+    padding: 10px;
+  }
+
+  .exam-time-header .header-divider {
+    display: none;
+  }
+
+  .exam-time-header > span {
+    white-space: nowrap;
+  }
+
+  .exam-time-header .exam-countdown {
+    width: 100%;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px rgba(255, 255, 255, 0.2) solid;
+  }
 }
 
 /* 响应式布局 - 当屏幕宽度大于800px时 */
@@ -1814,11 +1892,13 @@ input[type="checkbox"] {
 
   .container {
     width: 800px;
+    max-width: 800px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     background: var(--color-cream);
     margin: 0 auto;
+    padding: 15px 0;
   }
 
   .left-column {
@@ -1892,10 +1972,15 @@ input[type="checkbox"] {
 }
 
 .exam-time-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   text-align: center;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color: white;
-  padding: 8px;
+  padding: 8px 12px;
   border-radius: var(--radius-lg);
   margin-bottom: 20px;
   font-size: 0.8em;
