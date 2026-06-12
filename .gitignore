@@ -10,6 +10,18 @@ impeccable/
 
 # OS generated files
 .DS_Store
+Thumbs.db
 
 # Temporary files
 tmp/
+
+# Sensitive / deployment-only assets (NOT for public repo)
+ga_icon.png
+scripts/.env
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
