@@ -5,24 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CET-4/CET-6考试时间模拟器beta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
   <div class="container">
     <div class="column-wrapper">
+      <!-- 考试信息横幅 - 横跨两栏在最顶上 -->
+      <div class="header-wrapper">
+        <div class="exam-time-header" id="examTimeHeader">
+          <span id="examType">CET-4</span> | <span id="examDate">2026年6月13日上午</span> | <span id="examTimeRange">9:00 - 11:20</span> | <span class="exam-countdown" id="examCountdown">距离考试还有 63 天</span>
+        </div>
+      </div>
+
       <!-- 左侧栏 -->
       <div class="left-column">
-        <div class="header-wrapper">
-          <span class="close-btn" id="closeHeaderBtn" title="关闭考试信息">×</span>
-          <div class="exam-time-header" id="examTimeHeader">
-            <span id="examType">CET-4</span> 考试时间 <span id="examDate">2025年12月13日上午</span> <span id="examTimeRange">9:00
-              - 11:20</span>
-            <div class="exam-countdown" id="examCountdown">距离考试还有 X 天</div>
-          </div>
-        </div>
 
-        <h1 id="pageHeader">🎓<span id="examTitle">CET-4</span><br>考试时间模拟器</h1>
+        <h1 id="pageHeader"><span id="examTitle">CET-4</span><br>考试时间模拟器</h1>
 
         <div class="real-time-display">
           模拟考场时间：<span id="currentTimeSpan">09:00:00</span>
@@ -56,7 +58,7 @@
           <button onclick="pauseExam()" id="pauseBtn" disabled>暂停</button>
           <button onclick="resetExam()" id="resetBtn">重置</button>
           <div class="skip-selector">
-            <label for="sectionSelect">跳转到环节:</label>
+            <h3>切换环节 / Switch Section</h3>
             <select id="sectionSelect">
               <!-- 选项将由JavaScript动态生成 -->
             </select>
@@ -90,9 +92,10 @@
       <div class="preset-selector-full-width">
         <div class="custom-preset-selector">
           <div class="preset-selector-header">
-            <div class="preset-selector-label">选择考试预设:</div>
+            <h3 class="preset-selector-label">选择考试预设 / Select Exam Preset</h3>
             <div class="preset-type-buttons">
-              <button type="button" class="preset-type-btn active" data-type="official" id="officialPresetBtn">官方预设</button>
+              <button type="button" class="preset-type-btn active" data-type="official"
+                id="officialPresetBtn">官方预设</button>
               <button type="button" class="preset-type-btn" data-type="custom" id="customPresetBtn">自定义预设</button>
             </div>
           </div>
@@ -120,29 +123,33 @@
 
       <!-- 自定义考试按钮 -->
       <div class="toggle-exam-button-container">
-        <button id="customExamBtn" onclick="goToCustomExam()" class="toggle-exam-button" style="background-color: #e67e22;">自定义考试设置</button>
+        <button id="customExamBtn" onclick="goToCustomExam()" class="toggle-exam-button">自定义考试设置</button>
       </div>
-      
+
       <!-- 直接显示的显示设置控件 -->
       <div class="inline-display-settings">
         <div class="inline-setting-controls">
-          <span class="display-settings-label">显示设置：</span>
+          <h3 class="display-settings-label">显示设置 / Display Settings</h3>
           <label class="setting-checkbox-horizontal">
-            <input type="checkbox" id="inlineShowCurrentTime" name="inlineShowCurrentTime" checked onchange="toggleDisplaySetting('showCurrentTime', this.checked)">
+            <input type="checkbox" id="inlineShowCurrentTime" name="inlineShowCurrentTime" checked
+              onchange="toggleDisplaySetting('showCurrentTime', this.checked)">
             <span>显示"模拟考场时间"</span>
           </label>
           <label class="setting-checkbox-horizontal">
-            <input type="checkbox" id="inlineShowCountdownTimer" name="inlineShowCountdownTimer" checked onchange="toggleDisplaySetting('showCountdownTimer', this.checked)">
+            <input type="checkbox" id="inlineShowCountdownTimer" name="inlineShowCountdownTimer" checked
+              onchange="toggleDisplaySetting('showCountdownTimer', this.checked)">
             <span>显示"距离考试结束"</span>
           </label>
           <label class="setting-checkbox-horizontal">
-            <input type="checkbox" id="inlineShowSectionTimer" name="inlineShowSectionTimer" checked onchange="toggleDisplaySetting('showSectionTimer', this.checked)">
+            <input type="checkbox" id="inlineShowSectionTimer" name="inlineShowSectionTimer" checked
+              onchange="toggleDisplaySetting('showSectionTimer', this.checked)">
             <span>显示"本环节倒计时"</span>
           </label>
-          <button type="button" id="resetDisplaySettingsBtn" class="reset-display-settings-btn" title="恢复默认显示设置" onclick="resetDisplaySettings()">恢复预设默认显示设置</button>
+          <button type="button" id="resetDisplaySettingsBtn" class="reset-display-settings-btn" title="恢复默认显示设置"
+            onclick="resetDisplaySettings()">恢复默认</button>
         </div>
       </div>
-      
+
     </div>
 
     <!-- 恢复提示（小屏幕设备使用） -->
@@ -166,19 +173,23 @@
     function showIntroduction() {
       window.open('introduction.html', '_blank');
     }
-    
+
     // 跳转到自定义考试配置页面
     function goToCustomExam() {
       window.location.href = 'custom-exam.html';
     }
-    
+
     // 处理考试预设选择变化
     function handlePresetChange(value) {
       if (value === 'cet4' || value === 'cet6') {
         // 官方预设
         currentExamType = value;
         updateExamConfig(officialExams[value]);
-        
+
+        // 保存到localStorage
+        localStorage.setItem('lastOfficialPreset', value);
+        localStorage.setItem('lastPresetType', 'official');
+
         // 更新显示的预设名称
         const presetName = value === 'cet4' ? 'CET-4 (大学英语四级)' : 'CET-6 (大学英语六级)';
         document.getElementById('selectedPreset').innerHTML = `<span>${presetName}</span><span class="dropdown-arrow">▼</span>`;
@@ -186,32 +197,50 @@
         document.getElementById('selectedPreset').classList.remove('custom-selected');
       } else {
         // 自定义预设
-        selectCustomExam(value);
-        
-        // 更新显示的预设名称
-        document.getElementById('selectedPreset').innerHTML = `<span>${value}</span><span class="dropdown-arrow">▼</span>`;
-        // 添加自定义选中样式
-        document.getElementById('selectedPreset').classList.add('custom-selected');
+        const exam = getCustomExamsSafe().find(e => e.name === value);
+        if (exam) {
+          // 保存到localStorage
+          localStorage.setItem('lastCustomPreset', value);
+          localStorage.setItem('lastPresetType', 'custom');
+
+          // 直接应用自定义考试配置（不刷新页面）
+          if (typeof applyCustomExamConfig === 'function') {
+            applyCustomExamConfig(exam);
+          }
+
+          // 更新显示的预设名称
+          document.getElementById('selectedPreset').innerHTML = `<span>${value}</span><span class="dropdown-arrow">▼</span>`;
+          // 添加自定义选中样式
+          document.getElementById('selectedPreset').classList.add('custom-selected');
+        }
       }
-      
+
       // 隐藏下拉菜单
-      document.getElementById('presetOptions').style.display = 'none';
+      closePresetDropdown();
     }
-    
+
     // 动态填充自定义考试选项
+    function getCustomExamsSafe() {
+      if (Array.isArray(window.customExams)) {
+        return window.customExams;
+      }
+      return [];
+    }
+
     function populateCustomPresets() {
       const customPresetOptions = document.getElementById('customPresetOptions');
+      const customExamList = getCustomExamsSafe();
       // 清空现有选项
       customPresetOptions.innerHTML = '';
-      
-      if (customExams && customExams.length > 0) {
-        customExams.forEach(exam => {
+
+      if (customExamList.length > 0) {
+        customExamList.forEach(exam => {
           const option = document.createElement('div');
           option.className = 'preset-option';
           option.textContent = exam.name;
           option.setAttribute('data-value', exam.name);
           // 在这里添加点击事件监听器
-          option.addEventListener('click', function() {
+          option.addEventListener('click', function () {
             handlePresetChange(this.getAttribute('data-value'));
           });
           customPresetOptions.appendChild(option);
@@ -220,69 +249,141 @@
         const option = document.createElement('div');
         option.className = 'preset-option disabled';
         option.textContent = '无自定义考试';
-        option.style.color = '#aaa';
+        option.style.color = 'var(--color-text-muted)';
         customPresetOptions.appendChild(option);
       }
     }
-    
+
+    function openPresetDropdown() {
+      const options = document.getElementById('presetOptions');
+      if (options) {
+        options.style.display = 'block';
+      }
+    }
+
+    function closePresetDropdown() {
+      const options = document.getElementById('presetOptions');
+      if (options) {
+        options.style.display = 'none';
+      }
+    }
+
+    function setPresetTypeUI(type) {
+      const officialBtn = document.getElementById('officialPresetBtn');
+      const customBtn = document.getElementById('customPresetBtn');
+      const officialGroup = document.getElementById('officialPresetGroup');
+      const customGroup = document.getElementById('customPresetGroup');
+
+      const isCustom = type === 'custom';
+
+      officialBtn.classList.toggle('active', !isCustom);
+      customBtn.classList.toggle('active', isCustom);
+      officialGroup.style.display = isCustom ? 'none' : 'block';
+      customGroup.style.display = isCustom ? 'block' : 'none';
+    }
+
     // 在DOM加载完成后设置自定义选择器事件
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // 为自定义选择器添加点击事件
       const selector = document.getElementById('presetSelector');
       const selected = document.getElementById('selectedPreset');
       const options = document.getElementById('presetOptions');
-      
-      selected.addEventListener('click', function(e) {
+
+      selected.addEventListener('click', function (e) {
         e.stopPropagation();
         const isDisplayed = options.style.display !== 'none';
-        options.style.display = isDisplayed ? 'none' : 'block';
+        if (isDisplayed) {
+          closePresetDropdown();
+        } else {
+          openPresetDropdown();
+        }
       });
-      
+
       // 使用事件委托为所有预设选项添加点击事件
-      options.addEventListener('click', function(e) {
+      options.addEventListener('click', function (e) {
         if (e.target.classList.contains('preset-option') && !e.target.classList.contains('disabled')) {
           const value = e.target.getAttribute('data-value');
           handlePresetChange(value);
         }
       });
-      
+
       // 点击页面其他地方关闭下拉菜单
-      document.addEventListener('click', function(e) {
+      document.addEventListener('click', function (e) {
         if (!selector.contains(e.target)) {
-          options.style.display = 'none';
+          closePresetDropdown();
         }
       });
-      
+
       // 预设类型切换按钮事件
       const officialBtn = document.getElementById('officialPresetBtn');
       const customBtn = document.getElementById('customPresetBtn');
-      const officialGroup = document.getElementById('officialPresetGroup');
-      const customGroup = document.getElementById('customPresetGroup');
-      
-      officialBtn.addEventListener('click', function() {
-        officialBtn.classList.add('active');
-        customBtn.classList.remove('active');
-        officialGroup.style.display = 'block';
-        customGroup.style.display = 'none';
-        // 如果当前选中的是自定义预设，切换到第一个官方预设
-        const selectedValue = selected.querySelector('span').textContent;
-        if (selectedValue && !selectedValue.includes('CET-')) {
-          handlePresetChange('cet4');
-        }
+
+      officialBtn.addEventListener('click', function () {
+        setPresetTypeUI('official');
+        // 自动切换到上次使用的官方预设
+        const lastOfficialPreset = localStorage.getItem('lastOfficialPreset') || 'cet4';
+        handlePresetChange(lastOfficialPreset);
+        openPresetDropdown();
       });
-      
-      customBtn.addEventListener('click', function() {
-        customBtn.classList.add('active');
-        officialBtn.classList.remove('active');
-        officialGroup.style.display = 'none';
-        customGroup.style.display = 'block';
+
+      customBtn.addEventListener('click', function () {
+        setPresetTypeUI('custom');
         populateCustomPresets();
+
+        // 自动切换到上次使用的自定义预设
+        const customExamList = getCustomExamsSafe();
+        if (customExamList.length > 0) {
+          const lastCustomPreset = localStorage.getItem('lastCustomPreset');
+          const presetToSelect = lastCustomPreset && customExamList.some(e => e.name === lastCustomPreset)
+            ? lastCustomPreset
+            : customExamList[0].name;
+          handlePresetChange(presetToSelect);
+        }
+
+        openPresetDropdown();
       });
-      
+
+      // 初始化恢复上次预设状态（官方预设部分）
+      const lastPresetType = localStorage.getItem('lastPresetType') || 'official';
+      const lastOfficialPreset = localStorage.getItem('lastOfficialPreset') || 'cet4';
+
+      if (lastPresetType !== 'custom') {
+        setPresetTypeUI('official');
+        handlePresetChange(lastOfficialPreset);
+      }
+
       populateCustomPresets();
     });
   </script>
   <script src="script.js"></script>
+  <script>
+    // 在 script.js 加载完成后恢复预设状态
+    document.addEventListener('DOMContentLoaded', function() {
+      // 等待 script.js 的 DOMContentLoaded 执行完成
+      setTimeout(function() {
+        const lastPresetType = localStorage.getItem('lastPresetType') || 'official';
+        const customExamList = window.customExams || [];
+
+        if (lastPresetType === 'custom' && customExamList.length > 0) {
+          const lastCustomPreset = localStorage.getItem('lastCustomPreset');
+          const presetToSelect = lastCustomPreset && customExamList.some(e => e.name === lastCustomPreset)
+            ? lastCustomPreset
+            : customExamList[0].name;
+
+          // 应用自定义考试配置
+          const exam = customExamList.find(e => e.name === presetToSelect);
+          if (exam) {
+            applyCustomExamConfig(exam);
+
+            // 更新 UI
+            setPresetTypeUI('custom');
+            document.getElementById('selectedPreset').innerHTML = `<span>${presetToSelect}</span><span class="dropdown-arrow">▼</span>`;
+            document.getElementById('selectedPreset').classList.add('custom-selected');
+          }
+        }
+      }, 0);
+    });
+  </script>
 </body>
 
 </html>

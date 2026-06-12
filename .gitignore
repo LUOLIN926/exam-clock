@@ -1,0 +1,15 @@
+# Claude Code / IDE generated files
+.claude/
+
+# Playwright browser automation cache
+.playwright-cli/
+.playwright-mcp/
+
+# Skills should be globally installed, not in project
+impeccable/
+
+# OS generated files
+.DS_Store
+
+# Temporary files
+tmp/

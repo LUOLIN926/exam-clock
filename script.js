@@ -8,7 +8,7 @@ const cet4Sections = [
   { name: "考试结束", start: 140, duration: 0, end: 140, description: "收答题卡2和试题册", realTime: "11:20" }
 ];
 
-// CET-6 考试环节配置 
+// CET-6 考试环节配置
 const cet6Sections = [
   { name: "考前准备", start: 0, duration: 10, end: 10, description: "发卷、填写个人信息、贴条形码", realTime: "15:00-15:10" },
   { name: "写作", start: 10, duration: 30, end: 40, description: "作文写作（不能翻看试题册）", realTime: "15:10-15:40" },
@@ -24,22 +24,55 @@ const officialExams = {
     name: "CET-4",
     sections: cet4Sections,
     totalTime: 140 * 60,
-    examDate: '2025年12月13日上午',
+    examDate: '2026年6月13日上午',
     examTimeRange: '9:00 - 11:20',
     examStartTime: { hours: 9, minutes: 0 }
   },
   cet6: {
-    name: "CET-6", 
+    name: "CET-6",
     sections: cet6Sections,
     totalTime: 145 * 60,
-    examDate: '2025年12月13日下午',
+    examDate: '2026年6月13日下午',
     examTimeRange: '15:00 - 17:25',
     examStartTime: { hours: 15, minutes: 0 }
   }
 };
 
-// 自定义考试配置数组
-let customExams = [];
+// 加载自定义考试配置到 window.customExams
+function loadCustomExams() {
+  const savedExams = localStorage.getItem('customExams');
+  if (savedExams) {
+    window.customExams = JSON.parse(savedExams);
+  } else {
+    // 如果没有保存的自定义考试，设置默认预设
+    window.customExams = [
+      {
+        id: 1,
+        name: "参考预设：中期模拟考试",
+        startTime: "09:00",
+        date: "2026-06-20",
+        timeRange: "09:00 - 11:30",
+        totalMinutes: 150,
+        displaySettings: {
+          showCurrentTime: false,
+          showCountdownTimer: true,
+          showSectionTimer: true
+        },
+        sections: [
+          { name: "考前准备", duration: 10, description: "发卷及填写信息", countInTotal: true },
+          { name: "第一部分", duration: 60, description: "选择题模块", countInTotal: true },
+          { name: "第二部分", duration: 80, description: "主观题模块", countInTotal: true },
+          { name: "考试结束", duration: 0, description: "收起试卷", countInTotal: false }
+        ]
+      }
+    ];
+    // 保存默认预设到 localStorage
+    localStorage.setItem('customExams', JSON.stringify(window.customExams));
+  }
+}
+
+// 在脚本加载时立即加载自定义考试配置
+loadCustomExams();
 
 // 当前使用的考试类型（默认为CET-4）
 let currentExamType = 'cet4';
@@ -54,6 +87,9 @@ let isRunning = false;
 let currentSectionIndex = 0;
 let examStartTime = new Date();
 examStartTime.setHours(9, 0, 0, 0); // CET-4开始时间
+
+let startTimeStamp = null; // 计时器最近一次启动或恢复时的系统时间戳
+let elapsedBeforeLastStart = 0; // 最近一次启动或恢复前，考试已经累计消耗的秒数
 
 // 添加变量跟踪倒计时显示状态
 let isCountdownVisible = true;
@@ -88,6 +124,13 @@ function initializeGlobals() {
   document.getElementById('examTitle').textContent = officialExams.cet4.name;
   document.getElementById('examDate').textContent = officialExams.cet4.examDate;
   document.getElementById('examTimeRange').textContent = officialExams.cet4.examTimeRange;
+  
+  // Calculate days left
+  const targetDate = new Date('2026-06-13T09:00:00');
+  const now = new Date();
+  const diffTime = targetDate - now;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById('examCountdown').textContent = `距离考试还有 ${diffDays > 0 ? diffDays : 0} 天`;
   document.getElementById('totalTime').textContent = totalTime / 60;
   document.getElementById('remainingTime').textContent = totalTime / 60;
   document.getElementById('timer').textContent = formatTime(timeLeft);
@@ -129,16 +172,29 @@ function getRealTime(currentTime) {
 }
 
 function updateTimer() {
+  // 基于系统时间戳计算准确的 timeLeft
+  if (isRunning && startTimeStamp) {
+    const elapsedSeconds = Math.floor((Date.now() - startTimeStamp) / 1000);
+    timeLeft = Math.max(0, totalTime - (elapsedBeforeLastStart + elapsedSeconds));
+  }
+
   // 检查是否结束
   if (timeLeft <= 0) {
+    timeLeft = 0; // 确保时间不为负数
     clearInterval(timer);
     isRunning = false;
     updateButtons();
+    
+    // 更新 UI 为结束状态
+    document.getElementById('timer').textContent = formatTime(0);
+    document.getElementById('remainingTime').textContent = 0;
+    document.getElementById('progressFill').style.width = '100%';
     document.getElementById('currentSection').textContent = '考试结束！';
-    // 使用getRealTime函数获取正确的时间显示
+    document.getElementById('sectionTimer').style.display = 'none';
     document.getElementById('currentTimeSpan').textContent = getRealTime(totalTime);
     document.querySelector('.countdown-value').textContent = '考试已结束';
-    timeLeft = 0; // 确保时间不为负数
+    updateSectionList();
+    return;
   }
 
   document.getElementById('timer').textContent = formatTime(timeLeft);
@@ -183,8 +239,8 @@ function updateTimer() {
 
     document.getElementById('currentSection').innerHTML = `
                 <strong>当前环节：</strong>${currentSection.name}<br>
-                <small style="color: #7f8c8d;">${currentSection.description}</small><br>
-                <small style="color: #800080;">考场时间: ${currentSection.realTime}</small>
+                <small style="color: var(--color-text-muted);">${currentSection.description}</small><br>
+                <small style="color: var(--color-text-light);">考场时间: ${currentSection.realTime}</small>
             `;
   } else if (timeLeft > 0) {
     // 考试还没开始
@@ -208,21 +264,6 @@ function updateTimer() {
 
   // 更新实时时间显示
   document.getElementById('currentTimeSpan').textContent = getRealTime(totalTime - timeLeft);
-
-  // 检查是否结束
-  if (timeLeft <= 0) {
-    clearInterval(timer);
-    isRunning = false;
-    updateButtons();
-    document.getElementById('currentSection').textContent = '考试结束！';
-    // 使用getRealTime函数获取正确的时间显示
-    document.getElementById('currentTimeSpan').textContent = getRealTime(totalTime);
-    document.querySelector('.countdown-value').textContent = '考试已结束';
-  }
-
-  if (timeLeft > 0) {
-    timeLeft--;
-  }
 }
 
 function updateSectionList() {
@@ -298,6 +339,8 @@ function startExam() {
   }
 
   isRunning = true;
+  startTimeStamp = Date.now();
+  elapsedBeforeLastStart = totalTime - timeLeft;
   timer = setInterval(updateTimer, 1000);
   updateButtons();
   updateSectionList();
@@ -307,6 +350,11 @@ function pauseExam() {
   if (isRunning) {
     clearInterval(timer);
     isRunning = false;
+    if (startTimeStamp) {
+      const elapsedSeconds = Math.floor((Date.now() - startTimeStamp) / 1000);
+      elapsedBeforeLastStart += elapsedSeconds;
+      timeLeft = Math.max(0, totalTime - elapsedBeforeLastStart);
+    }
     updateButtons();
   }
 }
@@ -314,6 +362,8 @@ function pauseExam() {
 function resetExam() {
   clearInterval(timer);
   isRunning = false;
+  startTimeStamp = null;
+  elapsedBeforeLastStart = 0;
   timeLeft = totalTime;
   currentSectionIndex = 0;
   document.getElementById('timer').textContent = formatTime(timeLeft);
@@ -326,6 +376,13 @@ function resetExam() {
   document.querySelector('.countdown-value').textContent = '--';
   document.getElementById('progressFill').style.width = '0%';
   document.getElementById('remainingTime').textContent = totalTime / 60;
+}
+
+function syncTimeOnManualChange() {
+  elapsedBeforeLastStart = totalTime - timeLeft;
+  if (isRunning) {
+    startTimeStamp = Date.now();
+  }
 }
 
 function updateButtons() {
@@ -358,6 +415,7 @@ function handleSectionChange() {
   const selectedValue = document.getElementById('sectionSelect').value;
   const targetTime = examSections[selectedValue].start * 60;
   timeLeft = totalTime - targetTime;
+  syncTimeOnManualChange();
   currentSectionIndex = parseInt(selectedValue);
   document.getElementById('currentTimeSpan').textContent = getRealTime(targetTime);
   updateSectionList();
@@ -367,6 +425,7 @@ function skipToSelectedSection() {
   const selectedValue = document.getElementById('sectionSelect').value;
   const targetTime = examSections[selectedValue].start * 60;
   timeLeft = totalTime - targetTime;
+  syncTimeOnManualChange();
   currentSectionIndex = parseInt(selectedValue);
   document.getElementById('currentTimeSpan').textContent = getRealTime(targetTime);
   updateSectionList();
@@ -417,6 +476,7 @@ function nextSection() {
   const nextSectionIndex = currentSectionIndex + 1;
   const targetTime = examSections[nextSectionIndex].start * 60;
   timeLeft = totalTime - targetTime;
+  syncTimeOnManualChange();
   document.getElementById('currentTimeSpan').textContent = getRealTime(targetTime);
   document.getElementById('timer').textContent = formatTime(timeLeft);
 
@@ -463,6 +523,14 @@ function updateExamConfig(examConfig) {
   document.getElementById('examTitle').textContent = examConfig.name;
   document.getElementById('examDate').textContent = examConfig.examDate;
   document.getElementById('examTimeRange').textContent = examConfig.examTimeRange;
+  
+  // Calculate days left
+  const targetDateStr = examConfig.name === 'CET-6' ? '2026-06-13T15:00:00' : '2026-06-13T09:00:00';
+  const targetDate = new Date(targetDateStr);
+  const now = new Date();
+  const diffTime = targetDate - now;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById('examCountdown').textContent = `距离考试还有 ${diffDays > 0 ? diffDays : 0} 天`;
   document.getElementById('totalTime').textContent = totalTime / 60;
   document.getElementById('remainingTime').textContent = totalTime / 60;
   document.getElementById('timer').textContent = formatTime(timeLeft);
@@ -535,332 +603,6 @@ function toggleHeader() {
   }
 }
 
-// 保存自定义考试配置
-function saveCustomExam() {
-  const examName = document.getElementById('customExamName').value;
-  const examStartTime = document.getElementById('customExamStartTime').value;
-  const examDate = document.getElementById('customExamDate').value;
-  
-  if (!examName) {
-    alert('请输入考试名称');
-    return;
-  }
-  
-  const sections = [];
-  const sectionRows = document.querySelectorAll('.section-row');
-  let totalMinutes = 0;
-  
-  for (let i = 0; i < sectionRows.length; i++) {
-    const row = sectionRows[i];
-    const name = row.querySelector('.section-name').value;
-    const duration = parseInt(row.querySelector('.section-duration').value);
-    const description = row.querySelector('.section-description').value;
-    
-    if (!name || !duration || !description) {
-      alert(`请完整填写第${i + 1}个环节的信息`);
-      return;
-    }
-    
-    sections.push({
-      name: name,
-      duration: duration,
-      description: description
-    });
-    
-    totalMinutes += duration;
-  }
-  
-  // 构造考试时间段字符串
-  const startTime = examStartTime;
-  const [hours, minutes] = startTime.split(':').map(Number);
-  const endTime = new Date(2000, 0, 1, hours, minutes);
-  endTime.setMinutes(endTime.getMinutes() + totalMinutes);
-  const endTimeString = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-  const timeRange = `${startTime} - ${endTimeString}`;
-  
-  const customExam = {
-    name: examName,
-    startTime: examStartTime,
-    date: examDate,
-    timeRange: timeRange,
-    sections: sections,
-    totalMinutes: totalMinutes
-  };
-  
-  // 检查是否已存在同名考试
-  const existingIndex = customExams.findIndex(exam => exam.name === examName);
-  if (existingIndex >= 0) {
-    if (confirm(`已存在名为"${examName}"的考试配置，是否覆盖？`)) {
-      customExams[existingIndex] = customExam;
-    } else {
-      return;
-    }
-  } else {
-    customExams.push(customExam);
-  }
-  
-  // 保存到localStorage
-  localStorage.setItem('customExams', JSON.stringify(customExams));
-  
-  alert(`考试"${examName}"配置已保存！`);
-}
-
-// 加载自定义考试配置
-function loadCustomExams() {
-  // 从localStorage加载
-  const savedExams = localStorage.getItem('customExams');
-  if (savedExams) {
-    customExams = JSON.parse(savedExams);
-  }
-  
-  if (customExams.length === 0) {
-    alert('没有保存的自定义考试配置');
-    return;
-  }
-  
-  // 创建选择对话框
-  let examList = '请选择要加载的考试配置：\n';
-  customExams.forEach((exam, index) => {
-    examList += `${index + 1}. ${exam.name}\n`;
-  });
-  
-  const selectedIndex = prompt(examList);
-  if (selectedIndex && !isNaN(selectedIndex) && selectedIndex > 0 && selectedIndex <= customExams.length) {
-    const exam = customExams[selectedIndex - 1];
-    
-    // 填充表单
-    document.getElementById('customExamName').value = exam.name;
-    document.getElementById('customExamStartTime').value = exam.startTime;
-    document.getElementById('customExamDate').value = exam.date;
-    
-    // 清除现有环节
-    const container = document.getElementById('sectionsContainer');
-    while (container.firstChild && container.firstChild.id !== 'addSectionBtn') {
-      container.removeChild(container.firstChild);
-    }
-    
-    // 添加环节
-    exam.sections.forEach(section => {
-      addSection();
-      const rows = document.querySelectorAll('.section-row');
-      const lastRow = rows[rows.length - 1];
-      lastRow.querySelector('.section-name').value = section.name;
-      lastRow.querySelector('.section-duration').value = section.duration;
-      lastRow.querySelector('.section-description').value = section.description;
-    });
-    
-    alert(`已加载"${exam.name}"的配置`);
-  }
-}
-
-// 应用自定义考试配置
-function applyCustomExam() {
-  const examName = document.getElementById('customExamName').value;
-  const examStartTimeValue = document.getElementById('customExamStartTime').value;
-  const examDate = document.getElementById('customExamDate').value;
-  
-  if (!examName) {
-    alert('请输入考试名称');
-    return;
-  }
-  
-  const sections = [];
-  const sectionRows = document.querySelectorAll('.section-row');
-  let totalMinutes = 0;
-  
-  // 验证并收集环节信息
-  for (let i = 0; i < sectionRows.length; i++) {
-    const row = sectionRows[i];
-    const name = row.querySelector('.section-name').value;
-    const duration = parseInt(row.querySelector('.section-duration').value);
-    const description = row.querySelector('.section-description').value;
-    
-    if (!name || !duration || !description) {
-      alert(`请完整填写第${i + 1}个环节的信息`);
-      return;
-    }
-    
-    sections.push({
-      name: name,
-      duration: duration,
-      description: description
-    });
-    
-    totalMinutes += duration;
-  }
-  
-  // 构造考试配置
-  const customSections = [];
-  let currentTime = 0;
-  
-  sections.forEach((section, index) => {
-    const start = currentTime;
-    const duration = section.duration;
-    const end = start + duration;
-    
-    // 构造时间段字符串
-    const [startHours, startMinutes] = examStartTimeValue.split(':').map(Number);
-    const realStartTime = new Date(2000, 0, 1, startHours, startMinutes);
-    realStartTime.setMinutes(realStartTime.getMinutes() + start);
-    
-    const realEndTime = new Date(2000, 0, 1, startHours, startMinutes);
-    realEndTime.setMinutes(realEndTime.getMinutes() + end);
-    
-    const realTime = `${realStartTime.getHours().toString().padStart(2, '0')}:${realStartTime.getMinutes().toString().padStart(2, '0')}-` +
-                   `${realEndTime.getHours().toString().padStart(2, '0')}:${realEndTime.getMinutes().toString().padStart(2, '0')}`;
-    
-    customSections.push({
-      name: section.name,
-      start: start,
-      duration: duration,
-      end: end,
-      description: section.description,
-      realTime: realTime
-    });
-    
-    currentTime = end;
-  });
-  
-  // 添加考试结束环节
-  if (customSections.length > 0) {
-    const lastSection = customSections[customSections.length - 1];
-    customSections.push({
-      name: "考试结束",
-      start: lastSection.end,
-      duration: 0,
-      end: lastSection.end,
-      description: "考试结束",
-      realTime: lastSection.realTime.split('-')[1]
-    });
-  }
-  
-  // 更新全局变量
-  currentExamType = 'custom';
-  examSections = customSections;
-  totalTime = totalMinutes * 60;
-  timeLeft = totalTime;
-  
-  // 设置考试开始时间
-  const [hours, minutes] = examStartTimeValue.split(':').map(Number);
-  examStartTime = new Date();
-  examStartTime.setHours(hours, minutes, 0, 0);
-  
-  // 更新UI
-  document.getElementById('examType').textContent = examName;
-  document.getElementById('examTitle').textContent = examName;
-  document.getElementById('examDate').textContent = formatDate(examDate);
-  document.getElementById('examTimeRange').textContent = `${examStartTimeValue} - ${calculateEndTime(examStartTimeValue, totalMinutes)}`;
-  document.getElementById('totalTime').textContent = totalMinutes;
-  document.getElementById('remainingTime').textContent = totalMinutes;
-  document.getElementById('timer').textContent = formatTime(timeLeft);
-  document.getElementById('currentTimeSpan').textContent = `${examStartTimeValue}:00`;
-  
-  // 关闭模态窗口
-  closeCustomExamModal();
-  
-  // 重置考试状态
-  resetExam();
-  updateSectionOptions();
-  updateSectionList();
-  
-  // 更新切换按钮文本
-  const toggleBtn = document.getElementById('toggleExamBtn');
-  const toggleBtnSmall = document.getElementById('toggleExamBtnSmall');
-  if (toggleBtn) toggleBtn.textContent = '切换为CET-4';
-  if (toggleBtnSmall) toggleBtnSmall.textContent = '切换为CET-4';
-  
-  alert(`已应用自定义考试"${examName}"的配置`);
-}
-
-// 选择自定义考试配置
-function selectCustomExam(examName) {
-  // 从自定义考试数组中找到对应的考试配置
-  const selectedExam = customExams.find(exam => exam.name === examName);
-  
-  if (!selectedExam) {
-    console.error(`找不到名为 "${examName}" 的自定义考试配置`);
-    return;
-  }
-  
-  // 构造考试配置
-  const customSections = [];
-  let currentTime = 0;
-  
-  selectedExam.sections.forEach((section, index) => {
-    const start = currentTime;
-    const duration = section.duration;
-    const end = start + duration;
-    
-    // 构造时间段字符串
-    const [startHours, startMinutes] = selectedExam.startTime.split(':').map(Number);
-    const realStartTime = new Date(2000, 0, 1, startHours, startMinutes);
-    realStartTime.setMinutes(realStartTime.getMinutes() + start);
-    
-    const realEndTime = new Date(2000, 0, 1, startHours, startMinutes);
-    realEndTime.setMinutes(realEndTime.getMinutes() + end);
-    
-    const realTime = `${realStartTime.getHours().toString().padStart(2, '0')}:${realStartTime.getMinutes().toString().padStart(2, '0')}-` +
-                   `${realEndTime.getHours().toString().padStart(2, '0')}:${realEndTime.getMinutes().toString().padStart(2, '0')}`;
-    
-    customSections.push({
-      name: section.name,
-      start: start,
-      duration: duration,
-      end: end,
-      description: section.description,
-      realTime: realTime
-    });
-    
-    currentTime = end;
-  });
-  
-  // 添加考试结束环节
-  if (customSections.length > 0) {
-    const lastSection = customSections[customSections.length - 1];
-    customSections.push({
-      name: "考试结束",
-      start: lastSection.end,
-      duration: 0,
-      end: lastSection.end,
-      description: "考试结束",
-      realTime: lastSection.realTime.split('-')[1]
-    });
-  }
-  
-  // 更新全局变量
-  currentExamType = 'custom';
-  examSections = customSections;
-  totalTime = selectedExam.totalMinutes * 60;
-  timeLeft = totalTime;
-  
-  // 设置考试开始时间
-  const [hours, minutes] = selectedExam.startTime.split(':').map(Number);
-  examStartTime = new Date();
-  examStartTime.setHours(hours, minutes, 0, 0);
-  
-  // 更新UI
-  document.getElementById('examType').textContent = selectedExam.name;
-  document.getElementById('examTitle').textContent = selectedExam.name;
-  document.getElementById('examDate').textContent = formatDate(selectedExam.date);
-  document.getElementById('examTimeRange').textContent = `${selectedExam.startTime} - ${calculateEndTime(selectedExam.startTime, selectedExam.totalMinutes)}`;
-  document.getElementById('totalTime').textContent = selectedExam.totalMinutes;
-  document.getElementById('remainingTime').textContent = selectedExam.totalMinutes;
-  document.getElementById('timer').textContent = formatTime(timeLeft);
-  document.getElementById('currentTimeSpan').textContent = `${selectedExam.startTime}:00`;
-  
-  // 重置考试状态
-  resetExam();
-  updateSectionOptions();
-  updateSectionList();
-  
-  // 如果有自定义的显示设置，则应用它们
-  if (selectedExam.displaySettings) {
-    applyDisplaySettings(selectedExam.displaySettings);
-  }
-  
-  console.log(`已选择自定义考试 "${selectedExam.name}"`);
-}
-
 // 在DOMContentLoaded事件监听器中添加检查自定义考试配置的代码
 document.addEventListener('DOMContentLoaded', function () {
   // 检查是否有从自定义考试页面传递过来的配置
@@ -870,13 +612,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 清除已应用的配置，避免重复应用
     localStorage.removeItem('selectedCustomExam');
   }
-  
-  // 加载保存的自定义考试配置
-  const savedCustomExams = localStorage.getItem('customExams');
-  if (savedCustomExams) {
-    customExams = JSON.parse(savedCustomExams);
-  }
-  
+
   // 在加载完所有配置后，初始化全局变量
   initializeGlobals();
   

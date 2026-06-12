@@ -4,7 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>自定义考试配置 - 考试时间模拟器</title>
+  <title>自定义考试 - CET-4/CET-6考试时间模拟器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="iconfont/iconfont.css">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,16 +24,19 @@
         <div class="custom-exam-form">
           <form id="customExamForm">
             <div class="form-group">
-              <label for="customExamName">考试名称:</label>
-              <input type="text" id="customExamName" name="customExamName" placeholder="请输入考试名称" required style="padding: 12px;">
+              <label for="customExamName">考试名称 / Exam Name</label>
+              <input type="text" id="customExamName" name="customExamName" placeholder="请输入考试名称" required
+                style="padding: 12px; font-family: var(--font-family);">
             </div>
 
             <div class="form-group">
-              <label for="customExamStartTime">考试开始时间（进入考场时间）:</label>
+              <label for="customExamStartTime">考试开始时间 / Start Time</label>
               <div class="custom-time-picker" id="customExamStartTimePicker">
                 <div class="time-input-wrapper">
-                  <input type="text" id="customExamStartTime" name="customExamStartTime" value="12:00" class="time-input-display" readonly>
-                  <button type="button" class="picker-toggle-btn" data-target="time" aria-label="打开时间下拉"><span class="iconfont icon-youjiantou"></span></button>
+                  <input type="text" id="customExamStartTime" name="customExamStartTime" value="12:00"
+                    class="time-input-display" readonly>
+                  <button type="button" class="picker-toggle-btn" data-target="time" aria-label="打开时间下拉"><span
+                      class="iconfont icon-youjiantou"></span></button>
                 </div>
                 <div class="time-dropdowns">
                   <div class="time-select-wrapper">
@@ -58,11 +64,13 @@
             </div>
 
             <div class="form-group">
-              <label for="customExamDate">正式考试日期:</label>
+              <label for="customExamDate">正式考试日期 / Exam Date</label>
               <div class="custom-date-picker" id="customExamDatePicker">
                 <div class="date-input-wrapper">
-                  <input type="text" id="customExamDate" name="customExamDate" value="" class="date-input-display" readonly required>
-                  <button type="button" class="picker-toggle-btn" data-target="date" aria-label="打开日期下拉"><span class="iconfont icon-youjiantou"></span></button>
+                  <input type="text" id="customExamDate" name="customExamDate" value="" class="date-input-display"
+                    readonly required>
+                  <button type="button" class="picker-toggle-btn" data-target="date" aria-label="打开日期下拉"><span
+                      class="iconfont icon-youjiantou"></span></button>
                 </div>
                 <div class="date-dropdowns">
                   <div class="date-select-wrapper">
@@ -99,7 +107,7 @@
             </div>
 
             <div class="form-group">
-              <label>考试环节:</label>
+              <label>考试环节 / Exam Sections</label>
               <div class="sections-wrapper" style="padding-bottom: 5px !important;">
                 <div class="section-headers-row">
                   <div class="section-header-drag"></div>
@@ -117,10 +125,10 @@
 
             <!-- 添加显示设置选项 -->
             <div class="form-group">
-              <label>显示设置:</label>
+              <label>显示设置 / Display Settings</label>
               <div class="vertical-setting-controls">
                 <label class="setting-checkbox-vertical">
-                  <input type="checkbox" id="customShowCurrentTime" name="customShowCurrentTime" checked>
+                  <input type="checkbox" id="customShowCurrentTime" name="customShowCurrentTime">
                   <span>模拟考场时间</span>
                 </label>
                 <label class="setting-checkbox-vertical">
@@ -150,7 +158,7 @@
 
       <!-- 右侧栏 - 配置列表 -->
       <div class="right-column">
-        <h2>已保存的配置</h2>
+        <h2>已保存的配置 / Saved Configs</h2>
         <div id="savedExamsList">
           <!-- 已保存的配置将通过JavaScript动态添加 -->
         </div>

@@ -1,10 +1,18 @@
 body {
-  font-family: 'Microsoft YaHei', Arial, sans-serif;
-  background: #ffffff;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  background:
+    /* 微妙的有机纹理 - 使用CSS实现 */
+    radial-gradient(ellipse at 20% 30%, rgba(107, 142, 99, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(160, 82, 45, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(139, 115, 85, 0.02) 0%, transparent 70%),
+    var(--color-cream);
   margin: 0;
   padding: 20px;
   min-height: 100vh;
-  color: #333;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -25,16 +33,16 @@ body {
 }
 
 .toggle-exam-button {
-  background: #9b59b6;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
   width: 100%;
   max-width: 800px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-weight: bold;
   text-align: center;
   min-height: 40px;
@@ -42,21 +50,23 @@ body {
 }
 
 .toggle-exam-button:hover {
-  background: #8e44ad;
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 /* 功能介绍按钮 */
 .intro-button {
-  background: #3498db;
+  background: var(--color-accent);
   color: white;
   border: none;
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
   width: 100%;
   max-width: 800px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   font-weight: bold;
   text-align: center;
   min-height: 40px;
@@ -64,7 +74,9 @@ body {
 }
 
 .intro-button:hover {
-  background: #2980b9;
+  background: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 /* 小屏幕切换按钮 */
@@ -74,15 +86,15 @@ body {
 }
 
 .toggle-button-small-screen button {
-  background: #9b59b6;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background var(--transition-normal), transform var(--transition-fast);
   width: 100%;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   font-weight: bold;
   text-align: center;
   min-height: 40px;
@@ -90,58 +102,57 @@ body {
 }
 
 .toggle-button-small-screen button:hover {
-  background: #8e44ad;
+  background: var(--color-primary-dark);
 }
 
 /* 预设类型按钮样式 */
 .preset-type-btn {
-  padding: 10px 12px;
-  /* 修改上下padding为10px，使总高度约26px */
+  padding: 6px 12px;
   font-size: 12px;
-  border: 1px solid #ddd;
-  background: #fff;
-  color: #666;
-  border-radius: 4px;
+  border: 1px solid var(--color-earth);
+  background: white;
+  color: var(--color-text-light);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-normal);
   font-weight: 500;
 }
 
 .preset-type-btn:hover {
-  background: #f5f5f5;
-  border-color: #3498db;
-  color: #3498db;
+  background: var(--color-cream-dark);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .preset-type-btn.active {
-  background: #3498db;
-  color: #fff;
-  border-color: #3498db;
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
 }
 
 .preset-type-btn[data-type="custom"] {
-  background: #fff;
+  background: white;
   /* 默认为白色背景 */
-  color: #666;
+  color: var(--color-text-light);
   /* 默认为灰色文字 */
-  border-color: #ddd;
+  border-color: var(--color-earth);
   /* 默认为灰色边框 */
 }
 
 .preset-type-btn[data-type="custom"]:hover {
-  background: #f5f5f5;
-  /* 悬停时浅灰色背景 */
-  border-color: #f39c12;
+  background: var(--color-cream-dark);
+  /* 悬停时浅色背景 */
+  border-color: var(--color-warning);
   /* 悬停时橙色边框 */
-  color: #f39c12;
+  color: var(--color-warning);
   /* 悬停时橙色文字 */
 }
 
 .preset-type-btn[data-type="custom"].active {
-  background: #f39c12;
+  background: var(--color-warning);
   /* 选中状态使用橙色 */
-  color: #fff;
-  border-color: #f39c12;
+  color: white;
+  border-color: var(--color-warning);
 }
 
 /* 为小屏幕设备设置的预设类型按钮样式 */
@@ -154,7 +165,7 @@ body {
   .preset-type-btn {
     flex: 1;
     max-width: 120px;
-    background: #9b59b6;
+    background: var(--color-lavender);
     /* 确保小屏幕下也是紫色 */
     color: white;
   }
@@ -170,9 +181,97 @@ body {
 .restore-hint {
   font-size: 0.9em;
   text-align: center;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   cursor: pointer;
   margin-top: 10px;
+}
+
+:root {
+  /* Organic/Natural Color Palette */
+  --color-primary: #4A6741;
+  /* 苔藓绿 - 主色 */
+  --color-primary-dark: #3A5334;
+  /* 深苔藓绿 */
+  --color-primary-light: #6B8E63;
+  /* 浅苔藓绿 */
+  --color-secondary: #A0522D;
+  /* 赭石色 */
+  --color-accent: #8B7355;
+  /* 土棕色 */
+  --color-earth: #C4A77D;
+  /* 沙土色 */
+  --color-cream: #FAF8F5;
+  /* 奶油白背景 */
+  --color-cream-dark: #F5F2ED;
+  /* 深奶油色 */
+  --color-text: #3D3229;
+  /* 深棕色文字 */
+  --color-text-light: #6B5D4D;
+  /* 浅棕色文字 */
+  --color-text-muted: #9A8B78;
+  /* 柔和棕色 */
+  --color-success: #5B8C5A;
+  /* 自然绿 */
+  --color-warning: #C9844A;
+  /* 秋季橙 */
+  --color-danger: #A65D4E;
+  /* 陶土红 */
+
+  /* Natural Button Colors - 来自自然元素 */
+  --color-sky: #5B8A8A;
+  /* 青绿色 */
+  --color-sky-dark: #4A7575;
+  /* 深青绿色 */
+  --color-autumn: #9B8568;
+  /* 木色 */
+  --color-autumn-dark: #8B7355;
+  /* 深木色 */
+  --color-lavender: #c2a2d2;
+  /* 薰衣草紫 */
+  --color-lavender-dark: #b283b6;
+  /* 深薰衣草紫 */
+  --color-moss: #6B8E6B;
+  /* 苔藓绿 */
+  --color-rust: #B8765A;
+  /* 铁锈红 */
+
+  /* Font - 免费商用字体 */
+  --font-family: 'Noto Serif SC', 'Noto Serif', serif;
+  --font-family-mono: 'JetBrains Mono', 'Roboto Mono', 'SF Mono', 'Consolas', monospace;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 800;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Border Radius - Organic feel */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows - Soft organic shadows */
+  --shadow-sm: 0 2px 8px rgba(61, 50, 41, 0.08);
+  --shadow-md: 0 4px 16px rgba(61, 50, 41, 0.12);
+  --shadow-lg: 0 8px 32px rgba(61, 50, 41, 0.16);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-out;
+  --transition-normal: 0.3s ease-out;
+  --transition-slow: 0.5s ease-out;
+
+  /* Timer Backgrounds (color mixed with cream-dark) */
+  --color-section-completed-bg: color-mix(in oklch, var(--color-success) 12%, var(--color-cream-dark));
+  --color-section-active-bg: color-mix(in oklch, var(--color-secondary) 12%, var(--color-cream-dark));
+  --color-timer-section-bg: color-mix(in oklch, var(--color-warning) 15%, var(--color-cream-dark));
 }
 
 * {
@@ -181,19 +280,13 @@ body {
   box-sizing: border-box;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #fff;
-  color: #333;
-  line-height: 1.5;
-}
 
 .introduction-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
   min-height: calc(100vh - 200px);
-  background: #fff;
+  background: var(--color-cream);
 }
 
 .introduction-container header {
@@ -204,49 +297,39 @@ body {
 }
 
 .introduction-container h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 15px;
-  color: #1d1d1f;
+  color: var(--color-primary-dark);
   display: block;
 }
 
 .introduction-container .subtitle {
   font-size: 1.25rem;
   font-weight: 400;
-  color: #86868b;
+  color: var(--color-text-muted);
   max-width: 600px;
   margin: 0 auto 30px;
   line-height: 1.6;
 }
 
-.hero-image {
-  width: 100%;
-  max-width: 800px;
-  margin: 40px auto;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
 .cta-button {
   display: inline-block;
-  background: #0071e3;
+  background: var(--color-primary);
   color: white;
   padding: 12px 24px;
-  border-radius: 30px;
+  border-radius: var(--radius-full);
   text-decoration: none;
   font-weight: 400;
-  transition: all 0.3s ease;
-  border: 1px solid #0071e3;
+  transition: all var(--transition-normal);
+  border: none;
 }
 
 .cta-button:hover {
-  background: #0077ed;
-  border-color: #0077ed;
+  background: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 113, 227, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .introduction-container .section {
@@ -265,9 +348,9 @@ body {
 
 .introduction-container .section-title {
   font-weight: 600;
-  font-size: 3rem;
+  font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 60px;
-  color: #1d1d1f;
+  color: var(--color-primary-dark);
   display: block;
   text-align: center;
   unicode-bidi: isolate;
@@ -283,25 +366,25 @@ body {
 .introduction-container .feature-card {
   text-align: center;
   padding: 35px 30px;
-  background: #fff;
-  border-radius: 18px;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  border: 1px solid #e5e5e7;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: white;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--color-cream-dark);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
 }
 
 .introduction-container .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-  border-color: #d2d2d7;
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-earth);
 }
 
 .introduction-container .feature-icon {
   font-size: 2.75rem;
   margin-bottom: 18px;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-normal);
 }
 
 .introduction-container .feature-card:hover .feature-icon {
@@ -312,26 +395,27 @@ body {
   font-size: 1.375rem;
   font-weight: 600;
   margin-bottom: 12px;
-  color: #1d1d1f;
+  color: var(--color-text);
   display: block;
   letter-spacing: -0.3px;
-  transition: color 0.3s ease;
+  transition: color var(--transition-normal);
 }
 
 .introduction-container .feature-card:hover h3 {
-  color: #0071e3;
+  color: var(--color-primary);
 }
 
 .introduction-container .feature-card p {
-  color: #86868b;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
-  margin: 0;
-  transition: color 0.3s ease;
+  margin: 0 auto;
+  max-width: 65ch;
+  transition: color var(--transition-normal);
 }
 
 .introduction-container .feature-card:hover p {
-  color: #666;
+  color: var(--color-text-light);
 }
 
 .introduction-container .exam-types {
@@ -344,33 +428,33 @@ body {
 }
 
 .introduction-container .exam-type {
-  background: #f5f5f7;
+  background: var(--color-cream-dark);
   border: none;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   padding: 40px 35px;
   text-align: center;
   flex: 1;
   min-width: 280px;
   max-width: 320px;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
 }
 
 .introduction-container .exam-type:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
 }
 
 .introduction-container .exam-type h3 {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #1d1d1f;
+  color: var(--color-primary-dark);
   display: block;
 }
 
 .introduction-container .exam-type p {
   margin: 8px 0;
-  color: #666;
+  color: var(--color-text-light);
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -378,7 +462,7 @@ body {
 .introduction-container .exam-type ul {
   margin-top: 10px;
   padding-left: 20px;
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   line-height: 1.8;
 }
@@ -386,7 +470,7 @@ body {
 .introduction-container footer {
   text-align: center;
   padding: 40px 20px;
-  color: #86868b;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   width: 100%;
   box-sizing: border-box;
@@ -449,7 +533,7 @@ body {
   text-align: center;
   margin-top: 20px;
   font-size: 14px;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -458,12 +542,12 @@ body {
 }
 
 .icp-info a {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   text-decoration: none;
 }
 
 .icp-info a:hover {
-  color: #3498db;
+  color: var(--color-sky);
   text-decoration: underline;
 }
 
@@ -486,17 +570,17 @@ body {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: white;
   margin: 5% auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid var(--color-text-muted);
   width: 90%;
   max-width: 600px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .close {
-  color: #aaa;
+  color: var(--color-text-muted);
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -518,21 +602,23 @@ body {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.form-group>label {
   font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .form-group input {
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
   box-sizing: border-box;
 }
 
 /* 表单帮助文本样式 */
 .form-help-text {
   font-size: 0.7em;
-  color: #c0392b;
+  color: var(--color-danger);
   margin-top: 5px;
   font-style: normal;
 }
@@ -554,20 +640,32 @@ body {
 .time-input-display {
   flex: 1;
   padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  text-align: center;
-  background: #fff;
-  cursor: text;
   padding-right: 34px;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  background: var(--color-cream-dark);
+  color: var(--color-text);
+  cursor: text;
   /* 给右侧小三角留空间 */
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  font-variant-numeric: tabular-nums;
+}
+
+.time-input-display:focus {
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 2px rgba(91, 138, 138, 0.15);
+  outline: none;
 }
 
 .time-separator {
   font-size: 18px;
-  font-weight: bold;
-  color: #333;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  font-family: var(--font-family);
 }
 
 .picker-toggle-btn {
@@ -577,10 +675,10 @@ body {
   transform: translateY(-50%);
   width: 26px;
   height: 26px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: #fff;
-  color: #666;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
+  background: var(--color-cream-dark);
+  color: var(--color-text-muted);
   cursor: pointer;
   font-size: 12px;
   line-height: 1;
@@ -588,18 +686,18 @@ body {
   align-items: center;
   justify-content: center;
   user-select: none;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .picker-toggle-btn:hover {
-  border-color: #3498db;
-  color: #3498db;
-  background: #f8f9fa;
+  border-color: var(--color-sky);
+  color: var(--color-sky);
+  background: var(--color-cream);
 }
 
 .picker-toggle-btn.active {
-  border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 2px rgba(91, 138, 138, 0.15);
 }
 
 /* 统一给右侧小箭头添加旋转动画效果 */
@@ -631,49 +729,52 @@ body {
 
 .time-divider {
   font-size: 18px;
-  font-weight: bold;
-  color: #333;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
   user-select: none;
 }
 
 .time-select-trigger {
   width: 100%;
   padding: 4px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background: var(--color-cream-dark);
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
   min-height: 26px;
   box-sizing: border-box;
   user-select: none;
-  transition: all 0.2s;
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .time-select-trigger:hover {
-  border-color: #3498db;
-  background: #f8f9fa;
+  border-color: var(--color-sky);
+  background: var(--color-cream);
 }
 
 .time-select-trigger.active {
-  border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 2px rgba(91, 138, 138, 0.15);
 }
 
 .time-value {
   flex-grow: 1;
   text-align: center;
+  font-family: var(--font-family-mono);
 }
 
 .time-arrow {
   font-size: 12px;
-  color: #999;
-  transition: transform 0.2s;
+  color: var(--color-text-muted);
+  transition: transform var(--transition-fast);
   margin-left: 8px;
-  /* 增加箭头与数字之间的距离 */
 }
 
 .time-select-trigger.active .time-arrow {
@@ -685,15 +786,17 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: white;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
   z-index: 1000;
   max-height: 200px;
   overflow-y: auto;
   display: none;
   margin-top: 4px;
+  font-family: var(--font-family-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .time-select-dropdown.show {
@@ -709,12 +812,14 @@ body {
   cursor: pointer;
   text-align: center;
   font-size: 16px;
-  border-bottom: 1px solid #f0f0f0;
-  transition: background 0.2s;
+  font-family: var(--font-family-mono);
+  border-bottom: 1px solid var(--color-cream-dark);
+  transition: background var(--transition-fast);
   min-height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--color-text);
 }
 
 .time-option:last-child {
@@ -722,13 +827,13 @@ body {
 }
 
 .time-option:hover {
-  background: #f0f7ff;
+  background: var(--color-cream-dark);
 }
 
 .time-option.selected {
-  background: #3498db;
-  color: #fff;
-  font-weight: bold;
+  background: var(--color-sky);
+  color: white;
+  font-weight: var(--font-weight-semibold);
 }
 
 /* 自定义日期选择器样式 */
@@ -746,19 +851,29 @@ body {
 .date-input-display {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
   font-size: 16px;
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-medium);
   text-align: center;
-  background: #fff;
+  background: var(--color-cream-dark);
+  color: var(--color-text);
   box-sizing: border-box;
   cursor: text;
   padding-right: 34px;
   /* 给右侧小三角留空间 */
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  font-variant-numeric: tabular-nums;
+}
+
+.date-input-display:focus {
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 2px rgba(91, 138, 138, 0.15);
+  outline: none;
 }
 
 .date-dropdowns {
-  display: flex;
   gap: 5px;
   align-items: center;
   display: none;
@@ -778,51 +893,53 @@ body {
 
 .date-divider {
   font-size: 16px;
-  font-weight: bold;
-  color: #333;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
   user-select: none;
 }
 
 .date-select-trigger {
   width: 100%;
   padding: 4px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background: var(--color-cream-dark);
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
   min-height: 26px;
   box-sizing: border-box;
   user-select: none;
-  transition: all 0.2s;
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .date-select-trigger:hover {
-  border-color: #3498db;
-  background: #f8f9fa;
+  border-color: var(--color-sky);
+  background: var(--color-cream);
 }
 
 .date-select-trigger.active {
-  border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 2px rgba(91, 138, 138, 0.15);
 }
 
 .date-value {
-  font-weight: 500;
-  color: #333;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
   flex-grow: 1;
   text-align: center;
 }
 
 .date-arrow {
   font-size: 12px;
-  color: #999;
-  transition: transform 0.2s;
+  color: var(--color-text-muted);
+  transition: transform var(--transition-fast);
   margin-left: 8px;
-  /* 增加箭头与数字之间的距离 */
 }
 
 .date-select-trigger.active .date-arrow {
@@ -834,10 +951,10 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: white;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
   z-index: 1000;
   max-height: 200px;
   overflow-y: auto;
@@ -858,7 +975,7 @@ body {
   cursor: pointer;
   text-align: center;
   font-size: 16px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-cream-dark);
   transition: background 0.2s;
   min-height: 35px;
   display: flex;
@@ -871,13 +988,97 @@ body {
 }
 
 .date-option:hover {
-  background: #f0f7ff;
+  background: var(--color-cream-dark);
 }
 
 .date-option.selected {
-  background: #3498db;
-  color: #fff;
+  background: var(--color-sky);
+  color: white;
   font-weight: bold;
+}
+
+/* 统一选择器组件 — div-based，替代浏览器默认下拉 */
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-trigger {
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: var(--font-family);
+  background: white;
+  color: var(--color-text);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 40px;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  user-select: none;
+}
+
+.custom-select-trigger:hover {
+  border-color: var(--color-sky);
+}
+
+.custom-select-trigger.active {
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 2px rgba(91, 138, 138, 0.15);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.custom-select-arrow {
+  font-size: 10px;
+  color: var(--color-text-light);
+  transition: transform var(--transition-fast);
+  line-height: 1;
+}
+
+.custom-select-trigger.active .custom-select-arrow {
+  transform: rotate(180deg);
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--color-sky);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  display: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.custom-select-dropdown.show {
+  display: block;
+}
+
+.custom-select-option {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text);
+  transition: background-color var(--transition-fast);
+}
+
+.custom-select-option:hover {
+  background-color: var(--color-cream-dark);
+  color: var(--color-primary);
+}
+
+.custom-select-option.selected {
+  background-color: var(--color-sky);
+  color: white;
+  font-weight: 600;
 }
 
 /* 触摸设备优化 */
@@ -899,11 +1100,11 @@ body {
 /* 环节卡片样式 */
 /* 环节容器和标题行 */
 .sections-wrapper {
-  border: 2px solid #e5e5e7;
-  border-radius: 12px;
+  border: 2px solid var(--color-earth);
+  border-radius: var(--radius-lg);
   padding: 10px;
   /* 减小内边距 */
-  background: #fafafa;
+  background: var(--color-cream-dark);
 }
 
 .section-headers-row {
@@ -913,19 +1114,19 @@ body {
   gap: 15px;
   padding: 8px 10px;
   /* 减小padding */
-  background: #e5e5e7;
-  border-radius: 8px;
+  background: var(--color-cream-dark);
+  border-radius: var(--radius-md);
   margin-bottom: 12px;
   font-weight: 600;
   font-size: 0.85rem;
   /* 修改字体大小 */
-  color: #666;
+  color: var(--color-text-light);
   align-items: center;
 }
 
 .section-header-drag {
   text-align: center;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .section-header-name {
@@ -949,30 +1150,46 @@ body {
 }
 
 .section-card {
-  background: #fff;
-  border: 2px solid #3498db;
-  border-radius: 10px;
+  background: white;
+  border: 2px solid var(--color-sky);
+  border-radius: var(--radius-md);
   margin-bottom: 12px;
   padding: 6px 10px;
-  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
   cursor: move;
 }
 
 .section-card:hover {
   box-shadow: 0 4px 16px rgba(52, 152, 219, 0.25);
-  border-color: #2980b9;
+  border-color: var(--color-sky-dark);
   transform: translateY(-2px);
 }
 
 .section-card input {
   padding-left: 5px;
   height: 30px;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.section-card input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* 确保环节输入框字体统一 */
+.section-card .section-name,
+.section-card .section-duration,
+.section-card .section-description {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
 }
 
 .section-card.dragging {
   opacity: 0.5;
-  border-color: #3498db;
+  border-color: var(--color-sky);
   box-shadow: 0 8px 24px rgba(52, 152, 219, 0.3);
 }
 
@@ -990,7 +1207,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: grab;
-  color: #999;
+  color: var(--color-text-muted);
   user-select: none;
   font-size: 14px;
   padding: 0;
@@ -1035,7 +1252,7 @@ body {
   justify-content: center;
   cursor: pointer;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text-light);
   padding: 0;
   height: auto;
   min-height: unset;
@@ -1063,6 +1280,14 @@ body {
   display: block;
 }
 
+/* 统一复选框样式 - 绿色主题 */
+input[type="checkbox"] {
+  accent-color: var(--color-success);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
 .section-card-actions {
   display: flex;
   align-items: center;
@@ -1074,11 +1299,11 @@ body {
 
 .remove-section-btn {
   background-color: transparent;
-  color: #e74c3c;
-  border: 2px solid #e74c3c;
+  color: var(--color-danger);
+  border: 2px solid var(--color-danger);
   padding: 0;
   /* 修改为0 */
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
@@ -1093,15 +1318,15 @@ body {
 }
 
 .remove-section-btn:hover {
-  background-color: #e74c3c;
+  background-color: var(--color-danger);
   color: white;
   transform: scale(1.05);
 }
 
 /* 考试结束环节样式 */
 .end-section-card {
-  background: #f8f9fa;
-  border-color: #c0392b;
+  background: var(--color-cream-dark);
+  border-color: var(--color-danger);
   opacity: 0.9;
   cursor: default;
   padding: 6px 10px;
@@ -1110,17 +1335,17 @@ body {
 
 .end-section-card:hover {
   transform: none;
-  border-color: #c0392b;
+  border-color: var(--color-danger);
 }
 
 .end-section-card .section-name[readonly],
 .end-section-card .section-duration[readonly] {
-  background: #f0f0f0;
+  background: var(--color-cream-dark);
   cursor: not-allowed;
 }
 
 .end-section-card .section-description {
-  background: #fff;
+  background: white;
   cursor: text;
 }
 
@@ -1128,146 +1353,20 @@ body {
   cursor: not-allowed;
 }
 
-/* 环节标题行样式（已废弃，保留以防兼容性问题） */
-.section-headers {
-  display: none;
-}
-
-.section-header-item {
-  flex: 1;
-  font-size: 0.8em;
-  color: #555;
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.section-name-header {
-  flex: 2;
-}
-
-.section-duration-header {
-  flex: 0 0 60px;
-  /* 与对应的输入框保持一致的宽度 */
-}
-
-.section-description-header {
-  flex: 1;
-}
-
-.section-count-header {
-  flex: 1;
-  max-width: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.section-action-header {
-  flex: 1;
-  max-width: 80px;
-  text-align: center;
-  font-size: 0.8em;
-  color: #555;
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.section-item {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.section-item input {
-  flex: 1;
-  min-width: 0;
-  /* 允许输入框在flex容器中正确收缩 */
-  align-self: center;
-}
-
-.section-item .section-name {
-  flex: 2;
-  align-self: center;
-}
-
-.section-item .section-duration {
-  flex: 0 0 60px;
-  /* 不伸缩，固定宽度为60px */
-  align-self: center;
-}
-
-.section-item .section-description {
-  flex: 1;
-  align-self: center;
-}
-
-.section-item .count-in-total-label {
-  flex: 1;
-  max-width: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
-}
-
-.section-item .count-in-total-label input[type="checkbox"] {
-  width: auto;
-  margin: 0;
-}
-
-.section-actions {
-  flex: 1;
-  max-width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.remove-section-btn {
-  background-color: transparent;
-  color: #e74c3c;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  box-sizing: border-box;
-  text-decoration: underline;
-  width: 100%;
-  /* 让按钮占满容器宽度 */
-  max-width: 80px;
-  /* 与表头宽度保持一致 */
-}
-
-.remove-section-btn:hover {
-  background-color: transparent;
-  color: #c0392b;
-}
 
 .add-section-btn {
   flex: 1;
   padding: 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: bold;
   font-size: 14px;
   text-align: center;
   min-height: 40px;
   box-sizing: border-box;
-  background-color: #e67e22;
+  background-color: var(--color-autumn-dark);
   color: white;
-}
-
-.add-section-btn:hover {
-  background-color: #d35400;
 }
 
 .form-actions {
@@ -1289,7 +1388,7 @@ body {
   flex: 1;
   padding: 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: bold;
   font-size: 14px;
@@ -1298,53 +1397,45 @@ body {
 }
 
 #saveCustomExamBtn {
-  background-color: #27ae60;
+  background-color: var(--color-success);
   color: white;
-}
-
-#saveCustomExamBtn:hover {
-  background-color: #219653;
 }
 
 #applyCustomExamBtn {
-  background-color: #9b59b6;
+  background-color: var(--color-lavender-dark);
   color: white;
 }
 
-#applyCustomExamBtn:hover {
-  background-color: #8e44ad;
-}
-
 #backToMainBtn {
-  background-color: #3498db;
+  background-color: var(--color-sky);
   color: white;
 }
 
 #backToMainBtn:hover {
-  background-color: #2980b9;
+  background-color: var(--color-sky-dark);
 }
 
 /* 预设选择器样式 */
 .preset-selector {
   margin-top: 15px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f8f9fa;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-cream-dark);
 }
 
 .preset-selector label {
   display: block;
   margin-bottom: 5px;
-  font-weight: bold;
-  color: #2c3e50;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
 }
 
 .preset-selector select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
   box-sizing: border-box;
   font-size: 14px;
 }
@@ -1375,42 +1466,10 @@ body {
   gap: 15px;
 }
 
-.preset-selector-label {
-  font-weight: bold;
-  font-size: 14px;
-  color: #333;
-  flex-shrink: 0;
-}
-
 .preset-type-buttons {
   display: flex;
   gap: 8px;
   flex-shrink: 0;
-}
-
-.preset-type-btn {
-  padding: 10px 12px;
-  /* 修改上下padding为10px，使总高度约26px */
-  font-size: 12px;
-  border: 1px solid #ddd;
-  background: #fff;
-  color: #666;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 500;
-}
-
-.preset-type-btn:hover {
-  background: #f5f5f5;
-  border-color: #3498db;
-  color: #3498db;
-}
-
-.preset-type-btn.active {
-  background: #3498db;
-  color: #fff;
-  border-color: #3498db;
 }
 
 .preset-selector-dropdown {
@@ -1421,10 +1480,10 @@ body {
 .preset-selector-selected {
   width: 100%;
   padding: 10px;
-  background: #3498db;
+  background: var(--color-sky);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -1437,16 +1496,16 @@ body {
 }
 
 .preset-selector-selected:hover {
-  background-color: #2980b9;
+  background-color: var(--color-sky-dark);
 }
 
 .preset-selector-selected.custom-selected {
-  background-color: #f39c12;
+  background-color: var(--color-autumn);
   /* 选中状态背景色为橙色 */
 }
 
 .preset-selector-selected.custom-selected:hover {
-  background-color: #e67e22;
+  background-color: var(--color-autumn-dark);
   /* 悬停状态背景色为深橙色 */
 }
 
@@ -1461,10 +1520,10 @@ body {
   left: 0;
   right: 0;
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-earth);
   border-top: none;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-md);
   z-index: 1000;
   /* 确保下拉选项在最上层 */
   max-height: 300px;
@@ -1473,7 +1532,7 @@ body {
 }
 
 .preset-option-group {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-cream-dark);
 }
 
 .preset-option-group:last-child {
@@ -1482,22 +1541,22 @@ body {
 
 .option-group-title {
   padding: 10px 12px;
-  background-color: #f5f5f7;
+  background-color: var(--color-cream-dark);
   font-weight: 600;
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-light);
   text-align: left;
 }
 
 .preset-option {
   padding: 12px;
   cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-cream-dark);
   z-index: 1001;
   /* 确保选项在最上层 */
   font-size: 14px;
-  color: #333;
-  transition: background-color 0.2s;
+  color: var(--color-text);
+  transition: background-color var(--transition-normal);
 }
 
 .preset-option:last-child {
@@ -1505,14 +1564,14 @@ body {
 }
 
 .preset-option:hover {
-  background-color: #f5f5f7;
-  color: #0071e3;
+  background-color: var(--color-cream-dark);
+  color: var(--color-secondary);
 }
 
 .preset-option.disabled {
-  color: #aaa;
+  color: var(--color-text-muted);
   cursor: not-allowed;
-  background-color: #f9f9f9;
+  background-color: var(--color-cream);
 }
 
 /* 预设选择器横跨两栏样式 */
@@ -1526,6 +1585,8 @@ body {
   display: flex;
   justify-content: center;
   margin: 10px 0;
+  border-top: 2px solid var(--color-cream-dark);
+  padding-top: 20px;
 }
 
 /* 大屏幕设备下的样式 */
@@ -1545,151 +1606,74 @@ body {
 /* 已保存的考试配置列表样式 */
 .right-column h2 {
   margin-top: 0;
+  margin-bottom: 24px;
   font-size: 1.2em;
   display: block;
+  font-weight: 800;
 }
 
 .exam-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  background-color: #f8f9fa;
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-md);
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  background-color: var(--color-cream-dark);
 }
 
 .exam-item h3 {
   margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.1em;
+  margin-bottom: 8px;
+  font-size: 1em;
   display: block;
 }
 
 .exam-item p {
-  margin: 5px 0;
-  font-size: 0.9em;
-  color: #666;
+  margin: 4px 0;
+  font-size: 0.85em;
+  color: var(--color-text-light);
+  font-family: var(--font-family-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .exam-actions {
-  margin-top: 10px;
+  margin-top: 12px;
   display: flex;
   gap: 10px;
 }
 
 .exam-actions button {
   flex: 1;
-  padding: 10px;
+  padding: 6px 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
-  min-height: 40px;
+  min-height: 32px;
   box-sizing: border-box;
 }
 
 .edit-exam-btn {
-  background-color: #f39c12;
+  background-color: var(--color-autumn-dark);
   color: white;
-}
-
-.edit-exam-btn:hover {
-  background-color: #e67e22;
 }
 
 .apply-exam-btn {
-  background-color: #9b59b6;
+  background-color: var(--color-lavender-dark);
   color: white;
-}
-
-.apply-exam-btn:hover {
-  background-color: #8e44ad;
 }
 
 .delete-exam-btn {
-  background-color: #e74c3c;
+  background-color: var(--color-danger);
   color: white;
-}
-
-.delete-exam-btn:hover {
-  background-color: #c0392b;
 }
 
 .no-exams {
   text-align: center;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   font-style: italic;
   padding: 20px;
-}
-
-/* 响应式设计 */
-@media screen and (max-width: 600px) {
-  .section-item {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .section-item input,
-  .section-item .section-name,
-  .section-item .section-duration,
-  .section-item .section-description {
-    max-width: none;
-    width: 100%;
-  }
-
-  .exam-actions {
-    flex-direction: column;
-  }
-
-  /* 移动端隐藏标题行 */
-  .section-headers {
-    display: none;
-  }
-
-  /* 环节卡片响应式 */
-  .section-headers-row {
-    display: none;
-    /* 小屏幕隐藏标题行 */
-  }
-
-  .section-card-content {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .section-card-drag-handle {
-    order: -1;
-    justify-self: start;
-  }
-
-  .section-field-description {
-    grid-column: 1;
-  }
-
-  .section-card-actions {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .remove-section-btn {
-    width: auto;
-  }
-
-  /* 自定义考试页面表单按钮响应式 */
-  .form-actions-row {
-    flex-direction: column;
-  }
-
-  .form-actions button {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  /* 右侧栏在小屏幕上移到下方 */
-  .right-column {
-    margin-top: 20px;
-  }
 }
 
 /* 大屏幕设备的恢复提示 */
@@ -1697,7 +1681,7 @@ body {
   display: none;
   margin-top: 5px;
   padding-top: 10px;
-  border-top: 1px dashed #ddd;
+  border-top: 1px dashed var(--color-earth);
 }
 
 /* 响应式布局 - 当屏幕宽度小于等于800px时 */
@@ -1790,12 +1774,17 @@ body {
   .right-column {
     margin-top: 20px;
   }
+
+  /* 考试操作按钮垂直排列 */
+  .exam-actions {
+    flex-direction: column;
+  }
 }
 
 /* 响应式布局 - 当屏幕宽度大于800px时 */
 @media (min-width: 801px) {
   body {
-    background: #ffffff;
+    background: var(--color-cream);
     padding: 20px;
   }
 
@@ -1804,7 +1793,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background: #ffffff;
+    background: var(--color-cream);
     margin: 0 auto;
   }
 
@@ -1839,7 +1828,7 @@ body {
     text-align: center;
     margin: 5px auto 0;
     padding: 10px 0 0;
-    border-top: 1px dashed #ddd;
+    border-top: 1px dashed var(--color-earth);
   }
 
   /* 隐藏小屏幕切换按钮 */
@@ -1850,6 +1839,11 @@ body {
   /* 隐藏小屏幕功能介绍按钮 */
   #introButtonSmallScreen {
     display: none !important;
+  }
+
+  /* 大屏幕考试信息横幅 - 横跨两栏 */
+  .header-wrapper {
+    flex: 0 0 100%;
   }
 
   /* 大屏幕切换按钮居中 */
@@ -1875,110 +1869,99 @@ body {
 
 .exam-time-header {
   text-align: center;
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color: white;
   padding: 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   margin-bottom: 20px;
   font-size: 0.8em;
   font-weight: bold;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-md);
   line-height: 1.2;
   position: relative;
+  font-family: var(--font-family);
+  font-variant-numeric: tabular-nums;
 }
 
 .exam-countdown {
-  text-align: center;
-  font-size: 0.9em;
-  color: #f0f0f0;
-  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: normal;
-}
-
-.close-btn {
-  position: absolute;
-  top: -10px;
-  left: -5px;
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #8b0000;
-  /* 暗红色 */
-  background: transparent;
-  width: auto;
-  height: auto;
-  border-radius: 0;
-  display: none;
-  /* 默认隐藏 */
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  transition: color 0.3s;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.close-btn:hover {
-  color: #000000;
-  /* 悬停时变为黑色 */
-}
-
-/* 当鼠标靠近整个红色区域附近时显示关闭按钮 */
-.header-wrapper:hover .close-btn {
-  display: flex;
+  font-variant-numeric: tabular-nums;
 }
 
 h1 {
   text-align: center;
-  color: #2c3e50;
+  color: var(--color-primary-dark);
   margin-bottom: 20px;
   font-size: 2em;
   display: block;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* index.html 专用 h3 标题样式 - 与 design.html section h3 一致 */
+.skip-selector h3,
+.preset-selector-label,
+.display-settings-label {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 16px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .current-section {
-  background: #fff3cd;
-  border: 2px solid #ffeaa7;
+  background: color-mix(in srgb, var(--color-lavender) 20%, transparent);
+  border: 2px solid var(--color-lavender-dark);
   padding: 15px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   text-align: center;
   margin: 20px 0;
   font-size: 1.2em;
+  color: var(--color-text);
 }
 
 .real-time-display {
   text-align: center;
   font-size: 1.5em;
-  color: #27ae60;
+  color: var(--color-primary-dark);
   margin: 15px 0;
   padding: 15px;
-  background: #e8f5e8;
-  border-radius: 10px;
-  border: 2px solid #27ae60;
-  font-weight: bold;
+  background: var(--color-section-completed-bg);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 .timer-display {
   text-align: center;
   font-size: 1.5em;
-  font-weight: bold;
-  color: #e74c3c;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-secondary);
   margin: 15px 0;
   padding: 15px;
-  background: #fdeaea;
-  border-radius: 10px;
-  border: 2px solid #e74c3c;
+  background: var(--color-section-active-bg);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 .section-timer-display {
   text-align: center;
   font-size: 1.5em;
-  font-weight: bold;
-  color: #ff6600;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-warning);
   margin: 15px 0;
   padding: 15px;
-  background: #fff3e0;
-  border-radius: 10px;
-  border: 2px solid #ff9800;
+  background: var(--color-timer-section-bg);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-warning);
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 .countdown-container {
@@ -1994,18 +1977,19 @@ h1 {
   text-align: center;
   font-size: 1em;
   padding: 8px;
-  background: #e8f4fd;
-  border-radius: 8px;
-  border-left: 5px solid #3498db;
+  background: var(--color-section-completed-bg);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--color-primary);
   font-weight: bold;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .next-button {
   padding: 10px;
-  background: #e8f4fd;
-  color: #3498db;
-  border: 1px solid #3498db;
-  border-radius: 4px;
+  background: var(--color-cream-dark);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
@@ -2015,10 +1999,12 @@ h1 {
   justify-content: center;
   min-height: 40px;
   box-sizing: border-box;
+  transition: all var(--transition-normal);
 }
 
 .next-button:hover {
-  background: #d1e6f9;
+  background: var(--color-primary);
+  color: white;
 }
 
 .next-button:active {
@@ -2035,15 +2021,15 @@ h1 {
 
 .controls button {
   flex: 1;
-  background: #3498db;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
   text-align: center;
   min-height: 40px;
   box-sizing: border-box;
@@ -2051,56 +2037,110 @@ h1 {
 }
 
 .controls button:hover {
-  background: #2980b9;
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .controls button:disabled {
-  background: #bdc3c7;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
-.section-timeline {
-  margin: 30px 0;
+.section {
+  position: relative;
+  background: var(--color-cream-dark);
+  border-radius: var(--radius-md);
+  padding: 12px 12px 12px 32px;
+  margin: 0 0 15px 0;
+  border: none !important;
+  transition: all var(--transition-normal);
 }
 
-.section {
-  background: #f8f9fa;
-  margin: 10px 0;
-  padding: 10px 10px 10px 15px;
-  border-radius: 8px;
-  border-left: 5px solid #3498db;
-  position: relative;
-  transition: all 0.3s;
+.section:last-child {
+  margin-bottom: 0;
+}
+
+/* The vertical line connecting sections */
+.section:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 28px;
+  bottom: -15px;
+  /* Cover the 15px margin to connect strictly to the next section */
+  width: 2px;
+  background-color: var(--color-earth);
+  opacity: 0.3;
+  transition: all var(--transition-normal);
+  z-index: 1;
+}
+
+/* The dot */
+.section::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  /* Center dot (8px) at 16px to align with vertical line (x=15, w=2 -> center 16) */
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-earth);
+  transition: all var(--transition-normal);
+  z-index: 2;
 }
 
 .section.completed {
-  background: #f0f8f0;
-  border-left-color: #27ae60;
+  background: var(--color-section-completed-bg);
+}
+
+.section.completed::before {
+  background-color: var(--color-success);
+}
+
+.section.completed:not(:last-child)::after {
+  background-color: var(--color-success);
+  opacity: 0.6;
 }
 
 .section.active {
-  background: #fdeaea;
-  border-left-color: #e74c3c;
-  transform: scale(1.02);
+  background: var(--color-section-active-bg);
+  transform: scale(1.01);
+}
+
+.section.active::before {
+  background-color: var(--color-rust);
+  /* Aligned with Current badge color */
+  box-shadow: 0 0 0 3px rgba(184, 118, 90, 0.2);
+  transform: scale(1.2);
+}
+
+.section.active .section-title {
+  color: var(--color-rust);
 }
 
 .section-title {
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--color-text);
   margin-bottom: 5px;
   display: block;
   unicode-bidi: isolate;
 }
 
 .section-time {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   font-size: 0.9em;
+  font-family: var(--font-family-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .section-real-time {
-  color: #800080;
+  color: var(--color-secondary);
   font-weight: normal;
   font-size: 0.9em;
+  font-family: var(--font-family-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .section-status {
@@ -2108,54 +2148,57 @@ h1 {
   right: 15px;
   top: 15px;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-size: 0.8em;
 }
 
 .status-current {
-  background: #e74c3c;
-  color: #fff;
+  background: var(--color-rust);
+  color: white;
   padding: 3px 8px;
-  border-radius: 12px;
+  border-radius: var(--radius-full);
   font-weight: bold;
   font-size: 0.7em;
   border: none;
+  font-family: var(--font-family-mono);
 }
 
 .status-upcoming {
-  background: #3498db;
-  color: #fff;
+  background: var(--color-moss);
+  color: white;
   padding: 3px 8px;
-  border-radius: 12px;
+  border-radius: var(--radius-full);
   font-weight: bold;
   font-size: 0.7em;
   border: none;
+  font-family: var(--font-family-mono);
 }
 
 .status-completed {
-  background: #27ae60;
-  color: #fff;
+  background: var(--color-success);
+  color: white;
   padding: 3px 8px;
-  border-radius: 12px;
+  border-radius: var(--radius-full);
   font-weight: bold;
   font-size: 0.7em;
   border: none;
+  font-family: var(--font-family-mono);
 }
 
 .progress-bar {
   width: 100%;
-  height: 20px;
-  background: #ecf0f1;
-  border-radius: 10px;
+  height: 12px;
+  background: var(--color-cream-dark);
+  border-radius: var(--radius-full);
   margin: 20px 0;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #3498db, #2ecc71);
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-success) 100%);
   width: 0%;
-  transition: width 0.5s ease;
+  transition: width var(--transition-normal) ease-out;
 }
 
 .stats {
@@ -2166,21 +2209,24 @@ h1 {
 }
 
 .stat-item {
-  background: #f8f9fa;
+  background: var(--color-cream-dark);
   padding: 15px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   flex: 1;
   margin: 0 5px;
+  box-shadow: var(--shadow-sm);
 }
 
 .stat-number {
   font-size: 2em;
   font-weight: bold;
-  color: #3498db;
+  color: var(--color-primary);
+  font-family: var(--font-family-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .stat-label {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   font-size: 0.9em;
 }
 
@@ -2198,8 +2244,8 @@ h1 {
 .skip-selector select {
   width: 100%;
   padding: 8px 12px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-earth);
   font-size: 14px;
   box-sizing: border-box;
 }
@@ -2215,16 +2261,6 @@ h1 {
 /* 显示设置控件样式 */
 .inline-display-settings {
   width: 100%;
-}
-
-.display-settings-label {
-  font-size: 0.9em;
-  margin-right: 15px;
-  font-weight: bold;
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  height: 1.5em;
 }
 
 .setting-checkbox-horizontal {
@@ -2267,9 +2303,9 @@ h1 {
   align-items: center;
   /* 垂直居中对齐 */
   padding: 10px;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  border: 1px solid #eee;
+  background-color: var(--color-cream-dark);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-earth);
   margin-top: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -2283,14 +2319,14 @@ h1 {
   /* 上下内边距为0，使总高度约为18px */
   font-size: 0.8em;
   /* 缩小字体大小 */
-  color: #666;
-  /* 文字颜色改为灰色 */
+  color: var(--color-text-light);
+  /* 文字颜色改为柔和色 */
   font-weight: normal;
   /* 不加粗 */
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
+  background-color: var(--color-cream-dark);
+  border: 1px solid var(--color-earth);
   /* 边框1px */
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   height: 18px;
   /* 设定固定高度为18px */
@@ -2303,7 +2339,7 @@ h1 {
 }
 
 .reset-display-settings-btn:hover {
-  border: 1px solid #c0392b;
+  border: 1px solid var(--color-danger);
   /* 悬浮时使用深红色边框 */
 }
 
@@ -2312,9 +2348,9 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  border: 1px solid #eee;
+  background-color: var(--color-cream-dark);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-earth);
   margin-top: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -2350,13 +2386,13 @@ h1 {
 
 /* 底部区域样式 */
 .bottom-bar {
-  background-color: #f5f5f5;
-  /* 灰色背景进行区分 */
+  background-color: var(--color-cream-dark);
+  /* 浅色背景进行区分 */
   padding: 15px 0;
   margin-top: 15px;
   margin-left: -20px;
   margin-right: -20px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--color-earth);
   text-align: center;
   width: calc(100% + 40px);
   box-sizing: border-box;
@@ -2377,22 +2413,23 @@ h1 {
 
 /* 底部文本样式 */
 .footer-text {
-  color: #666;
-  /* 灰色文字 */
+  color: var(--color-text-light);
+  /* 柔和文字 */
   font-size: 14px;
   margin: 8px 0;
   cursor: pointer;
   display: block;
+  transition: color var(--transition-fast);
 }
 
 .footer-text:hover {
-  color: #007bff;
+  color: var(--color-primary);
 }
 
 .bottom-bar .icp-info {
   margin-top: 10px;
-  color: #888;
-  /* 灰色文字 */
+  color: var(--color-text-muted);
+  /* 柔和文字 */
   font-size: 12px;
   width: 100%;
   display: flex;
@@ -2402,19 +2439,21 @@ h1 {
 }
 
 .bottom-bar .icp-info a {
-  color: #888;
-  /* 灰色链接 */
+  color: var(--color-text-muted);
+  /* 柔和链接 */
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 .bottom-bar .icp-info a:hover {
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
 /* 恢复提示样式 */
 .bottom-bar .restore-hint {
-  color: #666;
-  /* 灰色文字 */
+  color: var(--color-text-light);
+  /* 柔和文字 */
   font-size: 14px;
   margin: 8px 0;
   cursor: pointer;
@@ -2422,86 +2461,6 @@ h1 {
 }
 
 .bottom-bar .restore-hint:hover {
-  color: #007bff;
+  color: var(--color-primary);
 }
 
-/* 已保存的考试配置列表样式 */
-.right-column h2 {
-  margin-top: 0;
-  font-size: 1.2em;
-  display: block;
-}
-
-.exam-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  background-color: #f8f9fa;
-}
-
-.exam-item h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.1em;
-  display: block;
-}
-
-.exam-item p {
-  margin: 5px 0;
-  font-size: 0.9em;
-  color: #666;
-}
-
-.exam-actions {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-.exam-actions button {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  text-align: center;
-  min-height: 40px;
-  box-sizing: border-box;
-}
-
-.edit-exam-btn {
-  background-color: #f39c12;
-  color: white;
-}
-
-.edit-exam-btn:hover {
-  background-color: #e67e22;
-}
-
-.apply-exam-btn {
-  background-color: #9b59b6;
-  color: white;
-}
-
-.apply-exam-btn:hover {
-  background-color: #8e44ad;
-}
-
-.delete-exam-btn {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.delete-exam-btn:hover {
-  background-color: #c0392b;
-}
-
-.no-exams {
-  text-align: center;
-  color: #7f8c8d;
-  font-style: italic;
-  padding: 20px;
-}

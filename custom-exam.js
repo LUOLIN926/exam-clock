@@ -1,5 +1,24 @@
 // 全局变量
-let customExams = [];
+let customExams = [
+  {
+    id: 1,
+    name: "参考预设：中期模拟考试",
+    startTime: "09:00",
+    date: "2026-06-20",
+    timeRange: "09:00 - 11:30",
+    totalMinutes: 150,
+    displaySettings: {
+      showCurrentTime: false,
+      showCountdownTimer: true,
+      showSectionTimer: true
+    },
+    sections: [
+      { name: "考前准备", duration: 10, description: "发卷及填写信息", countInTotal: true },
+      { name: "第一部分", duration: 60, description: "选择题模块", countInTotal: true },
+      { name: "第二部分", duration: 80, description: "主观题模块", countInTotal: true }
+    ]
+  }
+];
 let editingExamId = null; // 用于跟踪正在编辑的考试ID
 let activeDropdown = null; // 当前打开的下拉框
 let activePanel = null; // 当前打开的"下拉面板"（时间/日期整组）
@@ -585,7 +604,7 @@ function initializeDisplaySettings() {
   const countdownTimerCheckbox = document.getElementById('customShowCountdownTimer');
   const sectionTimerCheckbox = document.getElementById('customShowSectionTimer');
 
-  if (currentTimeCheckbox) currentTimeCheckbox.checked = true;
+  if (currentTimeCheckbox) currentTimeCheckbox.checked = false;
   if (countdownTimerCheckbox) countdownTimerCheckbox.checked = true;
   if (sectionTimerCheckbox) sectionTimerCheckbox.checked = true;
 }
