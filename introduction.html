@@ -4,7 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>功能介绍 - 考试时间模拟器</title>
+  <title>功能介绍 - CET-4/CET-6 考试时间模拟器</title>
+  
+  <!-- SEO 元数据 -->
+  <meta name="description" content="CET-4/CET-6 考试时间模拟器功能说明书。包含考前训练指南、答题时长规划建议、如何定制个性化模拟考场等详尽使用指南。">
+  <meta name="keywords" content="功能介绍,四六级模拟,备考策略,考试指导,时间分配,离线计时器">
+  <meta name="author" content="罗霖">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph 社交网络分享元数据 -->
+  <meta property="og:title" content="功能介绍 - CET-4/CET-6 考试时间模拟器">
+  <meta property="og:description" content="了解如何高效使用四六级时间模拟器，熟悉考场时间划分与考试节奏，助您备考一臂之力。">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="favicon.png">
+  <meta property="og:url" content="./introduction.html">
+  
+  <!-- 移动端 & PWA 配置 -->
+  <meta name="theme-color" content="#FAF8F5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="考试时间模拟器">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Favicon 图标链接 -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  
   <link rel="stylesheet" href="styles.css">
   <style>
     /* Design page specific styles */
@@ -437,6 +462,16 @@
       
     </div>
   </div>
+  <!-- Service Worker 注册 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker 注册成功:', reg.scope))
+          .catch(err => console.error('Service Worker 注册失败:', err));
+      });
+    }
+  </script>
 </body>
 
 </html>

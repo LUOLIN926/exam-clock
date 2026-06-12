@@ -237,8 +237,8 @@ body {
   /* 铁锈红 */
 
   /* Font - 免费商用字体 */
-  --font-family: 'Noto Serif SC', 'Noto Serif', serif;
-  --font-family-mono: 'JetBrains Mono', 'Roboto Mono', 'SF Mono', 'Consolas', monospace;
+  --font-family: 'Noto Serif SC', 'Noto Serif', Georgia, 'Nimbus Roman No9 L', 'Songti SC', 'Songti TC', 'STSong', 'SimSun', serif;
+  --font-family-mono: 'JetBrains Mono', 'Roboto Mono', 'SF Mono', 'Consolas', Menlo, Monaco, monospace;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;

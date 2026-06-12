@@ -4,9 +4,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>自定义考试 - 考试时间模拟器</title>
+  <title>自定义考试配置 - CET-4/CET-6 考试时间模拟器</title>
+  
+  <!-- SEO 元数据 -->
+  <meta name="description" content="自定义您的英语四六级模拟考试或任何其他自定义考试。设置开始时间、考试日期以及配置各科目的倒计时环节，并支持本地保存与快速切换。完全支持离线环境。">
+  <meta name="keywords" content="自定义考试,四六级模拟,考试流程配置,倒计时,备考工具,离线模式">
+  <meta name="author" content="罗霖">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph 社交网络分享元数据 -->
+  <meta property="og:title" content="自定义考试配置 - CET-4/CET-6 考试时间模拟器">
+  <meta property="og:description" content="一键定制模拟考试流程，灵活设置考试时段 and 倒计时，支持本地保存及离线使用。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="favicon.png">
+  <meta property="og:url" content="./custom-exam.html">
+  
+  <!-- 移动端 & PWA 配置 -->
+  <meta name="theme-color" content="#FAF8F5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="考试时间模拟器">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Favicon 图标链接 -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  
+  <!-- 字体连接与加速 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="iconfont/iconfont.css">
   <link rel="stylesheet" href="styles.css">
@@ -175,6 +203,16 @@
       
     </div>
   </div>
+  <!-- Service Worker 注册 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker 注册成功:', reg.scope))
+          .catch(err => console.error('Service Worker 注册失败:', err));
+      });
+    }
+  </script>
 </body>
 
 </html>
