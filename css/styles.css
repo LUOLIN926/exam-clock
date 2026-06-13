@@ -3,21 +3,15 @@ body {
   font-weight: var(--font-weight-regular);
   background:
     /* 微妙的有机纹理 - 使用CSS实现 */
-    radial-gradient(
-      ellipse at 20% 30%,
+    radial-gradient(ellipse at 20% 30%,
       rgba(107, 142, 99, 0.03) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 80% 70%,
+      transparent 50%),
+    radial-gradient(ellipse at 80% 70%,
       rgba(160, 82, 45, 0.03) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 50% 50%,
+      transparent 50%),
+    radial-gradient(ellipse at 50% 50%,
       rgba(139, 115, 85, 0.02) 0%,
-      transparent 70%
-    ),
+      transparent 70%),
     var(--color-cream);
   margin: 0;
   padding: 20px;
@@ -294,21 +288,15 @@ body {
   --transition-slow: 0.5s ease-out;
 
   /* Timer Backgrounds (color mixed with cream-dark) */
-  --color-section-completed-bg: color-mix(
-    in oklch,
-    var(--color-success) 12%,
-    var(--color-cream-dark)
-  );
-  --color-section-active-bg: color-mix(
-    in oklch,
-    var(--color-secondary) 12%,
-    var(--color-cream-dark)
-  );
-  --color-timer-section-bg: color-mix(
-    in oklch,
-    var(--color-warning) 15%,
-    var(--color-cream-dark)
-  );
+  --color-section-completed-bg: color-mix(in oklch,
+      var(--color-success) 12%,
+      var(--color-cream-dark));
+  --color-section-active-bg: color-mix(in oklch,
+      var(--color-secondary) 12%,
+      var(--color-cream-dark));
+  --color-timer-section-bg: color-mix(in oklch,
+      var(--color-warning) 15%,
+      var(--color-cream-dark));
 }
 
 * {
@@ -638,7 +626,18 @@ body {
   margin-bottom: 15px;
 }
 
-.form-group > label {
+.display-settings-group {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.display-settings-group>label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-group>label {
   font-weight: bold;
   display: block;
   margin-bottom: 8px;
@@ -1134,6 +1133,7 @@ body {
 
 /* 触摸设备优化 */
 @media (hover: none) and (pointer: coarse) {
+
   .time-select-trigger,
   .date-select-trigger {
     min-height: 48px;
@@ -1216,6 +1216,10 @@ body {
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
   cursor: move;
+}
+
+.section-card:last-child {
+  margin-bottom: 0;
 }
 
 .section-card:hover {
@@ -1338,9 +1342,7 @@ body {
 }
 
 /* 为确保兼容性，添加更具体的选择器 */
-.section-field.section-field-checkbox
-  .count-in-total-label
-  input[type="checkbox"] {
+.section-field.section-field-checkbox .count-in-total-label input[type="checkbox"] {
   width: 18px;
   height: 18px;
   margin: 0;
@@ -1752,6 +1754,7 @@ input[type="checkbox"] {
 
 /* 响应式布局 - 当屏幕宽度小于等于800px时 */
 @media (max-width: 800px) {
+
   /* 隐藏大屏幕切换按钮容器 */
   .toggle-exam-button-container {
     display: none !important;
@@ -1922,7 +1925,7 @@ input[type="checkbox"] {
     display: none;
   }
 
-  .exam-time-header > span {
+  .exam-time-header>span {
     white-space: nowrap;
   }
 
@@ -2029,11 +2032,9 @@ input[type="checkbox"] {
   align-items: center;
   gap: 8px;
   text-align: center;
-  background: linear-gradient(
-    135deg,
-    var(--color-primary) 0%,
-    var(--color-primary-dark) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--color-primary) 0%,
+      var(--color-primary-dark) 100%);
   color: white;
   padding: 8px 12px;
   border-radius: var(--radius-lg);
@@ -2363,11 +2364,9 @@ h1 {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    var(--color-primary) 0%,
-    var(--color-success) 100%
-  );
+  background: linear-gradient(90deg,
+      var(--color-primary) 0%,
+      var(--color-success) 100%);
   width: 0%;
   transition: width var(--transition-normal) ease-out;
 }
