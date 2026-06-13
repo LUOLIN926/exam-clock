@@ -86,13 +86,13 @@ ICP_HTML = f"""      <div class="icp-info">
           target="_blank">{ICP_GA_NUMBER}</a>
       </div>"""
 
-# index.html
+# index.html: inject ICP inside bottom-bar, after restoreHintLargeScreen
 with open("index.html", "r") as f:
     c = f.read()
-c = re.sub(r"(点击恢复倒数日期\n\s*</div>)", r"\1\n" + ICP_HTML, c, count=1)
+c = re.sub(r'(id="restoreHintLargeScreen"[^>]*>\s*\n\s*点击恢复倒数日期\s*\n\s*</div>)', r"\1\n" + ICP_HTML, c, count=1)
 with open("index.html", "w") as f:
     f.write(c)
-print("    index.html: ICP injected")
+print("    index.html: ICP injected into bottom-bar")
 
 # custom-exam.html
 with open("custom-exam.html", "r") as f:
