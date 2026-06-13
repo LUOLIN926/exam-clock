@@ -3,9 +3,21 @@ body {
   font-weight: var(--font-weight-regular);
   background:
     /* 微妙的有机纹理 - 使用CSS实现 */
-    radial-gradient(ellipse at 20% 30%, rgba(107, 142, 99, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(160, 82, 45, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(139, 115, 85, 0.02) 0%, transparent 70%),
+    radial-gradient(
+      ellipse at 20% 30%,
+      rgba(107, 142, 99, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      rgba(160, 82, 45, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(139, 115, 85, 0.02) 0%,
+      transparent 70%
+    ),
     var(--color-cream);
   margin: 0;
   padding: 20px;
@@ -40,7 +52,10 @@ body {
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
+  transition:
+    background var(--transition-normal),
+    transform var(--transition-fast),
+    box-shadow var(--transition-normal);
   width: 100%;
   max-width: 800px;
   border-radius: var(--radius-sm);
@@ -64,7 +79,10 @@ body {
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
+  transition:
+    background var(--transition-normal),
+    transform var(--transition-fast),
+    box-shadow var(--transition-normal);
   width: 100%;
   max-width: 800px;
   border-radius: var(--radius-md);
@@ -93,7 +111,9 @@ body {
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: background var(--transition-normal), transform var(--transition-fast);
+  transition:
+    background var(--transition-normal),
+    transform var(--transition-fast);
   width: 100%;
   border-radius: var(--radius-md);
   font-weight: bold;
@@ -189,56 +209,60 @@ body {
 
 :root {
   /* Organic/Natural Color Palette */
-  --color-primary: #4A6741;
+  --color-primary: #4a6741;
   /* 苔藓绿 - 主色 */
-  --color-primary-dark: #3A5334;
+  --color-primary-dark: #3a5334;
   /* 深苔藓绿 */
-  --color-primary-light: #6B8E63;
+  --color-primary-light: #6b8e63;
   /* 浅苔藓绿 */
-  --color-secondary: #A0522D;
+  --color-secondary: #a0522d;
   /* 赭石色 */
-  --color-accent: #8B7355;
+  --color-accent: #8b7355;
   /* 土棕色 */
-  --color-earth: #C4A77D;
+  --color-earth: #c4a77d;
   /* 沙土色 */
-  --color-cream: #FAF8F5;
+  --color-cream: #faf8f5;
   /* 奶油白背景 */
-  --color-cream-dark: #F5F2ED;
+  --color-cream-dark: #f5f2ed;
   /* 深奶油色 */
-  --color-text: #3D3229;
+  --color-text: #3d3229;
   /* 深棕色文字 */
-  --color-text-light: #6B5D4D;
+  --color-text-light: #6b5d4d;
   /* 浅棕色文字 */
-  --color-text-muted: #9A8B78;
+  --color-text-muted: #9a8b78;
   /* 柔和棕色 */
-  --color-success: #5B8C5A;
+  --color-success: #5b8c5a;
   /* 自然绿 */
-  --color-warning: #C9844A;
+  --color-warning: #c9844a;
   /* 秋季橙 */
-  --color-danger: #A65D4E;
+  --color-danger: #a65d4e;
   /* 陶土红 */
 
   /* Natural Button Colors - 来自自然元素 */
-  --color-sky: #5B8A8A;
+  --color-sky: #5b8a8a;
   /* 青绿色 */
-  --color-sky-dark: #4A7575;
+  --color-sky-dark: #4a7575;
   /* 深青绿色 */
-  --color-autumn: #9B8568;
+  --color-autumn: #9b8568;
   /* 木色 */
-  --color-autumn-dark: #8B7355;
+  --color-autumn-dark: #8b7355;
   /* 深木色 */
   --color-lavender: #c2a2d2;
   /* 薰衣草紫 */
   --color-lavender-dark: #b283b6;
   /* 深薰衣草紫 */
-  --color-moss: #6B8E6B;
+  --color-moss: #6b8e6b;
   /* 苔藓绿 */
-  --color-rust: #B8765A;
+  --color-rust: #b8765a;
   /* 铁锈红 */
 
   /* Font - 免费商用字体 */
-  --font-family: 'Noto Serif SC', 'Noto Serif', Georgia, 'Nimbus Roman No9 L', 'Songti SC', 'Songti TC', 'STSong', 'SimSun', serif;
-  --font-family-mono: 'JetBrains Mono', 'Roboto Mono', 'SF Mono', 'Consolas', Menlo, Monaco, monospace;
+  --font-family:
+    "Noto Serif SC", "Noto Serif", Georgia, "Nimbus Roman No9 L", "Songti SC",
+    "Songti TC", "STSong", "SimSun", serif;
+  --font-family-mono:
+    "JetBrains Mono", "Roboto Mono", "SF Mono", "Consolas", Menlo, Monaco,
+    monospace;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -270,9 +294,21 @@ body {
   --transition-slow: 0.5s ease-out;
 
   /* Timer Backgrounds (color mixed with cream-dark) */
-  --color-section-completed-bg: color-mix(in oklch, var(--color-success) 12%, var(--color-cream-dark));
-  --color-section-active-bg: color-mix(in oklch, var(--color-secondary) 12%, var(--color-cream-dark));
-  --color-timer-section-bg: color-mix(in oklch, var(--color-warning) 15%, var(--color-cream-dark));
+  --color-section-completed-bg: color-mix(
+    in oklch,
+    var(--color-success) 12%,
+    var(--color-cream-dark)
+  );
+  --color-section-active-bg: color-mix(
+    in oklch,
+    var(--color-secondary) 12%,
+    var(--color-cream-dark)
+  );
+  --color-timer-section-bg: color-mix(
+    in oklch,
+    var(--color-warning) 15%,
+    var(--color-cream-dark)
+  );
 }
 
 * {
@@ -280,7 +316,6 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
 
 .introduction-container {
   max-width: 1200px;
@@ -603,7 +638,7 @@ body {
   margin-bottom: 15px;
 }
 
-.form-group>label {
+.form-group > label {
   font-weight: bold;
   display: block;
   margin-bottom: 8px;
@@ -652,7 +687,9 @@ body {
   color: var(--color-text);
   cursor: text;
   /* 给右侧小三角留空间 */
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
   font-variant-numeric: tabular-nums;
 }
 
@@ -687,7 +724,10 @@ body {
   align-items: center;
   justify-content: center;
   user-select: none;
-  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .picker-toggle-btn:hover {
@@ -752,7 +792,10 @@ body {
   min-height: 26px;
   box-sizing: border-box;
   user-select: none;
-  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .time-select-trigger:hover {
@@ -864,7 +907,9 @@ body {
   cursor: text;
   padding-right: 34px;
   /* 给右侧小三角留空间 */
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
   font-variant-numeric: tabular-nums;
 }
 
@@ -916,7 +961,10 @@ body {
   min-height: 26px;
   box-sizing: border-box;
   user-select: none;
-  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .date-select-trigger:hover {
@@ -1018,7 +1066,9 @@ body {
   align-items: center;
   min-height: 40px;
   box-sizing: border-box;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
   user-select: none;
 }
 
@@ -1084,7 +1134,6 @@ body {
 
 /* 触摸设备优化 */
 @media (hover: none) and (pointer: coarse) {
-
   .time-select-trigger,
   .date-select-trigger {
     min-height: 48px;
@@ -1289,7 +1338,9 @@ body {
 }
 
 /* 为确保兼容性，添加更具体的选择器 */
-.section-field.section-field-checkbox .count-in-total-label input[type="checkbox"] {
+.section-field.section-field-checkbox
+  .count-in-total-label
+  input[type="checkbox"] {
   width: 18px;
   height: 18px;
   margin: 0;
@@ -1370,7 +1421,6 @@ input[type="checkbox"] {
 .end-section-card input[disabled] {
   cursor: not-allowed;
 }
-
 
 .add-section-btn {
   flex: 1;
@@ -1704,7 +1754,6 @@ input[type="checkbox"] {
 
 /* 响应式布局 - 当屏幕宽度小于等于800px时 */
 @media (max-width: 800px) {
-
   /* 隐藏大屏幕切换按钮容器 */
   .toggle-exam-button-container {
     display: none !important;
@@ -1845,6 +1894,10 @@ input[type="checkbox"] {
     gap: 12px;
   }
 
+  .inline-setting-checkboxes .setting-checkbox-horizontal {
+    flex: none;
+  }
+
   .inline-setting-header {
     flex-direction: row;
     align-items: center;
@@ -1857,7 +1910,7 @@ input[type="checkbox"] {
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .reset-display-settings-btn {
     align-self: flex-end;
   }
@@ -1978,7 +2031,11 @@ input[type="checkbox"] {
   align-items: center;
   gap: 8px;
   text-align: center;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
   color: white;
   padding: 8px 12px;
   border-radius: var(--radius-lg);
@@ -2041,7 +2098,7 @@ h1 {
   border-radius: var(--radius-lg);
   border: 2px solid var(--color-primary);
   font-weight: var(--font-weight-bold);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-variant-numeric: tabular-nums;
 }
 
@@ -2055,7 +2112,7 @@ h1 {
   background: var(--color-section-active-bg);
   border-radius: var(--radius-lg);
   border: 2px solid var(--color-secondary);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-variant-numeric: tabular-nums;
 }
 
@@ -2069,7 +2126,7 @@ h1 {
   background: var(--color-timer-section-bg);
   border-radius: var(--radius-lg);
   border: 2px solid var(--color-warning);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-variant-numeric: tabular-nums;
 }
 
@@ -2090,7 +2147,7 @@ h1 {
   border-radius: var(--radius-sm);
   border-left: 4px solid var(--color-primary);
   font-weight: bold;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 .next-button {
@@ -2138,7 +2195,10 @@ h1 {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  transition: background var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-normal);
+  transition:
+    background var(--transition-normal),
+    transform var(--transition-fast),
+    box-shadow var(--transition-normal);
   text-align: center;
   min-height: 40px;
   box-sizing: border-box;
@@ -2172,7 +2232,7 @@ h1 {
 
 /* The vertical line connecting sections */
 .section:not(:last-child)::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 15px;
   top: 28px;
@@ -2187,7 +2247,7 @@ h1 {
 
 /* The dot */
 .section::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 12px;
   /* Center dot (8px) at 16px to align with vertical line (x=15, w=2 -> center 16) */
@@ -2305,7 +2365,11 @@ h1 {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-success) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-success) 100%
+  );
   width: 0%;
   transition: width var(--transition-normal) ease-out;
 }
@@ -2408,7 +2472,10 @@ h1 {
   border-radius: var(--radius-sm);
   cursor: pointer;
   height: 28px;
-  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -2424,12 +2491,13 @@ h1 {
 .inline-setting-checkboxes {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: space-between;
   align-items: center;
+  gap: 20px;
 }
 
 .setting-checkbox-horizontal {
+  flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2580,4 +2648,3 @@ h1 {
 .bottom-bar .restore-hint:hover {
   color: var(--color-primary);
 }
-
