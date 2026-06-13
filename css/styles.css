@@ -1369,9 +1369,9 @@ input[type="checkbox"] {
 }
 
 .remove-section-btn {
-  background-color: transparent;
-  color: var(--color-danger);
-  border: none;
+  background-color: transparent !important;
+  color: var(--color-danger) !important;
+  border: none !important;
   padding: 0;
   cursor: pointer;
   font-size: 20px;
