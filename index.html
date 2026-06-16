@@ -181,11 +181,53 @@
               >
                 <div class="preset-option-group" id="officialPresetGroup">
                   <div class="option-group-title">官方预设</div>
-                  <div class="preset-option" data-value="cet4">
+                  
+                  <!-- 二级标题: CET -->
+                  <div class="preset-level2-title">CET</div>
+                  <div class="preset-option level2-child" data-value="cet4">
                     CET-4 (大学英语四级)
                   </div>
-                  <div class="preset-option" data-value="cet6">
+                  <div class="preset-option level2-child" data-value="cet6">
                     CET-6 (大学英语六级)
+                  </div>
+                  
+                  <!-- 二级标题: 高考 -->
+                  <div class="preset-level2-title">高考</div>
+                  
+                  <!-- 三级标题: 6月7日 -->
+                  <div class="preset-level3-title">6月7日</div>
+                  <div class="preset-option level3-child" data-value="gaokao_yuwen">
+                    语文 (9:00-11:30)
+                  </div>
+                  <div class="preset-option level3-child" data-value="gaokao_shuxue">
+                    数学 (15:00-17:00)
+                  </div>
+                  
+                  <!-- 三级标题: 6月8日 -->
+                  <div class="preset-level3-title">6月8日</div>
+                  <div class="preset-option level3-child" data-value="gaokao_wuli">
+                    物理 (9:00-10:15)
+                  </div>
+                  <div class="preset-option level3-child" data-value="gaokao_lishi">
+                    历史 (9:00-10:15)
+                  </div>
+                  <div class="preset-option level3-child" data-value="gaokao_waiyu">
+                    外语 (15:00-17:00)
+                  </div>
+                  
+                  <!-- 三级标题: 6月9日 -->
+                  <div class="preset-level3-title">6月9日</div>
+                  <div class="preset-option level3-child" data-value="gaokao_huaxue">
+                    化学 (8:30-9:45)
+                  </div>
+                  <div class="preset-option level3-child" data-value="gaokao_dili">
+                    地理 (11:00-12:15)
+                  </div>
+                  <div class="preset-option level3-child" data-value="gaokao_zhengzhi">
+                    思想政治 (14:30-15:45)
+                  </div>
+                  <div class="preset-option level3-child" data-value="gaokao_shengwu">
+                    生物学 (17:00-18:15)
                   </div>
                 </div>
                 <div
@@ -309,7 +351,7 @@
 
       // 处理考试预设选择变化
       function handlePresetChange(value) {
-        if (value === "cet4" || value === "cet6") {
+        if (value in officialExams) {
           // 官方预设
           currentExamType = value;
           updateExamConfig(officialExams[value]);
@@ -319,8 +361,7 @@
           localStorage.setItem("lastPresetType", "official");
 
           // 更新显示的预设名称
-          const presetName =
-            value === "cet4" ? "CET-4 (大学英语四级)" : "CET-6 (大学英语六级)";
+          const presetName = officialExams[value].name;
           document.getElementById("selectedPreset").innerHTML =
             `<span>${presetName}</span><span class="dropdown-arrow">▼</span>`;
           // 移除自定义选中样式
@@ -530,6 +571,13 @@
               document
                 .getElementById("selectedPreset")
                 .classList.add("custom-selected");
+            }
+          } else {
+            // 恢复官方预设
+            const lastOfficialPreset =
+              localStorage.getItem("lastOfficialPreset") || "cet4";
+            if (window.officialExams && lastOfficialPreset in window.officialExams) {
+              handlePresetChange(lastOfficialPreset);
             }
           }
         }, 0);

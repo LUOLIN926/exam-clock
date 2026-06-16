@@ -102,6 +102,340 @@ const cet6Sections = [
   },
 ];
 
+// ==================== 高考预设（广东 3+1+2 模式）====================
+
+// 6月7日 - 语文 9:00-11:30（150分钟）
+const gaokaoYuwen = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "9:00-9:05",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "9:05-9:10",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 140,
+    end: 150,
+    description: "现代文阅读、古代诗文、语言文字运用、写作",
+    realTime: "9:10-11:30",
+  },
+  {
+    name: "考试结束",
+    start: 150,
+    duration: 0,
+    end: 150,
+    description: "收试卷和答题卡",
+    realTime: "11:30",
+  },
+];
+
+// 6月7日 - 数学 15:00-17:00（120分钟）
+const gaokaoShuxue = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "15:00-15:05",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "15:05-15:10",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 110,
+    end: 120,
+    description: "选择题、填空题、解答题",
+    realTime: "15:10-17:00",
+  },
+  {
+    name: "考试结束",
+    start: 120,
+    duration: 0,
+    end: 120,
+    description: "收试卷和答题卡",
+    realTime: "17:00",
+  },
+];
+
+// 6月8日 - 物理 9:00-10:15（75分钟）
+const gaokaoWuli = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "9:00-9:05",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "9:05-9:10",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 65,
+    end: 75,
+    description: "选择题、实验题、计算题",
+    realTime: "9:10-10:15",
+  },
+  {
+    name: "考试结束",
+    start: 75,
+    duration: 0,
+    end: 75,
+    description: "收试卷和答题卡",
+    realTime: "10:15",
+  },
+];
+
+// 6月8日 - 历史 9:00-10:15（75分钟）
+const gaokaoLishi = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "9:00-9:05",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "9:05-9:10",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 65,
+    end: 75,
+    description: "选择题、材料分析题、论述题",
+    realTime: "9:10-10:15",
+  },
+  {
+    name: "考试结束",
+    start: 75,
+    duration: 0,
+    end: 75,
+    description: "收试卷和答题卡",
+    realTime: "10:15",
+  },
+];
+
+// 6月8日 - 外语 15:00-17:00（120分钟）
+const gaokaoWaiyu = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "15:00-15:05",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "15:05-15:10",
+  },
+  {
+    name: "听力",
+    start: 10,
+    duration: 20,
+    end: 30,
+    description: "听力理解（边听边涂答题卡）",
+    realTime: "15:10-15:30",
+  },
+  {
+    name: "笔试",
+    start: 30,
+    duration: 90,
+    end: 120,
+    description: "阅读理解、完形填空、语法填空、书面表达",
+    realTime: "15:30-17:00",
+  },
+  {
+    name: "考试结束",
+    start: 120,
+    duration: 0,
+    end: 120,
+    description: "收试卷和答题卡",
+    realTime: "17:00",
+  },
+];
+
+// 6月9日 - 化学 8:30-9:45（75分钟）
+const gaokaoHuaxue = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "8:30-8:35",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "8:35-8:40",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 65,
+    end: 75,
+    description: "选择题、非选择题",
+    realTime: "8:40-9:45",
+  },
+  {
+    name: "考试结束",
+    start: 75,
+    duration: 0,
+    end: 75,
+    description: "收试卷和答题卡",
+    realTime: "9:45",
+  },
+];
+
+// 6月9日 - 地理 11:00-12:15（75分钟）
+const gaokaoDili = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "11:00-11:05",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "11:05-11:10",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 65,
+    end: 75,
+    description: "选择题、综合题",
+    realTime: "11:10-12:15",
+  },
+  {
+    name: "考试结束",
+    start: 75,
+    duration: 0,
+    end: 75,
+    description: "收试卷和答题卡",
+    realTime: "12:15",
+  },
+];
+
+// 6月9日 - 思想政治 14:30-15:45（75分钟）
+const gaokaoZhengzhi = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "14:30-14:35",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "14:35-14:40",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 65,
+    end: 75,
+    description: "选择题、非选择题",
+    realTime: "14:40-15:45",
+  },
+  {
+    name: "考试结束",
+    start: 75,
+    duration: 0,
+    end: 75,
+    description: "收试卷和答题卡",
+    realTime: "15:45",
+  },
+];
+
+// 6月9日 - 生物学 17:00-18:15（75分钟）
+const gaokaoShengwu = [
+  {
+    name: "考前准备1",
+    start: 0,
+    duration: 5,
+    end: 5,
+    description: "发放答题卡、草稿纸、条形码，填写答题卡上个人信息",
+    realTime: "17:00-17:05",
+  },
+  {
+    name: "考前准备2",
+    start: 5,
+    duration: 5,
+    end: 10,
+    description: "发放试卷，不允许作答",
+    realTime: "17:05-17:10",
+  },
+  {
+    name: "考试作答",
+    start: 10,
+    duration: 65,
+    end: 75,
+    description: "选择题、非选择题",
+    realTime: "17:10-18:15",
+  },
+  {
+    name: "考试结束",
+    start: 75,
+    duration: 0,
+    end: 75,
+    description: "收试卷和答题卡",
+    realTime: "18:15",
+  },
+];
+
 // 官方考试预设
 const officialExams = {
   cet4: {
@@ -111,6 +445,7 @@ const officialExams = {
     examDate: "2026年6月13日上午",
     examTimeRange: "9:00 - 11:20",
     examStartTime: { hours: 9, minutes: 0 },
+    targetDate: "2026-06-13T09:00:00",
   },
   cet6: {
     name: "CET-6",
@@ -119,6 +454,91 @@ const officialExams = {
     examDate: "2026年6月13日下午",
     examTimeRange: "15:00 - 17:25",
     examStartTime: { hours: 15, minutes: 0 },
+    targetDate: "2026-06-13T15:00:00",
+  },
+  // 高考 - 6月7日
+  gaokao_yuwen: {
+    name: "高考 · 语文",
+    sections: gaokaoYuwen,
+    totalTime: 150 * 60,
+    examDate: "6月7日上午",
+    examTimeRange: "9:00 - 11:30",
+    examStartTime: { hours: 9, minutes: 0 },
+    targetDate: "2027-06-07T09:00:00",
+  },
+  gaokao_shuxue: {
+    name: "高考 · 数学",
+    sections: gaokaoShuxue,
+    totalTime: 120 * 60,
+    examDate: "6月7日下午",
+    examTimeRange: "15:00 - 17:00",
+    examStartTime: { hours: 15, minutes: 0 },
+    targetDate: "2027-06-07T15:00:00",
+  },
+  // 高考 - 6月8日
+  gaokao_wuli: {
+    name: "高考 · 物理",
+    sections: gaokaoWuli,
+    totalTime: 75 * 60,
+    examDate: "6月8日上午",
+    examTimeRange: "9:00 - 10:15",
+    examStartTime: { hours: 9, minutes: 0 },
+    targetDate: "2027-06-08T09:00:00",
+  },
+  gaokao_lishi: {
+    name: "高考 · 历史",
+    sections: gaokaoLishi,
+    totalTime: 75 * 60,
+    examDate: "6月8日上午",
+    examTimeRange: "9:00 - 10:15",
+    examStartTime: { hours: 9, minutes: 0 },
+    targetDate: "2027-06-08T09:00:00",
+  },
+  gaokao_waiyu: {
+    name: "高考 · 外语",
+    sections: gaokaoWaiyu,
+    totalTime: 120 * 60,
+    examDate: "6月8日下午",
+    examTimeRange: "15:00 - 17:00",
+    examStartTime: { hours: 15, minutes: 0 },
+    targetDate: "2027-06-08T15:00:00",
+  },
+  // 高考 - 6月9日
+  gaokao_huaxue: {
+    name: "高考 · 化学",
+    sections: gaokaoHuaxue,
+    totalTime: 75 * 60,
+    examDate: "6月9日",
+    examTimeRange: "8:30 - 9:45",
+    examStartTime: { hours: 8, minutes: 30 },
+    targetDate: "2027-06-09T08:30:00",
+  },
+  gaokao_dili: {
+    name: "高考 · 地理",
+    sections: gaokaoDili,
+    totalTime: 75 * 60,
+    examDate: "6月9日",
+    examTimeRange: "11:00 - 12:15",
+    examStartTime: { hours: 11, minutes: 0 },
+    targetDate: "2027-06-09T11:00:00",
+  },
+  gaokao_zhengzhi: {
+    name: "高考 · 思想政治",
+    sections: gaokaoZhengzhi,
+    totalTime: 75 * 60,
+    examDate: "6月9日",
+    examTimeRange: "14:30 - 15:45",
+    examStartTime: { hours: 14, minutes: 30 },
+    targetDate: "2027-06-09T14:30:00",
+  },
+  gaokao_shengwu: {
+    name: "高考 · 生物学",
+    sections: gaokaoShengwu,
+    totalTime: 75 * 60,
+    examDate: "6月9日",
+    examTimeRange: "17:00 - 18:15",
+    examStartTime: { hours: 17, minutes: 0 },
+    targetDate: "2027-06-09T17:00:00",
   },
 };
 
@@ -219,7 +639,12 @@ if (isNaN(timeLeft) || timeLeft <= 0) {
 // 确保examStartTime是有效日期
 if (!(examStartTime instanceof Date) || isNaN(examStartTime.getTime())) {
   examStartTime = new Date();
-  examStartTime.setHours(currentExamType === "cet4" ? 9 : 15, 0, 0, 0);
+  const fallbackConfig = officialExams[currentExamType];
+  if (fallbackConfig) {
+    examStartTime.setHours(fallbackConfig.examStartTime.hours, fallbackConfig.examStartTime.minutes, 0, 0);
+  } else {
+    examStartTime.setHours(9, 0, 0, 0);
+  }
 }
 
 // 初始化全局变量
@@ -240,7 +665,7 @@ function initializeGlobals() {
     officialExams.cet4.examTimeRange;
 
   // Calculate days left
-  const targetDate = new Date("2026-06-13T09:00:00");
+  const targetDate = new Date(officialExams.cet4.targetDate);
   const now = new Date();
   const diffTime = targetDate - now;
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -280,7 +705,12 @@ function getRealTime(currentTime) {
   // 确保examStartTime是有效的日期对象
   if (!(examStartTime instanceof Date) || isNaN(examStartTime.getTime())) {
     examStartTime = new Date();
-    examStartTime.setHours(currentExamType === "cet4" ? 9 : 15, 0, 0, 0);
+    const fallbackConfig = officialExams[currentExamType];
+    if (fallbackConfig) {
+      examStartTime.setHours(fallbackConfig.examStartTime.hours, fallbackConfig.examStartTime.minutes, 0, 0);
+    } else {
+      examStartTime.setHours(9, 0, 0, 0);
+    }
   }
 
   const actualTime = new Date(examStartTime.getTime() + currentTime * 1000);
@@ -634,17 +1064,6 @@ function nextSection() {
   updateSectionList();
 }
 
-function toggleExamType() {
-  // 切换考试类型
-  if (currentExamType === "cet4") {
-    currentExamType = "cet6";
-  } else {
-    currentExamType = "cet4";
-  }
-
-  // 更新考试配置
-  updateExamConfig(officialExams[currentExamType]);
-}
 
 function updateExamConfig(examConfig) {
   // 更新全局变量
@@ -670,7 +1089,8 @@ function updateExamConfig(examConfig) {
 
   // Calculate days left
   const targetDateStr =
-    examConfig.name === "CET-6" ? "2026-06-13T15:00:00" : "2026-06-13T09:00:00";
+    examConfig.targetDate ||
+    (examConfig.name === "CET-6" ? "2026-06-13T15:00:00" : "2026-06-13T09:00:00");
   const targetDate = new Date(targetDateStr);
   const now = new Date();
   const diffTime = targetDate - now;
@@ -932,6 +1352,22 @@ function applyCustomExamConfig(customExam) {
   resetExam();
   updateSectionOptions();
   updateSectionList();
+
+  // 更新天数倒计时
+  if (customExam.date) {
+    const targetDate = new Date(customExam.date);
+    const now = new Date();
+    if (customExam.startTime) {
+      const [startH, startM] = customExam.startTime.split(":").map(Number);
+      targetDate.setHours(startH, startM, 0, 0);
+    }
+    const diffTime = targetDate - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("examCountdown").textContent =
+      `距离考试还有 ${diffDays > 0 ? diffDays : 0} 天`;
+  } else {
+    document.getElementById("examCountdown").textContent = "距离考试还有 0 天";
+  }
 
   // 如果有自定义的显示设置，则应用它们
   if (customExam.displaySettings) {
