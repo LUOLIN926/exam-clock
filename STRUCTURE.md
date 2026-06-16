@@ -3,7 +3,7 @@
 ## 目录结构
 
 ```
-CET-4-practice-clock/
+exam-practice-clock/
 ├── css/
 │   └── styles.css
 ├── js/
@@ -30,7 +30,7 @@ CET-4-practice-clock/
 
 ### js/main/
 
-- `script.js`: 主页面逻辑，包含 CET-4/CET-6 考试模拟的主要功能
+- `script.js`: 主页面逻辑，包含内置考试预设与考试模拟的核心倒计时功能
 
 ### js/custom-exam/
 
@@ -38,7 +38,7 @@ CET-4-practice-clock/
 
 ### html/
 
-- `index.html`: 主页面，CET-4/CET-6 考试时间模拟器
+- `index.html`: 主页面，考试时间模拟器
 - `custom-exam.html`: 自定义考试配置页面
 - `introduction.html`: 项目介绍页面
 
