@@ -1932,14 +1932,29 @@ input[type="checkbox"] {
   }
 
   /* 响应式显示设置 */
+  .inline-display-settings {
+    padding: 14px;
+  }
+
   .inline-setting-checkboxes {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: stretch;
+    gap: 4px;
   }
 
   .inline-setting-checkboxes .setting-checkbox-horizontal {
     flex: none;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+  }
+
+  .inline-setting-checkboxes .setting-checkbox-horizontal:hover {
+    background-color: var(--color-cream);
+  }
+
+  .setting-checkbox-horizontal span {
+    white-space: nowrap;
   }
 
   .inline-setting-header {
@@ -1949,14 +1964,16 @@ input[type="checkbox"] {
 }
 
 @media (max-width: 480px) {
-  .inline-setting-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+  .inline-display-settings .display-settings-label {
+    font-size: 0.85em;
+    letter-spacing: 0.3px;
   }
 
   .reset-display-settings-btn {
-    align-self: flex-end;
+    font-size: 0.8em;
+    padding: 4px 10px;
+    height: 26px;
+    flex-shrink: 0;
   }
 
   .exam-time-header {
@@ -2566,6 +2583,63 @@ h1 {
 
 .setting-checkbox-horizontal:hover span {
   color: var(--color-text);
+}
+
+/* Keep mobile display-settings overrides after the base rules so they win. */
+@media (max-width: 800px) {
+  .inline-display-settings {
+    padding: 14px;
+  }
+
+  .inline-setting-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .inline-setting-checkboxes {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .inline-setting-checkboxes .setting-checkbox-horizontal {
+    width: 100%;
+    flex: none;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+  }
+
+  .inline-setting-checkboxes .setting-checkbox-horizontal:hover {
+    background-color: var(--color-cream);
+  }
+
+  .inline-setting-checkboxes .setting-checkbox-horizontal input[type="checkbox"] {
+    flex-shrink: 0;
+  }
+
+  .setting-checkbox-horizontal span {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 480px) {
+  .inline-display-settings .display-settings-label {
+    font-size: 0.85em;
+    letter-spacing: 0.3px;
+    min-width: 0;
+  }
+
+  .reset-display-settings-btn {
+    flex: 0 0 auto;
+    font-size: 0.8em;
+    padding: 4px 10px;
+    height: 26px;
+  }
 }
 
 /* 竖向显示设置控件样式 */
