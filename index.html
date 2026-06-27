@@ -179,56 +179,17 @@
                 id="presetOptions"
                 style="display: none"
               >
+                <!-- 我的收藏分组 -->
+                <div class="preset-option-group" id="favoritePresetGroup" style="display: none;">
+                  <div class="option-group-title">我的收藏</div>
+                  <div id="favoritePresetOptions">
+                    <!-- 收藏选项由JS生成 -->
+                  </div>
+                </div>
+
                 <div class="preset-option-group" id="officialPresetGroup">
                   <div class="option-group-title">官方预设</div>
-                  
-                  <!-- 二级标题: CET -->
-                  <div class="preset-level2-title">CET</div>
-                  <div class="preset-option level2-child" data-value="cet4">
-                    CET-4 (大学英语四级)
-                  </div>
-                  <div class="preset-option level2-child" data-value="cet6">
-                    CET-6 (大学英语六级)
-                  </div>
-                  
-                  <!-- 二级标题: 高考 -->
-                  <div class="preset-level2-title">高考</div>
-                  
-                  <!-- 三级标题: 6月7日 -->
-                  <div class="preset-level3-title">6月7日</div>
-                  <div class="preset-option level3-child" data-value="gaokao_yuwen">
-                    语文 (9:00-11:30)
-                  </div>
-                  <div class="preset-option level3-child" data-value="gaokao_shuxue">
-                    数学 (15:00-17:00)
-                  </div>
-                  
-                  <!-- 三级标题: 6月8日 -->
-                  <div class="preset-level3-title">6月8日</div>
-                  <div class="preset-option level3-child" data-value="gaokao_wuli">
-                    物理 (9:00-10:15)
-                  </div>
-                  <div class="preset-option level3-child" data-value="gaokao_lishi">
-                    历史 (9:00-10:15)
-                  </div>
-                  <div class="preset-option level3-child" data-value="gaokao_waiyu">
-                    外语 (15:00-17:00)
-                  </div>
-                  
-                  <!-- 三级标题: 6月9日 -->
-                  <div class="preset-level3-title">6月9日</div>
-                  <div class="preset-option level3-child" data-value="gaokao_huaxue">
-                    化学 (8:30-9:45)
-                  </div>
-                  <div class="preset-option level3-child" data-value="gaokao_dili">
-                    地理 (11:00-12:15)
-                  </div>
-                  <div class="preset-option level3-child" data-value="gaokao_zhengzhi">
-                    思想政治 (14:30-15:45)
-                  </div>
-                  <div class="preset-option level3-child" data-value="gaokao_shengwu">
-                    生物学 (17:00-18:15)
-                  </div>
+                  <!-- 二级/三级预设选项将由JavaScript动态生成 -->
                 </div>
                 <div
                   class="preset-option-group"
@@ -245,7 +206,7 @@
           </div>
         </div>
 
-        <!-- 自定义考试按钮 -->
+        <!-- 自定义考试按钮与官方预设市场按钮 -->
         <div class="toggle-exam-button-container">
           <button
             id="customExamBtn"
@@ -253,6 +214,13 @@
             class="toggle-exam-button"
           >
             自定义考试设置
+          </button>
+          <button
+            id="presetMarketBtn"
+            onclick="openPresetMarket()"
+            class="toggle-exam-button preset-market-btn"
+          >
+            官方预设市场
           </button>
         </div>
 
@@ -479,11 +447,13 @@
 
         // 使用事件委托为所有预设选项添加点击事件
         options.addEventListener("click", function (e) {
+          const option = e.target.closest(".preset-option");
           if (
-            e.target.classList.contains("preset-option") &&
-            !e.target.classList.contains("disabled")
+            option &&
+            !option.classList.contains("disabled") &&
+            !e.target.classList.contains("preset-fav-star")
           ) {
-            const value = e.target.getAttribute("data-value");
+            const value = option.getAttribute("data-value");
             handlePresetChange(value);
           }
         });
@@ -541,12 +511,462 @@
         populateCustomPresets();
       });
     </script>
+
+    <!-- 官方预设市场模态框 -->
+    <div class="market-modal-backdrop" id="presetMarketModal" style="display: none;" onclick="handleMarketBackdropClick(event)">
+      <div class="market-modal-card" onclick="event.stopPropagation()">
+        <div class="market-modal-header">
+          <h2>官方预设市场 / Official Preset Market</h2>
+          <button class="market-modal-close" onclick="closePresetMarket()">&times;</button>
+        </div>
+        <div class="market-modal-search-bar">
+          <input type="text" id="marketSearchInput" placeholder="搜索官方预设... / Search presets..." oninput="filterMarketPresets()" />
+          <span class="market-favorites-count" id="marketFavCount">已收藏: 0/10</span>
+        </div>
+        
+        <div class="market-content-layout">
+          <div class="market-categories-sidebar" id="marketCategoriesSidebar">
+            <!-- 分类按钮由JS生成 -->
+          </div>
+          <div class="market-presets-grid" id="marketPresetsGrid">
+            <!-- 预设卡片由JS生成 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="js/script.js"></script>
     <script>
+      // ==========================================
+      // 官方预设市场与收藏功能 JavaScript 逻辑
+      // ==========================================
+
+      let currentMarketCategory = "全部";
+
+      // 1. 收藏相关数据读取与存储
+      function getFavoritePresets() {
+        try {
+          const favs = localStorage.getItem("favOfficialPresets");
+          return favs ? JSON.parse(favs) : [];
+        } catch (e) {
+          console.error("读取收藏预设失败", e);
+          return [];
+        }
+      }
+
+      function saveFavoritePresets(favs) {
+        try {
+          localStorage.setItem("favOfficialPresets", JSON.stringify(favs));
+        } catch (e) {
+          console.error("保存收藏预设失败", e);
+        }
+      }
+
+      function toggleFavorite(id) {
+        let favs = getFavoritePresets();
+        const index = favs.indexOf(id);
+        if (index > -1) {
+          favs.splice(index, 1);
+          showToast("已取消收藏");
+        } else {
+          if (favs.length >= 10) {
+            showToast("已达收藏上限（最多10个）");
+            return;
+          }
+          favs.push(id);
+          showToast("已成功收藏");
+        }
+        saveFavoritePresets(favs);
+        updatePresetsUI();
+      }
+
+      // 2. 吐司提示组件
+      function showToast(msg) {
+        const existing = document.querySelector(".market-toast");
+        if (existing) {
+          existing.remove();
+        }
+
+        const toast = document.createElement("div");
+        toast.className = "market-toast";
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.remove();
+        }, 2500);
+      }
+
+      // 3. 动态生成下拉列表预设选项
+      function createPresetOptionElement(id, exam, className, isFav) {
+        const option = document.createElement("div");
+        option.className = `preset-option ${className || ""}`;
+        option.setAttribute("data-value", id);
+
+        const textSpan = document.createElement("span");
+        textSpan.className = "preset-option-text";
+        textSpan.textContent = exam.name;
+        option.appendChild(textSpan);
+
+        const star = document.createElement("span");
+        star.className = `preset-fav-star${isFav ? " active" : ""}`;
+        star.innerHTML = isFav ? "★" : "☆";
+        star.setAttribute("data-preset-id", id);
+        star.addEventListener("click", function (e) {
+          e.stopPropagation();
+          toggleFavorite(id);
+        });
+        option.appendChild(star);
+
+        return option;
+      }
+
+      function populateFavoritePresets() {
+        const favoriteGroup = document.getElementById("favoritePresetGroup");
+        const favoriteOptions = document.getElementById("favoritePresetOptions");
+        if (!favoriteGroup || !favoriteOptions) return;
+
+        const favorites = getFavoritePresets();
+        if (favorites.length === 0) {
+          favoriteGroup.style.display = "none";
+          favoriteOptions.innerHTML = "";
+          return;
+        }
+
+        favoriteGroup.style.display = "block";
+        favoriteOptions.innerHTML = "";
+
+        favorites.forEach((id) => {
+          const exam = officialExams[id];
+          if (exam) {
+            const option = createPresetOptionElement(id, exam, "level2-child", true);
+            favoriteOptions.appendChild(option);
+          }
+        });
+      }
+
+      function populateOfficialPresets() {
+        const officialPresetGroup = document.getElementById("officialPresetGroup");
+        if (!officialPresetGroup) return;
+
+        // 清空现有动态内容，保留标题
+        officialPresetGroup.innerHTML = '<div class="option-group-title">官方预设</div>';
+
+        const favorites = getFavoritePresets();
+
+        officialPresetCategories.forEach((category) => {
+          // 渲染二级标题
+          const lvl2Title = document.createElement("div");
+          lvl2Title.className = "preset-level2-title";
+          lvl2Title.textContent = category.name;
+          officialPresetGroup.appendChild(lvl2Title);
+
+          if (category.items) {
+            category.items.forEach((id) => {
+              const exam = officialExams[id];
+              if (exam) {
+                const option = createPresetOptionElement(
+                  id,
+                  exam,
+                  "level2-child",
+                  favorites.includes(id),
+                );
+                officialPresetGroup.appendChild(option);
+              }
+            });
+          }
+
+          if (category.subcategories) {
+            category.subcategories.forEach((sub) => {
+              // 渲染三级标题
+              const lvl3Title = document.createElement("div");
+              lvl3Title.className = "preset-level3-title";
+              lvl3Title.textContent = sub.name;
+              officialPresetGroup.appendChild(lvl3Title);
+
+              sub.items.forEach((id) => {
+                const exam = officialExams[id];
+                if (exam) {
+                  const option = createPresetOptionElement(
+                    id,
+                    exam,
+                    "level3-child",
+                    favorites.includes(id),
+                  );
+                  officialPresetGroup.appendChild(option);
+                }
+              });
+            });
+          }
+        });
+      }
+
+      function updatePresetsUI() {
+        populateFavoritePresets();
+        populateOfficialPresets();
+        updateMarketFavoritesCount();
+        if (document.getElementById("presetMarketModal").style.display !== "none") {
+          renderMarketPresets();
+        }
+      }
+
+      // 4. 预设市场模态框逻辑
+      function openPresetMarket() {
+        const modal = document.getElementById("presetMarketModal");
+        if (modal) {
+          modal.style.display = "flex";
+          document.getElementById("marketSearchInput").value = "";
+          currentMarketCategory = "全部";
+          renderMarketCategories();
+          renderMarketPresets();
+          updateMarketFavoritesCount();
+        }
+      }
+
+      function closePresetMarket() {
+        const modal = document.getElementById("presetMarketModal");
+        if (modal) {
+          modal.style.display = "none";
+        }
+      }
+
+      function handleMarketBackdropClick(e) {
+        if (e.target.id === "presetMarketModal") {
+          closePresetMarket();
+        }
+      }
+
+      function updateMarketFavoritesCount() {
+        const favs = getFavoritePresets();
+        const countSpan = document.getElementById("marketFavCount");
+        if (countSpan) {
+          countSpan.textContent = `已收藏: ${favs.length}/10`;
+        }
+      }
+
+      function renderMarketCategories() {
+        const sidebar = document.getElementById("marketCategoriesSidebar");
+        if (!sidebar) return;
+
+        sidebar.innerHTML = "";
+
+        // 添加 "全部" 分类
+        const allBtn = document.createElement("button");
+        allBtn.className = `market-category-btn${currentMarketCategory === "全部" ? " active" : ""}`;
+        allBtn.textContent = "全部预设";
+        allBtn.addEventListener("click", () => selectMarketCategory("全部"));
+        sidebar.appendChild(allBtn);
+
+        // 添加具体分类
+        officialPresetCategories.forEach((cat) => {
+          const btn = document.createElement("button");
+          btn.className = `market-category-btn${currentMarketCategory === cat.name ? " active" : ""}`;
+          btn.textContent = cat.name;
+          btn.addEventListener("click", () => selectMarketCategory(cat.name));
+          sidebar.appendChild(btn);
+        });
+      }
+
+      function selectMarketCategory(catName) {
+        currentMarketCategory = catName;
+        renderMarketCategories();
+        renderMarketPresets();
+      }
+
+      function renderMarketPresets() {
+        const grid = document.getElementById("marketPresetsGrid");
+        if (!grid) return;
+
+        grid.innerHTML = "";
+        const query = document.getElementById("marketSearchInput").value.trim().toLowerCase();
+        const favorites = getFavoritePresets();
+
+        let matchedPresetIds = [];
+
+        if (currentMarketCategory === "全部") {
+          Object.keys(officialExams).forEach((id) => {
+            matchedPresetIds.push(id);
+          });
+        } else {
+          const cat = officialPresetCategories.find((c) => c.name === currentMarketCategory);
+          if (cat) {
+            if (cat.items) {
+              matchedPresetIds.push(...cat.items);
+            }
+            if (cat.subcategories) {
+              cat.subcategories.forEach((sub) => {
+                matchedPresetIds.push(...sub.items);
+              });
+            }
+          }
+        }
+
+        // 搜索词过滤
+        if (query) {
+          matchedPresetIds = matchedPresetIds.filter((id) => {
+            const exam = officialExams[id];
+            return (
+              exam &&
+              (exam.name.toLowerCase().includes(query) ||
+                (exam.examDate && exam.examDate.toLowerCase().includes(query)) ||
+                (exam.examTimeRange && exam.examTimeRange.toLowerCase().includes(query)))
+            );
+          });
+        }
+
+        if (matchedPresetIds.length === 0) {
+          const emptyDiv = document.createElement("div");
+          emptyDiv.style.gridColumn = "1 / -1";
+          emptyDiv.style.textAlign = "center";
+          emptyDiv.style.padding = "40px";
+          emptyDiv.style.color = "var(--color-text-muted)";
+          emptyDiv.textContent = "未找到匹配的预设 / No presets found";
+          grid.appendChild(emptyDiv);
+          return;
+        }
+
+        matchedPresetIds.forEach((id) => {
+          const exam = officialExams[id];
+          if (!exam) return;
+
+          const isFav = favorites.includes(id);
+
+          const card = document.createElement("div");
+          card.className = "market-preset-card";
+
+          // Header
+          const header = document.createElement("div");
+          header.className = "market-preset-header";
+
+          const titleArea = document.createElement("div");
+          titleArea.className = "market-preset-title-area";
+
+          const name = document.createElement("span");
+          name.className = "market-preset-name";
+          name.textContent = exam.name;
+          titleArea.appendChild(name);
+
+          let badgeText = "";
+          const parentCat = officialPresetCategories.find((c) => {
+            if (c.items && c.items.includes(id)) return true;
+            if (c.subcategories) {
+              return c.subcategories.some((s) => s.items.includes(id));
+            }
+            return false;
+          });
+          if (parentCat) {
+            badgeText = parentCat.name;
+          }
+          if (badgeText) {
+            const badge = document.createElement("span");
+            badge.className = "market-preset-badge";
+            badge.textContent = badgeText;
+            titleArea.appendChild(badge);
+          }
+
+          header.appendChild(titleArea);
+
+          const favBtn = document.createElement("button");
+          favBtn.className = `market-preset-fav-btn${isFav ? " active" : ""}`;
+          favBtn.innerHTML = isFav ? "★" : "☆";
+          favBtn.title = isFav ? "取消收藏" : "加入收藏";
+          favBtn.addEventListener("click", () => {
+            toggleFavorite(id);
+          });
+          header.appendChild(favBtn);
+
+          card.appendChild(header);
+
+          // Meta
+          const meta = document.createElement("div");
+          meta.className = "market-preset-meta";
+
+          const durationMin = Math.round(exam.totalTime / 60);
+          const numSections = exam.sections ? exam.sections.length : 0;
+
+          const timeInfo = document.createElement("div");
+          timeInfo.className = "market-preset-meta-item";
+          timeInfo.innerHTML = `<span>时长：${durationMin}分钟 | ${numSections}个环节</span>`;
+          meta.appendChild(timeInfo);
+
+          if (exam.examDate || exam.examTimeRange) {
+            const dateInfo = document.createElement("div");
+            dateInfo.className = "market-preset-meta-item";
+            dateInfo.innerHTML = `<span>时间：${exam.examDate || ""} ${exam.examTimeRange || ""}</span>`;
+            meta.appendChild(dateInfo);
+          }
+
+          card.appendChild(meta);
+
+          // Section Preview
+          if (exam.sections && exam.sections.length > 0) {
+            const sectionsDiv = document.createElement("div");
+            sectionsDiv.className = "market-preset-sections";
+
+            const secTitle = document.createElement("span");
+            secTitle.className = "market-preset-sections-title";
+            secTitle.textContent = "环节预览 / Preview:";
+            sectionsDiv.appendChild(secTitle);
+
+            const list = document.createElement("div");
+            list.className = "market-preset-sections-list";
+
+            const displaySections = exam.sections.slice(0, 4);
+            displaySections.forEach((sec, idx) => {
+              const tag = document.createElement("span");
+              tag.className = "market-preset-section-tag";
+              tag.textContent = sec.name;
+              list.appendChild(tag);
+
+              if (idx < displaySections.length - 1 || exam.sections.length > 4) {
+                const arrow = document.createElement("span");
+                arrow.className = "market-preset-section-arrow";
+                arrow.textContent = "→";
+                list.appendChild(arrow);
+              }
+            });
+
+            if (exam.sections.length > 4) {
+              const moreTag = document.createElement("span");
+              moreTag.className = "market-preset-section-tag";
+              moreTag.style.fontStyle = "italic";
+              moreTag.textContent = `等共${exam.sections.length}个`;
+              list.appendChild(moreTag);
+            }
+
+            sectionsDiv.appendChild(list);
+            card.appendChild(sectionsDiv);
+          }
+
+          // Actions
+          const actions = document.createElement("div");
+          actions.className = "market-preset-actions";
+
+          const applyBtn = document.createElement("button");
+          applyBtn.className = "market-preset-apply-btn";
+          applyBtn.textContent = "一键应用 / Apply";
+          applyBtn.addEventListener("click", () => {
+            handlePresetChange(id);
+            closePresetMarket();
+            showToast(`已应用预设: ${exam.name}`);
+          });
+          actions.appendChild(applyBtn);
+
+          card.appendChild(actions);
+
+          grid.appendChild(card);
+        });
+      }
+
+      function filterMarketPresets() {
+        renderMarketPresets();
+      }
+
       // 在 script.js 加载完成后恢复预设状态
       document.addEventListener("DOMContentLoaded", function () {
         // 等待 script.js 的 DOMContentLoaded 执行完成
         setTimeout(function () {
+          updatePresetsUI();
           const lastPresetType =
             localStorage.getItem("lastPresetType") || "official";
           const customExamList = window.customExams || [];
@@ -576,7 +996,7 @@
             // 恢复官方预设
             const lastOfficialPreset =
               localStorage.getItem("lastOfficialPreset") || "cet4";
-            if (window.officialExams && lastOfficialPreset in window.officialExams) {
+            if (officialExams && lastOfficialPreset in officialExams) {
               handlePresetChange(lastOfficialPreset);
             }
           }

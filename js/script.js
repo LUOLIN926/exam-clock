@@ -436,6 +436,31 @@ const gaokaoShengwu = [
   },
 ];
 
+// 官方考试预设多级分类
+const officialPresetCategories = [
+  {
+    name: "CET",
+    items: ["cet4", "cet6"]
+  },
+  {
+    name: "高考",
+    subcategories: [
+      {
+        name: "6月7日",
+        items: ["gaokao_yuwen", "gaokao_shuxue"]
+      },
+      {
+        name: "6月8日",
+        items: ["gaokao_wuli", "gaokao_lishi", "gaokao_waiyu"]
+      },
+      {
+        name: "6月9日",
+        items: ["gaokao_huaxue", "gaokao_dili", "gaokao_zhengzhi", "gaokao_shengwu"]
+      }
+    ]
+  }
+];
+
 // 官方考试预设
 const officialExams = {
   cet4: {
