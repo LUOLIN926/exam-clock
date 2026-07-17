@@ -1,50 +1,44 @@
 # 项目结构说明
 
-## 目录结构
-
-```
-exam-practice-clock/
+```text
+exam-clock/
+├── assets/
+│   ├── fonts/iconfont/         # 本地图标字体及演示资源
+│   └── images/favicon.png      # 网站与 PWA 图标
 ├── css/
-│   └── styles.css
+│   └── styles.css              # 全站样式、响应式布局与组件样式
 ├── js/
-│   ├── main/
-│   │   └── script.js
-│   └── custom-exam/
-│       └── custom-exam.js
-├── html/
-│   ├── index.html
-│   ├── custom-exam.html
-│   └── introduction.html
-├── .git/
-├── .DS_Store
-├── LICENSE
-├── README.md
-├── STRUCTURE.md
+│   ├── script.js               # 首页计时、官方预设、收藏和显示设置
+│   └── custom-exam.js          # 自定义考试的编辑、排序、保存与应用
+├── scripts/
+│   ├── .env.example            # 部署脚本所需环境变量示例
+│   └── deploy.sh               # 面向 Nginx 服务器的可选部署脚本
+├── index.html                  # 主模拟器与官方预设市场
+├── custom-exam.html            # 自定义考试配置页
+├── introduction.html           # 功能介绍页
+├── design.html                 # 设计规范展示页
+├── manifest.json               # PWA Web App Manifest
+├── sw.js                       # Service Worker 缓存逻辑
+├── README.md                   # 项目说明与上手指南
+├── CONTRIBUTING.md             # 贡献指南
+├── SECURITY.md                 # 安全问题报告方式
+└── LICENSE                     # MIT 许可证
 ```
 
-## 文件说明
+## 关键模块
 
-### css/
+### 首页与预设
 
-- `styles.css`: 全局样式文件，包含所有页面的样式定义
+`index.html` 负责页面结构；`js/script.js` 包含 CET、高考等内置预设、考试计时、环节跳转、官方预设市场、收藏和显示设置。需要新增或调整官方预设时，应同时检查 `officialPresetCategories` 与 `officialExams`，确保分类和数据保持一致。
 
-### js/main/
+### 自定义考试
 
-- `script.js`: 主页面逻辑，包含内置考试预设与考试模拟的核心倒计时功能
+`custom-exam.html` 与 `js/custom-exam.js` 提供配置编辑器。配置、收藏及显示偏好保存在浏览器 `localStorage`，不依赖服务器或数据库。
 
-### js/custom-exam/
+### 离线与资源
 
-- `custom-exam.js`: 自定义考试配置页面的逻辑
+`manifest.json` 定义安装后的应用元数据，`sw.js` 预缓存本地静态资源并在运行时缓存同源资源与字体资源。更改离线资源清单时，应相应更新缓存版本号，确保已安装用户能收到新文件。
 
-### html/
+### 部署
 
-- `index.html`: 主页面，考试时间模拟器
-- `custom-exam.html`: 自定义考试配置页面
-- `introduction.html`: 项目介绍页面
-
-### 其他文件
-
-- `.git/`: Git 版本控制目录
-- `LICENSE`: 项目许可证
-- `README.md`: 项目说明文档
-- `STRUCTURE.md`: 项目结构说明文档
+`scripts/deploy.sh` 是可选的服务器部署脚本，使用前复制 `scripts/.env.example` 为 `scripts/.env` 并在本机填写配置。`scripts/.env` 及服务器专用资料不应提交到仓库。
